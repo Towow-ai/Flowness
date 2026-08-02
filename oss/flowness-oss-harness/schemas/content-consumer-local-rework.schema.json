@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/content-consumer-local-rework.schema.json",
+  "title": "Local deterministic corrective binding for a failed Content Consumer Machine run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "rework_id", "failed_run", "blocked_work_item_ids", "corrective_bindings", "repair_action", "successor", "boundary", "rework_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "content-consumer-local-rework/v1"},
+    "rework_id": {"type": "string", "pattern": "^content-consumer-rework-[0-9a-f]{24}$"},
+    "failed_run": {"$ref": "#/$defs/failedRun"},
+    "blocked_work_item_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "corrective_bindings": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/correctiveBinding"}},
+    "repair_action": {"type": "string", "const": "local_candidate_graph_and_package_rebinding"},
+    "successor": {"$ref": "#/$defs/successor"},
+    "boundary": {"type": "string", "const": "local deterministic corrective-binding record only; it binds a failed local run to a distinct successor graph and package registry, and does not itself mutate source material, call a model, dispatch an agent, publish, withdraw, schedule, use credentials, access a network, or send externally."},
+    "rework_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "failedRun": {"type": "object", "additionalProperties": false, "required": ["source_path", "run_id", "run_hash"], "properties": {"source_path": {"type": "string", "minLength": 1}, "run_id": {"type": "string", "pattern": "^content-consumer-run-[0-9a-f]{24}$"}, "run_hash": {"$ref": "#/$defs/sha256"}}},
+    "sourceGraph": {"type": "object", "additionalProperties": false, "required": ["graph_id", "graph_hash", "candidate_id", "snapshot_id", "version_id", "verification"], "properties": {"graph_id": {"type": "string", "minLength": 1}, "graph_hash": {"$ref": "#/$defs/sha256"}, "candidate_id": {"type": "string", "minLength": 1}, "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"type": "string", "minLength": 1}, "verification": {"type": "string", "const": "verified_content_graph_v3"}}},
+    "registry": {"type": "object", "additionalProperties": false, "required": ["registry_id", "registry_hash"], "properties": {"registry_id": {"type": "string", "pattern": "^content-package-registry-[0-9a-f]{24}$"}, "registry_hash": {"$ref": "#/$defs/sha256"}}},
+    "receipt": {"type": "object", "additionalProperties": false, "required": ["receipt_id", "receipt_hash"], "properties": {"receipt_id": {"type": "string", "pattern": "^content-update-[0-9a-f]{24}$"}, "receipt_hash": {"$ref": "#/$defs/sha256"}}},
+    "correctionRef": {"type": "object", "additionalProperties": false, "required": ["source_path", "correction_id", "correction_hash"], "properties": {"source_path": {"type": "string", "minLength": 1}, "correction_id": {"type": "string", "pattern": "^content-consumer-correction-[0-9a-f]{24}$"}, "correction_hash": {"$ref": "#/$defs/sha256"}}},
+    "correctiveBinding": {"type": "object", "additionalProperties": false, "required": ["blocked_work_item_id", "target_kind", "target_id", "successor_work_item_id", "correction_artifact"], "properties": {"blocked_work_item_id": {"type": "string", "minLength": 1}, "target_kind": {"type": "string", "minLength": 1}, "target_id": {"type": "string", "minLength": 1}, "successor_work_item_id": {"type": "string", "minLength": 1}, "correction_artifact": {"$ref": "#/$defs/correctionRef"}}},
+    "successor": {"type": "object", "additionalProperties": false, "required": ["source_graph", "package_registry", "update_receipt", "predecessor_graph_hash", "predecessor_package_registry_hash"], "properties": {"source_graph": {"$ref": "#/$defs/sourceGraph"}, "package_registry": {"$ref": "#/$defs/registry"}, "update_receipt": {"$ref": "#/$defs/receipt"}, "predecessor_graph_hash": {"$ref": "#/$defs/sha256"}, "predecessor_package_registry_hash": {"$ref": "#/$defs/sha256"}}}
+  }
+}

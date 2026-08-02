@@ -1,0 +1,699 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "pkg:pypi/annotated-types@0.7.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "annotated-types",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/annotated-types@0.7.0",
+      "scope": "required",
+      "type": "library",
+      "version": "0.7.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/attrs@26.1.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "attrs",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/attrs@26.1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "26.1.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/cffi@2.1.0",
+      "licenses": [
+        {
+          "expression": "MIT-0"
+        }
+      ],
+      "name": "cffi",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/cffi@2.1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "2.1.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/click@8.4.0",
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause"
+        }
+      ],
+      "name": "click",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/click@8.4.0",
+      "scope": "required",
+      "type": "library",
+      "version": "8.4.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/colorama@0.4.6",
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause"
+        }
+      ],
+      "name": "colorama",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "scope": "required",
+      "type": "library",
+      "version": "0.4.6"
+    },
+    {
+      "bom-ref": "pkg:pypi/cryptography@46.0.7",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR BSD-3-Clause"
+        }
+      ],
+      "name": "cryptography",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/cryptography@46.0.7",
+      "scope": "required",
+      "type": "library",
+      "version": "46.0.7"
+    },
+    {
+      "bom-ref": "pkg:pypi/iniconfig@2.3.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "iniconfig",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/iniconfig@2.3.0",
+      "scope": "optional",
+      "type": "library",
+      "version": "2.3.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema@4.26.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "jsonschema",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema@4.26.0",
+      "scope": "required",
+      "type": "library",
+      "version": "4.26.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "jsonschema-specifications",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "scope": "required",
+      "type": "library",
+      "version": "2025.9.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/packaging@26.2",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR BSD-2-Clause"
+        }
+      ],
+      "name": "packaging",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/packaging@26.2",
+      "scope": "optional",
+      "type": "library",
+      "version": "26.2"
+    },
+    {
+      "bom-ref": "pkg:pypi/pluggy@1.6.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pluggy",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pluggy@1.6.0",
+      "scope": "optional",
+      "type": "library",
+      "version": "1.6.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/pycparser@3.0",
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause"
+        }
+      ],
+      "name": "pycparser",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pycparser@3.0",
+      "scope": "required",
+      "type": "library",
+      "version": "3.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/pydantic@2.13.4",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pydantic",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pydantic@2.13.4",
+      "scope": "required",
+      "type": "library",
+      "version": "2.13.4"
+    },
+    {
+      "bom-ref": "pkg:pypi/pydantic-core@2.46.4",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pydantic-core",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pydantic-core@2.46.4",
+      "scope": "required",
+      "type": "library",
+      "version": "2.46.4"
+    },
+    {
+      "bom-ref": "pkg:pypi/pygments@2.20.0",
+      "licenses": [
+        {
+          "expression": "BSD-2-Clause"
+        }
+      ],
+      "name": "pygments",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pygments@2.20.0",
+      "scope": "optional",
+      "type": "library",
+      "version": "2.20.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/pytest@9.0.3",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pytest",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pytest@9.0.3",
+      "scope": "optional",
+      "type": "library",
+      "version": "9.0.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/pyyaml@6.0.3",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pyyaml",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/pyyaml@6.0.3",
+      "scope": "required",
+      "type": "library",
+      "version": "6.0.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/referencing@0.37.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "referencing",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/referencing@0.37.0",
+      "scope": "required",
+      "type": "library",
+      "version": "0.37.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/rpds-py@2026.6.3",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "rpds-py",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/rpds-py@2026.6.3",
+      "scope": "required",
+      "type": "library",
+      "version": "2026.6.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/setuptools@83.0.0",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "setuptools",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/setuptools@83.0.0",
+      "scope": "required",
+      "type": "library",
+      "version": "83.0.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-extensions@4.16.0",
+      "licenses": [
+        {
+          "expression": "PSF-2.0"
+        }
+      ],
+      "name": "typing-extensions",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/typing-extensions@4.16.0",
+      "scope": "required",
+      "type": "library",
+      "version": "4.16.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-inspection@0.4.2",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "typing-inspection",
+      "properties": [
+        {
+          "name": "flowness:resolution",
+          "value": "exact-unified-pin"
+        },
+        {
+          "name": "flowness:license-evidence",
+          "value": "installed-metadata-observation"
+        }
+      ],
+      "purl": "pkg:pypi/typing-inspection@0.4.2",
+      "scope": "required",
+      "type": "library",
+      "version": "0.4.2"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "pkg:pypi/flowness-harness@1.0.0a1",
+        "pkg:pypi/flowness-ledger-core@1.0.0a1",
+        "pkg:pypi/flowness-oss-harness@1.0.0a1",
+        "pkg:pypi/pytest@9.0.3",
+        "pkg:pypi/setuptools@83.0.0"
+      ],
+      "ref": "flowness-open-alpha@1.0.0a1"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/click@8.4.0",
+        "pkg:pypi/pydantic@2.13.4",
+        "pkg:pypi/pyyaml@6.0.3"
+      ],
+      "ref": "pkg:pypi/flowness-harness@1.0.0a1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/flowness-ledger-core@1.0.0a1"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/cryptography@46.0.7",
+        "pkg:pypi/jsonschema@4.26.0"
+      ],
+      "ref": "pkg:pypi/flowness-oss-harness@1.0.0a1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/annotated-types@0.7.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/attrs@26.1.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/pycparser@3.0"
+      ],
+      "ref": "pkg:pypi/cffi@2.1.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/colorama@0.4.6"
+      ],
+      "ref": "pkg:pypi/click@8.4.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/colorama@0.4.6"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/cffi@2.1.0"
+      ],
+      "ref": "pkg:pypi/cryptography@46.0.7"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/iniconfig@2.3.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/attrs@26.1.0",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/referencing@0.37.0",
+        "pkg:pypi/rpds-py@2026.6.3"
+      ],
+      "ref": "pkg:pypi/jsonschema@4.26.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/referencing@0.37.0"
+      ],
+      "ref": "pkg:pypi/jsonschema-specifications@2025.9.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/packaging@26.2"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/pluggy@1.6.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/pycparser@3.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/annotated-types@0.7.0",
+        "pkg:pypi/pydantic-core@2.46.4",
+        "pkg:pypi/typing-extensions@4.16.0",
+        "pkg:pypi/typing-inspection@0.4.2"
+      ],
+      "ref": "pkg:pypi/pydantic@2.13.4"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.16.0"
+      ],
+      "ref": "pkg:pypi/pydantic-core@2.46.4"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/pygments@2.20.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/iniconfig@2.3.0",
+        "pkg:pypi/packaging@26.2",
+        "pkg:pypi/pluggy@1.6.0",
+        "pkg:pypi/pygments@2.20.0"
+      ],
+      "ref": "pkg:pypi/pytest@9.0.3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/pyyaml@6.0.3"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/attrs@26.1.0",
+        "pkg:pypi/rpds-py@2026.6.3",
+        "pkg:pypi/typing-extensions@4.16.0"
+      ],
+      "ref": "pkg:pypi/referencing@0.37.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/rpds-py@2026.6.3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/setuptools@83.0.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.16.0"
+      ],
+      "ref": "pkg:pypi/typing-inspection@0.4.2"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "flowness-open-alpha@1.0.0a1",
+      "name": "flowness-open-alpha",
+      "type": "application",
+      "version": "1.0.0a1"
+    },
+    "properties": [
+      {
+        "name": "flowness:sbom-state",
+        "value": "locked-transitive-candidate"
+      },
+      {
+        "name": "flowness:release-authorized",
+        "value": "false"
+      },
+      {
+        "name": "flowness:offline-wheelhouse",
+        "value": "not-sealed-cross-platform"
+      },
+      {
+        "name": "flowness:harness-uv-lock-sha256",
+        "value": "d4daefe66ed39e0d2603da0928fa4b9fd9c0c4a6c80ee468ef067b025c305c28"
+      },
+      {
+        "name": "flowness:oss-uv-lock-sha256",
+        "value": "b10b61342fa57d7f1988a314a8840f945768c3a786cc8732c1b043432813994f"
+      },
+      {
+        "name": "flowness:build-system-lock-sha256",
+        "value": "192507377d4e349d6bea7b00ef2f140e235ccdae267d73612e3835f4c20ca4da"
+      }
+    ]
+  },
+  "serialNumber": "urn:uuid:a883a981-3b95-5e11-a392-d56aaa9df1f6",
+  "specVersion": "1.6",
+  "version": 1
+}

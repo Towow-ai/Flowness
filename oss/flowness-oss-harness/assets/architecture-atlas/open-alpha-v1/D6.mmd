@@ -1,0 +1,29 @@
+flowchart TB
+  H["D6 / open-alpha-v1 / architect + operator<br/>LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / UNKNOWN / EXTERNAL"]
+  Local["allowlisted public package<br/>CURRENT_VERIFIED identity only"]
+  Source["sealed source + manifest<br/>CURRENT_VERIFIED identity only"]
+  Servers["server fleet / fault domains<br/>UNKNOWN"]
+  Worker["worker pool<br/>UNKNOWN live topology"]
+  Sandbox["sandbox / worktree<br/>UNKNOWN isolation"]
+  Queue["queue placement + delivery semantics<br/>UNKNOWN"]
+  Store["event + projection store<br/>UNKNOWN deployed state"]
+  Telemetry["telemetry path + retention<br/>UNKNOWN"]
+  ScalingUnit["scaling unit: worker, session, host, or fleet<br/>UNKNOWN"]
+  Checkpoint["checkpoint + rollback point<br/>UNKNOWN"]
+  Recovery["rebuild / reflow / owner route<br/>EXPERIMENTAL candidates"]
+  Failure["FAILURE: source, host, worker, sandbox,<br/>store, telemetry, or rollback gap"]
+  Target["DESIGNED_TARGET: bounded topology, health, incident, and rollback evidence"]
+  Ceiling["PROOF CEILING: no proof of deployed hosts, blast radius, scaling, telemetry, checkpoint, or rollback operation"]
+
+  H -.-> Local
+  Local --> Source
+  Source -. "deployment link unsealed" .-> Servers
+  Servers -.-> Worker -.-> Sandbox
+  Worker -.-> Queue -.-> Store -.-> Telemetry -.-> ScalingUnit
+  ScalingUnit -.-> Checkpoint
+  Servers -. "failure signal unsealed" .-> Failure
+  Failure --> Recovery
+  Recovery -. "authorization + state unsealed" .-> Checkpoint
+  Target -.-> Servers
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling -.-> Recovery

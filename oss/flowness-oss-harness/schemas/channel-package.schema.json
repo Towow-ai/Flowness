@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/channel-package.schema.json",
+  "title": "Immutable private manual channel package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "package_id", "source_graph", "channel", "assets", "limitation_ids", "template", "draft", "capability", "external_send", "package_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "channel-package/v1"},
+    "package_id": {"type": "string", "pattern": "^channel-package-[a-f0-9]{24}$"},
+    "source_graph": {"$ref": "#/$defs/source_graph"},
+    "channel": {"$ref": "#/$defs/channel"},
+    "assets": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/asset"}},
+    "claim_ids": {"$ref": "#/$defs/id_list"},
+    "audience_tracks": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/audience_track"}},
+    "limitation_ids": {"$ref": "#/$defs/id_list"},
+    "template": {"$ref": "#/$defs/template"},
+    "draft": {"$ref": "#/$defs/draft"},
+    "capability": {"type": "string", "enum": ["draft", "manual_publish_pack", "analytics_only"]},
+    "external_send": {
+      "type": "object", "additionalProperties": false,
+      "required": ["authorization_required", "approval_present", "authorized", "operation"],
+      "properties": {
+        "authorization_required": {"type": "boolean", "const": true},
+        "approval_present": {"type": "boolean", "const": false},
+        "authorized": {"type": "boolean", "const": false},
+        "operation": {"type": "string", "const": "not_performed"}
+      }
+    },
+    "package_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "id_list": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "source_graph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_path", "content_hash", "graph_id", "candidate_id", "snapshot_id", "version_id"],
+      "properties": {
+        "source_path": {"type": "string", "minLength": 1}, "content_hash": {"$ref": "#/$defs/sha256"},
+        "graph_id": {"$ref": "#/$defs/id"}, "candidate_id": {"$ref": "#/$defs/id"},
+        "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "channel": {
+      "type": "object", "additionalProperties": false,
+      "required": ["channel_id", "locale", "audience_ids", "release_stage", "adapter"],
+      "properties": {
+        "channel_id": {"$ref": "#/$defs/id"}, "locale": {"type": "string", "enum": ["en", "zh-CN"]},
+        "audience_ids": {"$ref": "#/$defs/id_list"}, "release_stage": {"type": "string", "enum": ["S0-private-research", "S1-alpha-preparation", "S2-beta-expansion", "S3-1.0-launch"]},
+        "adapter": {"type": "object", "additionalProperties": false, "required": ["adapter_id", "adapter_version", "capability", "operation_mode"], "properties": {
+          "adapter_id": {"$ref": "#/$defs/id"}, "adapter_version": {"type": "string", "minLength": 1},
+          "capability": {"type": "string", "enum": ["draft", "manual_publish_pack", "analytics_only"]}, "operation_mode": {"type": "string", "const": "manual_only"}
+        }}
+      }
+    },
+    "asset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["asset_id", "source_path", "content_hash", "locale", "audience_ids", "limitation_ids"],
+      "properties": {"asset_id": {"$ref": "#/$defs/id"}, "source_path": {"type": "string", "minLength": 1}, "content_hash": {"$ref": "#/$defs/sha256"}, "locale": {"type": "string", "enum": ["en", "zh-CN"]}, "audience_ids": {"$ref": "#/$defs/id_list"}, "limitation_ids": {"$ref": "#/$defs/id_list"}}
+    },
+    "template": {"type": "object", "additionalProperties": false, "required": ["template_id", "template_version", "source_path", "content_hash"], "properties": {"template_id": {"$ref": "#/$defs/id"}, "template_version": {"type": "string", "minLength": 1}, "source_path": {"type": "string", "minLength": 1}, "content_hash": {"$ref": "#/$defs/sha256"}}},
+    "audience_track": {"type": "object", "additionalProperties": false, "required": ["audience_id", "summary", "entry_asset_ids"], "properties": {"audience_id": {"$ref": "#/$defs/id"}, "summary": {"type": "string", "minLength": 1}, "entry_asset_ids": {"$ref": "#/$defs/id_list"}}},
+    "draft": {"type": "object", "additionalProperties": false, "required": ["title", "body_markdown", "call_to_action", "withdrawal_text"], "properties": {"title": {"type": "string", "minLength": 1}, "body_markdown": {"type": "string", "minLength": 1}, "call_to_action": {"type": "string", "minLength": 1}, "withdrawal_text": {"type": "string", "minLength": 1}}}
+  }
+}

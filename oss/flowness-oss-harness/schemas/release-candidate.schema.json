@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/release-candidate.schema.json",
+  "title": "Flowness release candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "snapshot",
+    "target_stage",
+    "created_at",
+    "modules",
+    "claims",
+    "benchmarks",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "candidate_id": {
+      "$ref": "#/$defs/id",
+      "description": "Deterministically derived by candidate-assemble from the canonical candidate body."
+    },
+    "snapshot": {"$ref": "#/$defs/snapshot"},
+    "target_stage": {"enum": ["alpha", "beta", "1.0"]},
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Caller-supplied timestamp already sealed by candidate-assembly-manifest/v1; the assembler must not replace it with wall-clock time."
+    },
+    "modules": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/module"},
+      "minItems": 1
+    },
+    "claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/claim"},
+      "minItems": 1
+    },
+    "benchmarks": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/benchmark"}
+    },
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidence"},
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "gitSha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonemptyStrings": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/nonemptyString"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id",
+        "repo",
+        "commit_sha",
+        "tree_sha",
+        "dirty",
+        "built_at"
+      ],
+      "properties": {
+        "snapshot_id": {"$ref": "#/$defs/sha256"},
+        "repo": {"type": "string", "format": "uri"},
+        "commit_sha": {"$ref": "#/$defs/gitSha"},
+        "tree_sha": {"$ref": "#/$defs/gitSha"},
+        "dirty": {"const": false},
+        "built_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module_id", "min_maturity"],
+      "properties": {
+        "module_id": {"$ref": "#/$defs/id"},
+        "min_maturity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        }
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module_id",
+        "layer",
+        "name",
+        "critical",
+        "declared_maturity",
+        "dependencies",
+        "evidence_ids"
+      ],
+      "properties": {
+        "module_id": {"$ref": "#/$defs/id"},
+        "layer": {"enum": ["L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7"]},
+        "name": {"$ref": "#/$defs/nonemptyString"},
+        "critical": {"type": "boolean"},
+        "declared_maturity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/dependency"}
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/id"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "text",
+        "scope",
+        "baseline",
+        "success_criteria",
+        "critical",
+        "evidence_ids",
+        "limitations",
+        "last_verified_at"
+      ],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/id"},
+        "text": {"$ref": "#/$defs/nonemptyString"},
+        "scope": {"$ref": "#/$defs/nonemptyString"},
+        "baseline": {"$ref": "#/$defs/nonemptyString"},
+        "success_criteria": {"$ref": "#/$defs/nonemptyString"},
+        "critical": {"type": "boolean"},
+        "evidence_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/id"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "limitations": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonemptyString"},
+          "minItems": 1
+        },
+        "last_verified_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"$ref": "#/$defs/nonemptyString"},
+        "version": {"$ref": "#/$defs/nonemptyString"}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "hardware", "runtime", "network_policy"],
+      "properties": {
+        "os": {"$ref": "#/$defs/nonemptyString"},
+        "hardware": {"$ref": "#/$defs/nonemptyString"},
+        "runtime": {"$ref": "#/$defs/nonemptyString"},
+        "network_policy": {"$ref": "#/$defs/nonemptyString"}
+      }
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "case_count", "hash"],
+      "properties": {
+        "name": {"$ref": "#/$defs/nonemptyString"},
+        "version": {"$ref": "#/$defs/nonemptyString"},
+        "case_count": {"type": "integer", "minimum": 1},
+        "hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "runner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command_template", "commit_sha", "config_hash"],
+      "properties": {
+        "command_template": {"$ref": "#/$defs/nonemptyString"},
+        "commit_sha": {"$ref": "#/$defs/gitSha"},
+        "config_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "nullableMetric": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pass_at_1",
+        "pass_power_k",
+        "latency_p50_ms",
+        "latency_p95_ms",
+        "cost_usd",
+        "input_tokens",
+        "output_tokens"
+      ],
+      "properties": {
+        "pass_at_1": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "pass_power_k": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "latency_p50_ms": {"$ref": "#/$defs/nullableMetric"},
+        "latency_p95_ms": {"$ref": "#/$defs/nullableMetric"},
+        "cost_usd": {"$ref": "#/$defs/nullableMetric"},
+        "input_tokens": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      }
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "benchmark_id",
+        "claim_ids",
+        "dimension",
+        "baseline",
+        "environment",
+        "dataset",
+        "runner",
+        "attempts_per_case",
+        "metrics",
+        "raw_result_evidence_id",
+        "recorded_at"
+      ],
+      "properties": {
+        "benchmark_id": {"$ref": "#/$defs/id"},
+        "claim_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/id"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dimension": {"$ref": "#/$defs/nonemptyString"},
+        "baseline": {"$ref": "#/$defs/baseline"},
+        "environment": {"$ref": "#/$defs/environment"},
+        "dataset": {"$ref": "#/$defs/dataset"},
+        "runner": {"$ref": "#/$defs/runner"},
+        "attempts_per_case": {"type": "integer", "minimum": 1},
+        "metrics": {"$ref": "#/$defs/metrics"},
+        "raw_result_evidence_id": {"$ref": "#/$defs/id"},
+        "recorded_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "type",
+        "uri",
+        "sha256",
+        "snapshot_id",
+        "observed_at",
+        "producer",
+        "summary"
+      ],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/id"},
+        "type": {
+          "enum": [
+            "definition",
+            "prototype",
+            "passing_test",
+            "canonical_integration",
+            "dogfood_run",
+            "clean_reproduction",
+            "external_validation",
+            "source",
+            "raw_benchmark",
+            "security_scan",
+            "license_scan",
+            "trace",
+            "video",
+            "document"
+          ]
+        },
+        "uri": {"type": "string", "format": "uri-reference"},
+        "sha256": {
+          "anyOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
+        },
+        "snapshot_id": {"$ref": "#/$defs/sha256"},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "producer": {"$ref": "#/$defs/nonemptyString"},
+        "summary": {"$ref": "#/$defs/nonemptyString"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {"not": {"const": "source"}}
+            },
+            "required": ["type"]
+          },
+          "then": {
+            "properties": {
+              "sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

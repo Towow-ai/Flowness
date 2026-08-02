@@ -1,0 +1,523 @@
+{
+  "schema_version": "agent-role-registry/v1",
+  "roles": [
+    {
+      "role_id": "excavate.intent-planning",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "intent_planning",
+      "mission": "Trace intent, interview, concept, consensus and planning through code, events, tests, failures and history. Produce mechanism cards and unknowns.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.task-orchestration",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "task_orchestration",
+      "mission": "Trace task graph, dependency, dispatch, multi-agent delegation and the seams with planning and execution.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.event-projection",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "event_projection",
+      "mission": "Trace EventLog, envelope, commit gate, projection, watermark and all recovery paths. Sample the event registry exhaustively.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.workspace-concurrency",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "workspace_concurrency",
+      "mission": "Trace workspace, worktree, write-set, ownership, lock, lease, retry, idempotency, cancellation and resource governance.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.review-acceptance",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "review_acceptance",
+      "mission": "Trace review, finding, verification, fix, retest, acceptance, negative cases and terminal/non-terminal paths.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.context-handoff",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "context_handoff",
+      "mission": "Trace handoff, capsule, context, knowledge, judgment and transcript-derived owner decisions without quoting unapproved private text.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.watchers-recovery",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "watchers_recovery",
+      "mission": "Trace watcher, sentinel, forward chain, reflow, dead letter, incident, rollback and manual takeover.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.install-fleet",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "install_fleet",
+      "mission": "Trace installer, multi-project integration, versions, migrations, server fleet, accounts, quotas, sessions and scheduler.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "excavate.observability-security",
+      "wave": "excavation",
+      "kind": "producer",
+      "dimension": "observability_security",
+      "mission": "Trace health, alerting, permissions, secrets, network, production approval and owner authority across normal and failure paths.",
+      "output_schema": "mechanism-batch.schema.json"
+    },
+    {
+      "role_id": "challenge.coverage",
+      "wave": "coverage-trace",
+      "kind": "producer",
+      "dimension": "mechanism_coverage",
+      "mission": "Object-first blind trace. Consume only the sealed source archive and role-bound coverage sample manifest. Record exact candidate links through definitions and callers without claiming semantic source-chain verification or accessing any mechanism, unknown, drift registry, merge report content, or other trace.",
+      "output_schema": "coverage-trace.schema.json",
+      "sandbox": "danger-full-access"
+    },
+    {
+      "role_id": "challenge.consumer-chain",
+      "wave": "coverage-trace",
+      "kind": "producer",
+      "dimension": "consumer_chain",
+      "mission": "Failure-consumer blind trace. Consume only the sealed source archive and role-bound coverage sample manifest. Record exact candidate links to consumers, failure paths and recovery paths without claiming their semantic relationship or accessing any registry, merge result, or other trace.",
+      "output_schema": "coverage-trace.schema.json",
+      "sandbox": "danger-full-access"
+    },
+    {
+      "role_id": "challenge.coverage-comparator",
+      "wave": "coverage-compare",
+      "kind": "producer",
+      "dimension": "mechanism_coverage",
+      "mission": "Second phase only. Compare sealed blind traces against the bound combined mechanism, unknown and drift registries. Exact source excerpts are candidate links only: never emit source_chain_verified or runtime_verified under this protocol.",
+      "output_schema": "coverage-verdict.schema.json",
+      "sandbox": "danger-full-access"
+    },
+    {
+      "role_id": "challenge.coverage-adjudicator",
+      "wave": "coverage-adjudication",
+      "kind": "producer",
+      "dimension": "mechanism_coverage",
+      "mission": "Adjudicate only comparator or trace conflicts from sealed manifests, traces and registries. Do not add unsampled claims, promote mechanism status, or treat exact excerpts as semantic chain verification.",
+      "output_schema": "coverage-verdict.schema.json",
+      "sandbox": "danger-full-access"
+    },
+    {
+      "role_id": "challenge.history-simplification",
+      "wave": "challenge",
+      "kind": "producer",
+      "dimension": "history_simplification",
+      "mission": "Use git semantic history and failure records to distinguish load-bearing evolved mechanisms from accidental historical baggage.",
+      "output_schema": "artifact-bundle.schema.json"
+    },
+    {
+      "role_id": "benchmark.source-level",
+      "wave": "benchmark",
+      "kind": "producer",
+      "dimension": "benchmark",
+      "mission": "Benchmark comparable projects at source, test, release, issue and clean-install level. Do not score README rhetoric as implementation.",
+      "output_schema": "artifact-bundle.schema.json"
+    },
+    {
+      "role_id": "architecture.atlas",
+      "wave": "narrative",
+      "kind": "producer",
+      "dimension": "architecture",
+      "mission": "Generate D0-D9 atlas candidates strictly from accepted mechanism cards. Every diagram names current/target state, truth sources, failure paths and what it cannot prove.",
+      "output_schema": "artifact-bundle.schema.json"
+    },
+    {
+      "role_id": "narrative.terminology",
+      "wave": "narrative",
+      "kind": "producer",
+      "dimension": "public_clarity",
+      "mission": "Propose terminology only where a real mechanism distinction requires it. Supply one sentence, analogy, failure, diagram brief, demo and falsifier.",
+      "output_schema": "artifact-bundle.schema.json"
+    },
+    {
+      "role_id": "content.compiler",
+      "wave": "W12",
+      "kind": "producer",
+      "dimension": "public_clarity",
+      "mission": "Compile evidence-bounded professional, developer and public candidate copy from a sealed Content Graph v3. Preserve every limitation and emit typed private drafts only.",
+      "output_schema": "content-role-output.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "sealed_verified_content_graph_v3_and_impact_review_plan",
+        "output_kind": "content_draft",
+        "output_boundary": "role-private/content.compiler",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "visual_demo.compiler",
+      "wave": "W12",
+      "kind": "producer",
+      "dimension": "visual_demo",
+      "mission": "Compile evidence-bounded diagram and demo briefs that expose state change, provenance, failure and recovery. Emit typed private drafts only.",
+      "output_schema": "content-role-output.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "sealed_verified_content_graph_v3_and_impact_review_plan",
+        "output_kind": "visual_demo_draft",
+        "output_boundary": "role-private/visual_demo.compiler",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "channel.adapter",
+      "wave": "W12",
+      "kind": "producer",
+      "dimension": "channel_distribution",
+      "mission": "Adapt sealed, limitation-preserving candidate material into typed channel drafts. It cannot change truth, create a publish action, or use a channel API.",
+      "output_schema": "content-role-output.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "sealed_verified_content_graph_v3_and_impact_review_plan",
+        "output_kind": "channel_adapter_draft",
+        "output_boundary": "role-private/channel.adapter",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "publisher.stager",
+      "wave": "W12",
+      "kind": "producer",
+      "dimension": "channel_distribution",
+      "mission": "Stage a reviewable manual-package assessment from sealed candidate material. It emits package review only, never a send, schedule, credential request, or external action.",
+      "output_schema": "content-role-output.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "sealed_verified_content_graph_v3_and_impact_review_plan",
+        "output_kind": "package_review",
+        "output_boundary": "role-private/publisher.stager",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "analytics.interpreter",
+      "wave": "W12",
+      "kind": "producer",
+      "dimension": "channel_distribution",
+      "mission": "Interpret only sealed analytics observations into typed private notes. It cannot collect data, mutate source observations, publish findings, or promote claims.",
+      "output_schema": "content-role-output.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "sealed_verified_content_graph_v3_and_impact_review_plan",
+        "output_kind": "analytics_interpretation",
+        "output_boundary": "role-private/analytics.interpreter",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "judge.mechanism-coverage-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "mechanism_coverage",
+      "checks": ["G3.mechanism_coverage"],
+      "mission": "Blindly sample the sealed inventory and test whether load-bearing mechanisms, consumers, failures and recovery seams are represented.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.mechanism-coverage-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "mechanism_coverage",
+      "checks": ["G3.mechanism_coverage"],
+      "mission": "Independently try to prove that a major current mechanism is absent, flattened or supported only by narrative evidence.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.truth-claim-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "truth_claim",
+      "checks": ["G3.truth_claims"],
+      "mission": "Trace every public claim to scoped, current, independent evidence and reject document-only implementation claims.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.truth-claim-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "truth_claim",
+      "checks": ["G3.truth_claims"],
+      "mission": "Independently falsify claim scope, provenance, recency, baseline and stated limitations.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.architecture-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "architecture",
+      "checks": [
+        "G2.isolation_permission",
+        "G2.audit_provenance",
+        "G4.quickstart_architecture",
+        "G4.upgrade_rollback"
+      ],
+      "mission": "Verify that D0-D9 views agree with accepted mechanisms, stable identifiers, runtime boundaries and failure paths.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.architecture-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "architecture",
+      "checks": [
+        "G2.isolation_permission",
+        "G2.audit_provenance",
+        "G4.quickstart_architecture",
+        "G4.upgrade_rollback"
+      ],
+      "mission": "Independently trace diagram arrows to interfaces, state and evidence, and identify mixed current/target claims.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.install-dx-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "install_dx",
+      "checks": ["G1.clean_install", "G1.canonical_e2e"],
+      "mission": "Run the documented clean install and canonical first-success path in a fresh environment without private knowledge.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.install-dx-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "install_dx",
+      "checks": ["G1.clean_install", "G1.canonical_e2e"],
+      "mission": "Independently test installation, configuration errors, uninstall or rollback, and time to first verified outcome.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.security-privacy-ip-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "security_privacy_ip",
+      "checks": [
+        "G0.license_clean",
+        "G0.third_party_provenance",
+        "G0.secrets_privacy"
+      ],
+      "mission": "Blindly evaluate license, privacy, secret, supply-chain, source provenance and owner-authority blockers.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.security-privacy-ip-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "security_privacy_ip",
+      "checks": [
+        "G0.license_clean",
+        "G0.third_party_provenance",
+        "G0.secrets_privacy"
+      ],
+      "mission": "Independently red-team the sealed candidate for privacy, IP, secret, permission and unsafe publication failures.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.reliability-recovery-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "reliability_recovery",
+      "checks": [
+        "G2.cancel_timeout",
+        "G2.retry_idempotency",
+        "G2.resume_recovery"
+      ],
+      "mission": "Exercise timeout, cancellation, retry, idempotency, resume, partial failure and audit evidence over repeated trials.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.reliability-recovery-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "reliability_recovery",
+      "checks": [
+        "G2.cancel_timeout",
+        "G2.retry_idempotency",
+        "G2.resume_recovery"
+      ],
+      "mission": "Independently inject failures and verify authoritative postconditions, recovery boundaries and no duplicate effects.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.benchmark-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "benchmark",
+      "checks": [
+        "G3.versioned_eval",
+        "G3.baseline_raw_trials",
+        "G3.reproducibility"
+      ],
+      "mission": "Audit dataset, baseline, commit, config, trials, costs, timings and raw results for reproducibility.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.benchmark-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "benchmark",
+      "checks": [
+        "G3.versioned_eval",
+        "G3.baseline_raw_trials",
+        "G3.reproducibility"
+      ],
+      "mission": "Independently rerun or challenge benchmark methodology, negative cases, leakage and over-generalized conclusions.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.professional-value-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "professional_value",
+      "checks": ["G1.outcome_state", "G5.positioning_clarity"],
+      "mission": "Test whether the candidate solves a named professional workflow better than the disclosed baseline with measurable outcomes.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.professional-value-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "professional_value",
+      "checks": ["G1.outcome_state", "G5.positioning_clarity"],
+      "mission": "Independently test fit, no-fit, adoption cost and whether claimed value survives a realistic case.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.public-clarity-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "public_clarity",
+      "checks": ["G5.benchmark_story"],
+      "mission": "Evaluate layered explanations, terminology, limitations and whether a new reader can distinguish current, target and unknown.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.public-clarity-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "public_clarity",
+      "checks": ["G5.benchmark_story"],
+      "mission": "Independently find ambiguous, promotional or unsupported language across README, docs and channel packages.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.visual-demo-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "visual_demo",
+      "checks": ["G5.demo_cases"],
+      "mission": "Verify that diagrams and demos expose state change, provenance, failure and recovery rather than decorative activity.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.visual-demo-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "visual_demo",
+      "checks": ["G5.demo_cases"],
+      "mission": "Independently test the thirty-second comprehension target and trace visual elements back to canonical evidence.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.oss-community-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "oss_community",
+      "checks": ["G4.security_contributing", "G4.support_governance"],
+      "mission": "Evaluate license, contribution path, governance, support scope, issue templates, roadmap and maintainer continuity.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.oss-community-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "oss_community",
+      "checks": ["G4.security_contributing", "G4.support_governance"],
+      "mission": "Independently attempt a contributor journey and identify governance, maintenance or expectation gaps.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.channel-distribution-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "channel_distribution",
+      "checks": ["G5.channel_assets"],
+      "mission": "Check that staged GitHub, website, article, video and community assets derive from the same accepted content graph.",
+      "output_schema": "jury-report.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "blind_sealed_channel_package_review_only",
+        "output_kind": "jury_report",
+        "output_boundary": "role-private/judge.channel-distribution-a",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "judge.channel-distribution-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "channel_distribution",
+      "checks": ["G5.channel_assets"],
+      "mission": "Independently detect cross-channel claim drift, missing provenance, premature publish state and broken calls to action.",
+      "output_schema": "jury-report.schema.json",
+      "content_contract": {
+        "contract_id": "content-machine/CM-007/v1",
+        "input_contract": "blind_sealed_channel_package_review_only",
+        "output_kind": "jury_report",
+        "output_boundary": "role-private/judge.channel-distribution-b",
+        "blindness_required": true,
+        "forbidden_mutations": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"],
+        "forbidden_capabilities": ["publish", "network", "credential_use", "external_send", "schedule"],
+        "external_effects": "forbidden"
+      }
+    },
+    {
+      "role_id": "judge.adversarial-meta-a",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "adversarial_meta",
+      "checks": ["G0.threat_model", "G3.negative_cases"],
+      "mission": "Challenge the evaluation itself for correlated judges, rubric gaming, missing negatives and evidence laundering.",
+      "output_schema": "jury-report.schema.json"
+    },
+    {
+      "role_id": "judge.adversarial-meta-b",
+      "wave": "jury",
+      "kind": "judge",
+      "dimension": "adversarial_meta",
+      "checks": ["G0.threat_model", "G3.negative_cases"],
+      "mission": "Independently attack blindness, snapshot integrity, role conflicts, verdict aggregation and blocker-clearing procedure.",
+      "output_schema": "jury-report.schema.json"
+    }
+  ]
+}

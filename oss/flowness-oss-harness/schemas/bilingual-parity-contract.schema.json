@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private bilingual claim-unit parity contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_id", "candidate", "source_documents", "content_graph_binding", "claim_units", "parity_review", "boundary"],
+  "properties": {
+    "schema_version": {"const": "bilingual-parity/v1"},
+    "contract_id": {"type": "string", "minLength": 1},
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "snapshot_id", "version_id", "state_label"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "snapshot_id": {"type": "string", "minLength": 1},
+        "version_id": {"type": "string", "minLength": 1},
+        "state_label": {"const": "local_unsealed_candidate"}
+      }
+    },
+    "source_documents": {
+      "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/document"}
+    },
+    "content_graph_binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["graph_path", "content_hash", "localization_pair_id", "asset_ids"],
+      "properties": {
+        "graph_path": {"type": "string", "minLength": 1},
+        "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "localization_pair_id": {"type": "string", "minLength": 1},
+        "asset_ids": {"$ref": "#/$defs/ids"}
+      }
+    },
+    "claim_units": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/claim_unit"}
+    },
+    "parity_review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state", "reviewer_slots"],
+      "properties": {
+        "state": {"const": "unreviewed"},
+        "reviewer_slots": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": {"$ref": "#/$defs/reviewer"}
+        }
+      }
+    },
+    "boundary": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "document": {
+      "type": "object", "additionalProperties": false,
+      "required": ["locale", "source_path", "content_hash"],
+      "properties": {
+        "locale": {"enum": ["en", "zh-CN"]},
+        "source_path": {"type": "string", "minLength": 1},
+        "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "localized_text": {
+      "type": "object", "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": {"type": "string", "minLength": 1},
+        "zh-CN": {"type": "string", "minLength": 1}
+      }
+    },
+    "limitation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["limitation_id", "required_text"],
+      "properties": {
+        "limitation_id": {"type": "string", "minLength": 1},
+        "required_text": {"$ref": "#/$defs/localized_text"}
+      }
+    },
+    "claim_unit": {
+      "type": "object", "additionalProperties": false,
+      "required": ["claim_unit_id", "claim_id", "state_label", "claim_text", "limitations", "no_fit", "cta"],
+      "properties": {
+        "claim_unit_id": {"type": "string", "minLength": 1},
+        "claim_id": {"type": "string", "minLength": 1},
+        "state_label": {"const": "local_unsealed_candidate"},
+        "claim_text": {"$ref": "#/$defs/localized_text"},
+        "limitations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/limitation"}},
+        "no_fit": {"$ref": "#/$defs/localized_text"},
+        "cta": {"$ref": "#/$defs/localized_text"}
+      }
+    },
+    "reviewer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reviewer_role", "status", "review_id"],
+      "properties": {
+        "reviewer_role": {"enum": ["bilingual_semantics", "claim_boundary"]},
+        "status": {"const": "pending"},
+        "review_id": {"type": "null"}
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private media brief propagation contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_id", "boundary", "candidate", "content_graph_binding", "media_brief", "consumer_obligations", "review_packet", "contract_hash"],
+  "properties": {
+    "schema_version": {"const": "media-brief-propagation-contract/v1"},
+    "contract_id": {"type": "string", "minLength": 1},
+    "boundary": {"const": "PRIVATE-IMPACT-OVERLAY;REVIEW-OBLIGATION-NOT-SEMANTIC-PROPAGATION-NO-PUBLISH"},
+    "candidate": {"$ref": "#/$defs/candidate"},
+    "content_graph_binding": {"$ref": "#/$defs/binding"},
+    "media_brief": {"type": "object", "additionalProperties": false, "required": ["asset_id", "path", "sha256", "relation_state"], "properties": {"asset_id": {"const": "asset.ledger-media-speaker-video-private-kit"}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "relation_state": {"const": "private_draft"}}},
+    "consumer_obligations": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/obligation"}},
+    "review_packet": {"$ref": "#/$defs/binding"},
+    "contract_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "candidate": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "snapshot_id", "version_id", "capability"], "properties": {"candidate_id": {"type": "string", "minLength": 1}, "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"type": "string", "minLength": 1}, "capability": {"const": "draft"}}},
+    "binding": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "obligation": {"type": "object", "additionalProperties": false, "required": ["obligation_id", "consumer_kind", "path", "sha256", "action", "semantic_state", "review_state", "claim_boundary_state", "external_release_effect"], "properties": {"obligation_id": {"type": "string", "minLength": 1}, "consumer_kind": {"enum": ["narrative_en", "narrative_zh_cn", "demo_provenance", "whitepaper_outline_en", "whitepaper_outline_zh_cn"]}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "action": {"enum": ["regenerate_and_review", "rebind_and_review"]}, "semantic_state": {"const": "not_proven_by_hash_or_dependency"}, "review_state": {"const": "pending_unreviewed"}, "claim_boundary_state": {"const": "pending_unreviewed"}, "external_release_effect": {"const": "no_promotion"}}}
+  }
+}

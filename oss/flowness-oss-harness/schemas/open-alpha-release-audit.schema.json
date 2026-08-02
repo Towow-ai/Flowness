@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/open-alpha-release-audit.schema.json",
+  "title": "Flowness Open Alpha release audit report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit_id",
+    "package_manifest_hash",
+    "scope",
+    "checks",
+    "sensitive_findings",
+    "rights_groups",
+    "blockers",
+    "release_ready",
+    "owner_authorized",
+    "boundary",
+    "report_hash"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "open-alpha-release-audit/v2"},
+    "audit_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "package_manifest_hash": {"$ref": "#/$defs/hash"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["included_files", "included_bytes"],
+      "properties": {
+        "included_files": {"type": "integer", "minimum": 1},
+        "included_bytes": {"type": "integer", "minimum": 0}
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "state", "detail"],
+        "properties": {
+          "check_id": {"$ref": "#/$defs/id"},
+          "state": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+          "detail": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "sensitive_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule_id", "path", "line", "match_sha256"],
+        "properties": {
+          "rule_id": {"$ref": "#/$defs/id"},
+          "path": {"type": "string", "minLength": 1},
+          "line": {"type": "integer", "minimum": 1},
+          "match_sha256": {"$ref": "#/$defs/hash"}
+        }
+      }
+    },
+    "rights_groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group_id", "files", "license_expression", "origin_class", "rights_state", "ip_review_state", "provenance_state", "evidence_refs"],
+        "properties": {
+          "group_id": {"$ref": "#/$defs/id"},
+          "files": {"type": "integer", "minimum": 1},
+          "license_expression": {"type": "string", "minLength": 1},
+          "origin_class": {"type": "string", "minLength": 1},
+          "rights_state": {"type": "string", "enum": ["owner_attestation_pending", "blocked", "cleared"]},
+          "ip_review_state": {"type": "string", "enum": ["source_review_pending", "blocked", "cleared"]},
+          "provenance_state": {"type": "string", "minLength": 1},
+          "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/rights_evidence_ref"}}
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["blocker_id", "summary", "retest_condition"],
+        "properties": {
+          "blocker_id": {"$ref": "#/$defs/id"},
+          "summary": {"type": "string", "minLength": 1},
+          "retest_condition": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "release_ready": {"type": "boolean"},
+    "owner_authorized": {"type": "boolean"},
+    "boundary": {"type": "string", "minLength": 1},
+    "report_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "rights_evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_type", "path", "sha256"],
+      "properties": {
+        "evidence_type": {"type": "string", "const": "owner_rights_attestation"},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/hash"}
+      }
+    }
+  }
+}

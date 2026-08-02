@@ -1,0 +1,31 @@
+{
+  "schema_version": "channel-staging-policy/v1",
+  "publisher_implemented": false,
+  "publish_requires_owner_approval": true,
+  "stages": [
+    {"stage_id": "S0", "name": "private research", "eligible_channels": ["private_workspace"], "required_gates": []},
+    {"stage_id": "S1", "name": "alpha preparation", "eligible_channels": ["github", "minimal_docs", "demo_staging"], "required_gates": ["G0", "G1", "G2", "G3", "G4"]},
+    {"stage_id": "S2", "name": "beta expansion", "eligible_channels": ["github", "website", "long_form", "benchmark_page", "video", "community"], "required_gates": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+    {"stage_id": "S3", "name": "1.0 launch", "eligible_channels": ["github", "website", "wechat", "zhihu", "juejin", "video", "talks", "community"], "required_gates": ["G0", "G1", "G2", "G3", "G4", "G5"]}
+  ],
+  "asset_tiers": {
+    "A_release_truth": ["README", "license", "security", "contributing", "governance", "support", "install", "quickstart", "compatibility", "upgrade_rollback", "changelog", "claim_registry", "release_notes"],
+    "B_understanding": ["D0_D9_atlas", "terminology", "FAQ", "fit_no_fit", "mechanism_deep_dives", "success_failure_cases"],
+    "C_proof": ["canonical_demo", "raw_benchmark", "evaluation_report", "external_reproduction", "cost_latency_token_disclosure"],
+    "D_distribution": ["website", "wechat", "zhihu", "juejin", "video", "talk_kit", "social_cards", "community_onboarding"]
+  },
+  "required_package_fields": [
+    "channel",
+    "audience",
+    "language",
+    "release_stage",
+    "source_node_ids",
+    "candidate_snapshot_id",
+    "asset_hashes",
+    "reviewer_ids",
+    "call_to_action",
+    "staging_state",
+    "owner_approval"
+  ],
+  "analytics": ["attention", "read", "install", "first_success", "retention", "issues", "external_contributions", "adoption"]
+}

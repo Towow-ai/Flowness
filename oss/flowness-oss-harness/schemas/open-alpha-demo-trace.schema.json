@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Flowness Open Alpha demo trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "runner", "semantics_boundary", "policy", "producer_wave", "rounds", "rework", "event_log", "trace_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "open-alpha-demo-trace/v1"},
+    "run_id": {"type": "string", "pattern": "^demo-[a-z0-9-]+$"},
+    "runner": {"type": "string", "enum": ["fixture", "codex"]},
+    "semantics_boundary": {"type": "string", "minLength": 1},
+    "policy": {"$ref": "#/$defs/ref"},
+    "producer_wave": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_parallel", "barrier_parties", "roles", "outputs"],
+      "properties": {
+        "max_parallel": {"type": "integer", "const": 3},
+        "barrier_parties": {"type": "integer", "const": 3},
+        "roles": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "string"}, "uniqueItems": true},
+        "outputs": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/ref"}}
+      }
+    },
+    "rounds": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["round", "candidate", "reports", "decision", "blocking_report_ids"],
+        "properties": {
+          "round": {"type": "integer", "minimum": 1, "maximum": 2},
+          "candidate": {"$ref": "#/$defs/ref"},
+          "reports": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/ref"}},
+          "decision": {"type": "string", "enum": ["blocked", "accepted"]},
+          "blocking_report_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        }
+      }
+    },
+    "rework": {"type": "object", "additionalProperties": false, "required": ["blocker_id", "targeted_fields", "manifest", "successor_evidence"], "properties": {
+      "blocker_id": {"type": "string", "const": "BLK-DEMO-TRUTH-001"},
+      "targeted_fields": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+      "manifest": {"$ref": "#/$defs/ref"},
+      "successor_evidence": {"$ref": "#/$defs/ref"}
+    }},
+    "event_log": {"$ref": "#/$defs/ref"},
+    "trace_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "ref": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}
+    }
+  }
+}

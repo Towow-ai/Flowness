@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/open-alpha-package-manifest.schema.json",
+  "title": "Broadened Flowness Open Alpha package scope manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manifest_id", "package_id", "repository", "policy", "summary", "required_path_assertions", "dependency_closure", "consumer_closure", "records", "release_authorized", "rights_state", "global_boundary", "manifest_hash"],
+  "properties": {
+    "schema_version": {"const": "open-alpha-package-manifest/v1"},
+    "manifest_id": {"type": "string", "pattern": "^flowness-open-alpha-[0-9a-f]{24}$"},
+    "package_id": {"type": "string", "minLength": 1},
+    "repository": {
+      "type": "object", "additionalProperties": false,
+      "required": ["head", "tree"],
+      "properties": {
+        "head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/path"},
+        "sha256": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tracked_files", "include", "hold", "exclude", "stable_include", "experimental_include", "design_target_include", "components"],
+      "properties": {
+        "tracked_files": {"type": "integer", "minimum": 1},
+        "include": {"type": "integer", "minimum": 1},
+        "hold": {"type": "integer", "minimum": 0},
+        "exclude": {"type": "integer", "minimum": 0},
+        "stable_include": {"type": "integer", "minimum": 1},
+        "experimental_include": {"type": "integer", "minimum": 1},
+        "design_target_include": {"type": "integer", "minimum": 1},
+        "components": {
+          "type": "object", "minProperties": 1,
+          "additionalProperties": {
+            "type": "object", "additionalProperties": false,
+            "required": ["include", "hold", "exclude"],
+            "properties": {
+              "include": {"type": "integer", "minimum": 0},
+              "hold": {"type": "integer", "minimum": 0},
+              "exclude": {"type": "integer", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "required_path_assertions": {
+      "type": "object", "additionalProperties": false,
+      "required": ["include", "exclude"],
+      "properties": {
+        "include": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/path"}},
+        "exclude": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/path"}}
+      }
+    },
+    "dependency_closure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "analysis", "included_python_files", "blockers", "boundary"],
+      "properties": {
+        "status": {"enum": ["closed", "blocked"]},
+        "analysis": {"const": "static-first-party-python-imports/v1"},
+        "included_python_files": {"type": "integer", "minimum": 0},
+        "blockers": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/dependency_blocker"}},
+        "boundary": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "closed"}}}, "then": {"properties": {"blockers": {"maxItems": 0}}}},
+        {"if": {"properties": {"status": {"const": "blocked"}}}, "then": {"properties": {"blockers": {"minItems": 1}}}}
+      ]
+    },
+    "consumer_closure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "analysis", "included_consumer_files", "blockers", "boundary"],
+      "properties": {
+        "status": {"enum": ["closed", "blocked"]},
+        "analysis": {"const": "markdown-links-json-path-hashes-provenance-claims-and-mechanism-coordinates/v3"},
+        "included_consumer_files": {"type": "integer", "minimum": 0},
+        "blockers": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/consumer_blocker"}},
+        "boundary": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "closed"}}}, "then": {"properties": {"blockers": {"maxItems": 0}}}},
+        {"if": {"properties": {"status": {"const": "blocked"}}}, "then": {"properties": {"blockers": {"minItems": 1}}}}
+      ]
+    },
+    "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/record"}},
+    "release_authorized": {"const": false},
+    "rights_state": {"const": "unreviewed"},
+    "global_boundary": {"type": "string", "minLength": 1},
+    "manifest_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+    "dependency_blocker": {
+      "type": "object", "additionalProperties": false,
+      "required": ["blocker_id", "importer_path", "imported_module", "target_path", "target_disposition", "required_action"],
+      "properties": {
+        "blocker_id": {"type": "string", "pattern": "^DEP-[0-9a-f]{16}$"},
+        "importer_path": {"$ref": "#/$defs/path"},
+        "imported_module": {"type": "string", "pattern": "^towow(?:\\.[A-Za-z_][A-Za-z0-9_]*)*$"},
+        "target_path": {"oneOf": [{"$ref": "#/$defs/path"}, {"type": "null"}]},
+        "target_disposition": {"enum": ["hold", "exclude", "unresolved"]},
+        "required_action": {"const": "provide-public-adapter-or-include-reviewed-dependency"}
+      }
+    },
+    "consumer_blocker": {
+      "type": "object", "additionalProperties": false,
+      "required": ["blocker_id", "consumer_path", "reference_field", "target_path", "target_disposition", "required_action"],
+      "properties": {
+        "blocker_id": {"type": "string", "pattern": "^REF-[0-9a-f]{16}$"},
+        "consumer_path": {"$ref": "#/$defs/path"},
+        "reference_field": {"type": "string", "minLength": 1},
+        "target_path": {"$ref": "#/$defs/path"},
+        "target_disposition": {"enum": ["hold", "exclude", "include_hash_mismatch"]},
+        "required_action": {"enum": ["replace-with-included-evidence-or-explicit-nonlink-boundary", "refresh-hash-bound-reference-to-exact-included-bytes"]}
+      }
+    },
+    "record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "git_blob_sha1", "sha256", "bytes", "maturity", "disposition", "component", "rule_id", "reason", "claim_boundary"],
+      "properties": {
+        "path": {"$ref": "#/$defs/path"},
+        "git_blob_sha1": {"type": "string", "pattern": "^sha1:[0-9a-f]{40}$"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "maturity": {"enum": ["stable", "experimental", "design_target", "private_excluded"]},
+        "disposition": {"enum": ["include", "hold", "exclude"]},
+        "component": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,80}$"},
+        "rule_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,100}$"},
+        "reason": {"type": "string", "minLength": 1},
+        "claim_boundary": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {"if": {"properties": {"maturity": {"const": "private_excluded"}}}, "then": {"properties": {"disposition": {"const": "exclude"}}}}
+      ]
+    }
+  }
+}

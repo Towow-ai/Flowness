@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/wow-live-readonly-snapshot.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "snapshot_id", "scope", "provenance", "verification", "repository", "remote", "refs", "issues", "pull_requests", "contributors", "snapshot_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "wow-live-readonly-snapshot/v1"},
+    "snapshot_id": {"$ref": "#/$defs/id"},
+    "scope": {"type": "string", "const": "private_staging_only"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "verification": {"$ref": "#/$defs/verification"},
+    "repository": {"$ref": "#/$defs/repository"},
+    "remote": {"$ref": "#/$defs/remote"},
+    "refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ref"}},
+    "issues": {"type": "array", "items": {"$ref": "#/$defs/workItem"}},
+    "pull_requests": {"type": "array", "items": {"$ref": "#/$defs/workItem"}},
+    "contributors": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/contributor"}},
+    "snapshot_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "provenance": {"type": "object", "additionalProperties": false, "required": ["observed_at", "method", "collector_id", "read_only", "external_mutation"], "properties": {"observed_at": {"type": "string", "format": "date-time"}, "method": {"type": "string", "const": "authenticated_read_only_GitHub_and_git_metadata"}, "collector_id": {"type": "string", "minLength": 1, "maxLength": 128}, "read_only": {"type": "boolean", "const": true}, "external_mutation": {"type": "boolean", "const": false}}},
+    "verification": {"type": "object", "additionalProperties": false, "required": ["state", "verifier_id", "evidence_ref"], "properties": {"state": {"type": "string", "const": "independently_verified_read_only_snapshot"}, "verifier_id": {"type": "string", "minLength": 1, "maxLength": 128}, "evidence_ref": {"type": "string", "minLength": 1, "maxLength": 500}}},
+    "repository": {"type": "object", "additionalProperties": false, "required": ["name_with_owner", "node_id", "default_branch"], "properties": {"name_with_owner": {"type": "string", "const": "NatureBlueee/wow-harness"}, "node_id": {"type": "string", "const": "R_kgDOR93EIg"}, "default_branch": {"type": "string", "minLength": 1, "maxLength": 128}}},
+    "remote": {"type": "object", "additionalProperties": false, "required": ["url", "head_commit_sha"], "properties": {"url": {"type": "string", "minLength": 1, "maxLength": 500}, "head_commit_sha": {"$ref": "#/$defs/commit"}}},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["ref_id", "kind", "name", "target_commit_sha"], "properties": {"ref_id": {"type": "string", "pattern": "^refs/(heads|tags)/[A-Za-z0-9][A-Za-z0-9._/-]{0,127}$"}, "kind": {"type": "string", "enum": ["branch", "tag"]}, "name": {"type": "string", "minLength": 1, "maxLength": 128}, "target_commit_sha": {"$ref": "#/$defs/commit"}}},
+    "workItem": {"type": "object", "additionalProperties": false, "required": ["node_id", "number", "author_node_id"], "properties": {"node_id": {"type": "string", "pattern": "^[A-Za-z0-9_:-]{3,128}$"}, "number": {"type": "integer", "minimum": 1}, "author_node_id": {"type": "string", "pattern": "^[A-Za-z0-9_:-]{3,128}$"}}},
+    "contributor": {"type": "object", "additionalProperties": false, "required": ["node_id", "login", "source_object_ids"], "properties": {"node_id": {"type": "string", "pattern": "^[A-Za-z0-9_:-]{3,128}$"}, "login": {"type": "string", "minLength": 1, "maxLength": 128}, "source_object_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 200}}}}
+  }
+}

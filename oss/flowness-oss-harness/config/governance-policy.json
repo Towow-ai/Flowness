@@ -1,0 +1,692 @@
+{
+  "policy_version": "1.1",
+  "maturity_levels": {
+    "0": [],
+    "1": ["definition"],
+    "2": ["prototype"],
+    "3": ["passing_test"],
+    "4": ["canonical_integration", "dogfood_run"],
+    "5": ["clean_reproduction"],
+    "6": ["external_validation"]
+  },
+  "stage_profiles": {
+    "alpha": {
+      "module_requirements": [
+        {"selector": {"layer": ["L0", "L1", "L2"], "critical": true}, "min_maturity": 4},
+        {"module_id": "orchestration.single_agent", "min_maturity": 4},
+        {"module_id": "evaluation.acceptance", "min_maturity": 4},
+        {"module_id": "ux.clean_install", "min_maturity": 5},
+        {"module_id": "oss.license_security_contributing", "min_maturity": 4}
+      ],
+      "mandatory_gates": ["G0", "G1", "G2", "G3", "G4"],
+      "advisory_gates": ["G5"]
+    },
+    "beta": {
+      "module_requirements": [
+        {"selector": {"critical": true}, "min_maturity": 5},
+        {"module_id": "orchestration.multi_agent", "min_maturity": 5},
+        {"module_id": "recovery.resume", "min_maturity": 5},
+        {"module_id": "ux.clean_install", "min_maturity": 6}
+      ],
+      "mandatory_gates": ["G0", "G1", "G2", "G3", "G4", "G5"],
+      "advisory_gates": []
+    },
+    "1.0": {
+      "module_requirements": [
+        {"selector": {"critical": true}, "min_maturity": 6}
+      ],
+      "mandatory_gates": ["G0", "G1", "G2", "G3", "G4", "G5"],
+      "advisory_gates": []
+    }
+  },
+  "gates": [
+    {
+      "gate_id": "G0",
+      "mandatory": true,
+      "required_checks": [
+        {
+          "check_id": "G0.license_clean",
+          "dimension": "security_privacy_ip",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.security-privacy-ip-a", "judge.security-privacy-ip-b"],
+          "allowed_roles": ["judge.security-privacy-ip-a", "judge.security-privacy-ip-b"]
+        },
+        {
+          "check_id": "G0.third_party_provenance",
+          "dimension": "security_privacy_ip",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.security-privacy-ip-a", "judge.security-privacy-ip-b"],
+          "allowed_roles": ["judge.security-privacy-ip-a", "judge.security-privacy-ip-b"]
+        },
+        {
+          "check_id": "G0.secrets_privacy",
+          "dimension": "security_privacy_ip",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.security-privacy-ip-a", "judge.security-privacy-ip-b"],
+          "allowed_roles": ["judge.security-privacy-ip-a", "judge.security-privacy-ip-b"]
+        },
+        {
+          "check_id": "G0.threat_model",
+          "dimension": "adversarial_meta",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.adversarial-meta-a", "judge.adversarial-meta-b"],
+          "allowed_roles": ["judge.adversarial-meta-a", "judge.adversarial-meta-b"]
+        }
+      ],
+      "required_roles": [
+        {"role_id": "judge.security-privacy-ip-a", "min_count": 1},
+        {"role_id": "judge.security-privacy-ip-b", "min_count": 1},
+        {"role_id": "judge.adversarial-meta-a", "min_count": 1},
+        {"role_id": "judge.adversarial-meta-b", "min_count": 1}
+      ]
+    },
+    {
+      "gate_id": "G1",
+      "mandatory": true,
+      "required_checks": [
+        {
+          "check_id": "G1.clean_install",
+          "dimension": "install_dx",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.install-dx-a", "judge.install-dx-b"],
+          "allowed_roles": ["judge.install-dx-a", "judge.install-dx-b"]
+        },
+        {
+          "check_id": "G1.canonical_e2e",
+          "dimension": "install_dx",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.install-dx-a", "judge.install-dx-b"],
+          "allowed_roles": ["judge.install-dx-a", "judge.install-dx-b"]
+        },
+        {
+          "check_id": "G1.outcome_state",
+          "dimension": "professional_value",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.professional-value-a", "judge.professional-value-b"],
+          "allowed_roles": ["judge.professional-value-a", "judge.professional-value-b"]
+        }
+      ],
+      "required_roles": [
+        {"role_id": "judge.install-dx-a", "min_count": 1},
+        {"role_id": "judge.install-dx-b", "min_count": 1},
+        {"role_id": "judge.professional-value-a", "min_count": 1},
+        {"role_id": "judge.professional-value-b", "min_count": 1}
+      ]
+    },
+    {
+      "gate_id": "G2",
+      "mandatory": true,
+      "required_checks": [
+        {
+          "check_id": "G2.isolation_permission",
+          "dimension": "architecture",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.architecture-a", "judge.architecture-b"],
+          "allowed_roles": ["judge.architecture-a", "judge.architecture-b"]
+        },
+        {
+          "check_id": "G2.cancel_timeout",
+          "dimension": "reliability_recovery",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.reliability-recovery-a", "judge.reliability-recovery-b"],
+          "allowed_roles": ["judge.reliability-recovery-a", "judge.reliability-recovery-b"]
+        },
+        {
+          "check_id": "G2.retry_idempotency",
+          "dimension": "reliability_recovery",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.reliability-recovery-a", "judge.reliability-recovery-b"],
+          "allowed_roles": ["judge.reliability-recovery-a", "judge.reliability-recovery-b"]
+        },
+        {
+          "check_id": "G2.resume_recovery",
+          "dimension": "reliability_recovery",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.reliability-recovery-a", "judge.reliability-recovery-b"],
+          "allowed_roles": ["judge.reliability-recovery-a", "judge.reliability-recovery-b"]
+        },
+        {
+          "check_id": "G2.audit_provenance",
+          "dimension": "architecture",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.architecture-a", "judge.architecture-b"],
+          "allowed_roles": ["judge.architecture-a", "judge.architecture-b"]
+        }
+      ],
+      "required_roles": [
+        {"role_id": "judge.reliability-recovery-a", "min_count": 1},
+        {"role_id": "judge.reliability-recovery-b", "min_count": 1},
+        {"role_id": "judge.architecture-a", "min_count": 1},
+        {"role_id": "judge.architecture-b", "min_count": 1}
+      ]
+    },
+    {
+      "gate_id": "G3",
+      "mandatory": true,
+      "required_checks": [
+        {
+          "check_id": "G3.versioned_eval",
+          "dimension": "benchmark",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.benchmark-a", "judge.benchmark-b"],
+          "allowed_roles": ["judge.benchmark-a", "judge.benchmark-b"]
+        },
+        {
+          "check_id": "G3.baseline_raw_trials",
+          "dimension": "benchmark",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.benchmark-a", "judge.benchmark-b"],
+          "allowed_roles": ["judge.benchmark-a", "judge.benchmark-b"]
+        },
+        {
+          "check_id": "G3.negative_cases",
+          "dimension": "adversarial_meta",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.adversarial-meta-a", "judge.adversarial-meta-b"],
+          "allowed_roles": ["judge.adversarial-meta-a", "judge.adversarial-meta-b"]
+        },
+        {
+          "check_id": "G3.reproducibility",
+          "dimension": "benchmark",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.benchmark-a", "judge.benchmark-b"],
+          "allowed_roles": ["judge.benchmark-a", "judge.benchmark-b"]
+        },
+        {
+          "check_id": "G3.mechanism_coverage",
+          "dimension": "mechanism_coverage",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.mechanism-coverage-a", "judge.mechanism-coverage-b"],
+          "allowed_roles": ["judge.mechanism-coverage-a", "judge.mechanism-coverage-b"]
+        },
+        {
+          "check_id": "G3.truth_claims",
+          "dimension": "truth_claim",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.truth-claim-a", "judge.truth-claim-b"],
+          "allowed_roles": ["judge.truth-claim-a", "judge.truth-claim-b"]
+        }
+      ],
+      "required_roles": [
+        {"role_id": "judge.benchmark-a", "min_count": 1},
+        {"role_id": "judge.benchmark-b", "min_count": 1},
+        {"role_id": "judge.mechanism-coverage-a", "min_count": 1},
+        {"role_id": "judge.mechanism-coverage-b", "min_count": 1},
+        {"role_id": "judge.truth-claim-a", "min_count": 1},
+        {"role_id": "judge.truth-claim-b", "min_count": 1},
+        {"role_id": "judge.adversarial-meta-a", "min_count": 1},
+        {"role_id": "judge.adversarial-meta-b", "min_count": 1}
+      ]
+    },
+    {
+      "gate_id": "G4",
+      "mandatory": true,
+      "required_checks": [
+        {
+          "check_id": "G4.quickstart_architecture",
+          "dimension": "architecture",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.architecture-a", "judge.architecture-b"],
+          "allowed_roles": ["judge.architecture-a", "judge.architecture-b"]
+        },
+        {
+          "check_id": "G4.upgrade_rollback",
+          "dimension": "architecture",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.architecture-a", "judge.architecture-b"],
+          "allowed_roles": ["judge.architecture-a", "judge.architecture-b"]
+        },
+        {
+          "check_id": "G4.security_contributing",
+          "dimension": "oss_community",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.oss-community-a", "judge.oss-community-b"],
+          "allowed_roles": ["judge.oss-community-a", "judge.oss-community-b"]
+        },
+        {
+          "check_id": "G4.support_governance",
+          "dimension": "oss_community",
+          "critical": true,
+          "allow_na": false,
+          "required_roles": ["judge.oss-community-a", "judge.oss-community-b"],
+          "allowed_roles": ["judge.oss-community-a", "judge.oss-community-b"]
+        }
+      ],
+      "required_roles": [
+        {"role_id": "judge.architecture-a", "min_count": 1},
+        {"role_id": "judge.architecture-b", "min_count": 1},
+        {"role_id": "judge.oss-community-a", "min_count": 1},
+        {"role_id": "judge.oss-community-b", "min_count": 1}
+      ]
+    },
+    {
+      "gate_id": "G5",
+      "mandatory": false,
+      "required_checks": [
+        {
+          "check_id": "G5.positioning_clarity",
+          "dimension": "professional_value",
+          "critical": false,
+          "allow_na": false,
+          "required_roles": ["judge.professional-value-a", "judge.professional-value-b"],
+          "allowed_roles": ["judge.professional-value-a", "judge.professional-value-b"]
+        },
+        {
+          "check_id": "G5.demo_cases",
+          "dimension": "visual_demo",
+          "critical": false,
+          "allow_na": false,
+          "required_roles": ["judge.visual-demo-a", "judge.visual-demo-b"],
+          "allowed_roles": ["judge.visual-demo-a", "judge.visual-demo-b"]
+        },
+        {
+          "check_id": "G5.benchmark_story",
+          "dimension": "public_clarity",
+          "critical": false,
+          "allow_na": false,
+          "required_roles": ["judge.public-clarity-a", "judge.public-clarity-b"],
+          "allowed_roles": ["judge.public-clarity-a", "judge.public-clarity-b"]
+        },
+        {
+          "check_id": "G5.channel_assets",
+          "dimension": "channel_distribution",
+          "critical": false,
+          "allow_na": false,
+          "required_roles": ["judge.channel-distribution-a", "judge.channel-distribution-b"],
+          "allowed_roles": ["judge.channel-distribution-a", "judge.channel-distribution-b"]
+        }
+      ],
+      "required_roles": [
+        {"role_id": "judge.professional-value-a", "min_count": 1},
+        {"role_id": "judge.professional-value-b", "min_count": 1},
+        {"role_id": "judge.public-clarity-a", "min_count": 1},
+        {"role_id": "judge.public-clarity-b", "min_count": 1},
+        {"role_id": "judge.visual-demo-a", "min_count": 1},
+        {"role_id": "judge.visual-demo-b", "min_count": 1},
+        {"role_id": "judge.channel-distribution-a", "min_count": 1},
+        {"role_id": "judge.channel-distribution-b", "min_count": 1}
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "role_id": "candidate.author",
+      "kind": "builder",
+      "dimensions": [],
+      "gates": [],
+      "may_judge": false,
+      "required_inputs": ["sealed snapshots"],
+      "required_outputs": ["release candidate"],
+      "forbidden_actions": ["judge own output", "publish"]
+    },
+    {
+      "role_id": "judge.mechanism-coverage-a",
+      "kind": "judge",
+      "dimensions": ["mechanism_coverage"],
+      "gates": ["G3"],
+      "checks": ["G3.mechanism_coverage"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.mechanism-coverage-b",
+      "kind": "judge",
+      "dimensions": ["mechanism_coverage"],
+      "gates": ["G3"],
+      "checks": ["G3.mechanism_coverage"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.truth-claim-a",
+      "kind": "judge",
+      "dimensions": ["truth_claim"],
+      "gates": ["G3"],
+      "checks": ["G3.truth_claims"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "claim registry", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.truth-claim-b",
+      "kind": "judge",
+      "dimensions": ["truth_claim"],
+      "gates": ["G3"],
+      "checks": ["G3.truth_claims"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "claim registry", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.architecture-a",
+      "kind": "judge",
+      "dimensions": ["architecture"],
+      "gates": ["G2", "G4"],
+      "checks": [
+        "G2.isolation_permission",
+        "G2.audit_provenance",
+        "G4.quickstart_architecture",
+        "G4.upgrade_rollback"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "architecture atlas", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.architecture-b",
+      "kind": "judge",
+      "dimensions": ["architecture"],
+      "gates": ["G2", "G4"],
+      "checks": [
+        "G2.isolation_permission",
+        "G2.audit_provenance",
+        "G4.quickstart_architecture",
+        "G4.upgrade_rollback"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "architecture atlas", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.install-dx-a",
+      "kind": "judge",
+      "dimensions": ["install_dx"],
+      "gates": ["G1"],
+      "checks": ["G1.clean_install", "G1.canonical_e2e"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "clean environment", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "use private installation knowledge"]
+    },
+    {
+      "role_id": "judge.install-dx-b",
+      "kind": "judge",
+      "dimensions": ["install_dx"],
+      "gates": ["G1"],
+      "checks": ["G1.clean_install", "G1.canonical_e2e"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "clean environment", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "use private installation knowledge"]
+    },
+    {
+      "role_id": "judge.security-privacy-ip-a",
+      "kind": "judge",
+      "dimensions": ["security_privacy_ip"],
+      "gates": ["G0"],
+      "checks": [
+        "G0.license_clean",
+        "G0.third_party_provenance",
+        "G0.secrets_privacy"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "source boundary", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.security-privacy-ip-b",
+      "kind": "judge",
+      "dimensions": ["security_privacy_ip"],
+      "gates": ["G0"],
+      "checks": [
+        "G0.license_clean",
+        "G0.third_party_provenance",
+        "G0.secrets_privacy"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "source boundary", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.reliability-recovery-a",
+      "kind": "judge",
+      "dimensions": ["reliability_recovery"],
+      "gates": ["G2"],
+      "checks": [
+        "G2.cancel_timeout",
+        "G2.retry_idempotency",
+        "G2.resume_recovery"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "failure fixtures", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.reliability-recovery-b",
+      "kind": "judge",
+      "dimensions": ["reliability_recovery"],
+      "gates": ["G2"],
+      "checks": [
+        "G2.cancel_timeout",
+        "G2.retry_idempotency",
+        "G2.resume_recovery"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "failure fixtures", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.benchmark-a",
+      "kind": "judge",
+      "dimensions": ["benchmark"],
+      "gates": ["G3"],
+      "checks": [
+        "G3.versioned_eval",
+        "G3.baseline_raw_trials",
+        "G3.reproducibility"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "raw trials", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "score README rhetoric as implementation"]
+    },
+    {
+      "role_id": "judge.benchmark-b",
+      "kind": "judge",
+      "dimensions": ["benchmark"],
+      "gates": ["G3"],
+      "checks": [
+        "G3.versioned_eval",
+        "G3.baseline_raw_trials",
+        "G3.reproducibility"
+      ],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "raw trials", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "score README rhetoric as implementation"]
+    },
+    {
+      "role_id": "judge.professional-value-a",
+      "kind": "judge",
+      "dimensions": ["professional_value"],
+      "gates": ["G1", "G5"],
+      "checks": ["G1.outcome_state", "G5.positioning_clarity"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "baseline case", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.professional-value-b",
+      "kind": "judge",
+      "dimensions": ["professional_value"],
+      "gates": ["G1", "G5"],
+      "checks": ["G1.outcome_state", "G5.positioning_clarity"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "baseline case", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.public-clarity-a",
+      "kind": "judge",
+      "dimensions": ["public_clarity"],
+      "gates": ["G5"],
+      "checks": ["G5.benchmark_story"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "content graph", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "invent public claims"]
+    },
+    {
+      "role_id": "judge.public-clarity-b",
+      "kind": "judge",
+      "dimensions": ["public_clarity"],
+      "gates": ["G5"],
+      "checks": ["G5.benchmark_story"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "content graph", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "invent public claims"]
+    },
+    {
+      "role_id": "judge.visual-demo-a",
+      "kind": "judge",
+      "dimensions": ["visual_demo"],
+      "gates": ["G5"],
+      "checks": ["G5.demo_cases"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "architecture atlas", "demo", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "treat decorative motion as mechanism evidence"]
+    },
+    {
+      "role_id": "judge.visual-demo-b",
+      "kind": "judge",
+      "dimensions": ["visual_demo"],
+      "gates": ["G5"],
+      "checks": ["G5.demo_cases"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "architecture atlas", "demo", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "treat decorative motion as mechanism evidence"]
+    },
+    {
+      "role_id": "judge.oss-community-a",
+      "kind": "judge",
+      "dimensions": ["oss_community"],
+      "gates": ["G4"],
+      "checks": ["G4.security_contributing", "G4.support_governance"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "governance package", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.oss-community-b",
+      "kind": "judge",
+      "dimensions": ["oss_community"],
+      "gates": ["G4"],
+      "checks": ["G4.security_contributing", "G4.support_governance"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "governance package", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.channel-distribution-a",
+      "kind": "judge",
+      "dimensions": ["channel_distribution"],
+      "gates": ["G5"],
+      "checks": ["G5.channel_assets"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "content graph", "channel staging", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "publish"]
+    },
+    {
+      "role_id": "judge.channel-distribution-b",
+      "kind": "judge",
+      "dimensions": ["channel_distribution"],
+      "gates": ["G5"],
+      "checks": ["G5.channel_assets"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "content graph", "channel staging", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "publish"]
+    },
+    {
+      "role_id": "judge.adversarial-meta-a",
+      "kind": "judge",
+      "dimensions": ["adversarial_meta"],
+      "gates": ["G0", "G3"],
+      "checks": ["G0.threat_model", "G3.negative_cases"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "all policies", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.adversarial-meta-b",
+      "kind": "judge",
+      "dimensions": ["adversarial_meta"],
+      "gates": ["G0", "G3"],
+      "checks": ["G0.threat_model", "G3.negative_cases"],
+      "may_judge": true,
+      "required_inputs": ["sealed candidate", "all policies", "policy"],
+      "required_outputs": ["jury report"],
+      "forbidden_actions": ["modify candidate", "read peer first-pass verdict", "change policy"]
+    },
+    {
+      "role_id": "judge.adjudicator",
+      "kind": "adjudicator",
+      "dimensions": ["dispute"],
+      "gates": ["G0", "G1", "G2", "G3", "G4", "G5"],
+      "may_judge": true,
+      "required_inputs": ["disputed reports", "retest report", "policy"],
+      "required_outputs": ["adjudication jury report"],
+      "forbidden_actions": ["modify candidate", "act as original disputed judge", "clear credible failure without passing retest"]
+    },
+    {
+      "role_id": "release.owner",
+      "kind": "owner",
+      "dimensions": ["authorization"],
+      "gates": [],
+      "may_judge": false,
+      "required_inputs": ["release decision"],
+      "required_outputs": ["approve or hold"],
+      "forbidden_actions": ["override mandatory blocker"]
+    }
+  ],
+  "independence_rules": {
+    "distinct_agent_instances_per_required_role": true,
+    "blind_first_pass": true,
+    "candidate_author_may_judge": false,
+    "majority_vote_may_override_fail": false,
+    "adjudicator_must_be_independent": true,
+    "judges_per_check": 2
+  }
+}

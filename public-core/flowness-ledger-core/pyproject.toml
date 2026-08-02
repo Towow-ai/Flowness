@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flowness-ledger-core"
+version = "1.0.0a1"
+description = "Recoverable decision ledger for evidence-driven multi-agent workflows."
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+readme = "README.md"
+keywords = ["agents", "audit", "event-log", "harness", "recovery"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.scripts]
+flowness-ledger-demo = "flowness_ledger_core.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"

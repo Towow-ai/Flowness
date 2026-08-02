@@ -1,0 +1,96 @@
+{
+  "schema_version": "flowness-open-alpha-public-package-metadata/v1",
+  "release_identity": {
+    "project": "Flowness",
+    "release": "v1.0.0-alpha",
+    "distribution_state": "pre_release_candidate_external_acceptance_pending"
+  },
+  "package_state": "three_exact_installable_source_metadata_files_present",
+  "packages": [
+    {
+      "distribution_name": "flowness-harness",
+      "version": "1.0.0a1",
+      "source_metadata": "harness/pyproject.toml",
+      "source_metadata_sha256": "sha256:feede38f300ef72b42fd3a4a4c01b10df6c75231a56c48381aa55f3d655dcf82",
+      "requires_python": ">=3.12",
+      "license_expression": "Apache-2.0",
+      "documentation_license_expression": "CC-BY-4.0",
+      "runtime_dependencies": [
+        "pydantic>=2.13,<3",
+        "click>=8.4,<9",
+        "PyYAML>=6.0.3,<7"
+      ],
+      "build_dependencies": [
+        "setuptools>=83,<84"
+      ],
+      "entry_points": {
+        "flowness-harness": "towow.open_alpha_cli:main"
+      },
+      "assembly_state": "exact_installable_source_metadata_present"
+    },
+    {
+      "distribution_name": "flowness-oss-harness",
+      "version": "1.0.0a1",
+      "source_metadata": "oss/flowness-oss-harness/pyproject.toml",
+      "source_metadata_sha256": "sha256:7c95a075ec627446964947a3add2b71ce29f716b962294113b21b431506b318f",
+      "requires_python": ">=3.11",
+      "license_expression": "Apache-2.0",
+      "documentation_license_expression": "CC-BY-4.0",
+      "runtime_dependencies": [
+        "cryptography>=43,<47",
+        "jsonschema>=4.23,<5"
+      ],
+      "build_dependencies": [
+        "setuptools>=83,<84"
+      ],
+      "entry_points": {
+        "flowness-oss": "flowness_oss_harness.public_cli:main"
+      },
+      "assembly_state": "exact_installable_source_metadata_present"
+    },
+    {
+      "distribution_name": "flowness-ledger-core",
+      "version": "1.0.0a1",
+      "source_metadata": "public-core/flowness-ledger-core/pyproject.toml",
+      "source_metadata_sha256": "sha256:de3c1247025e50361fd34f0bae47ae9ec15b6c743186a68d11f454daa2889a7f",
+      "requires_python": ">=3.11",
+      "license_expression": "Apache-2.0",
+      "documentation_license_expression": "CC-BY-4.0",
+      "runtime_dependencies": [],
+      "build_dependencies": [
+        "setuptools>=69"
+      ],
+      "entry_points": {
+        "flowness-ledger-demo": "flowness_ledger_core.cli:main"
+      },
+      "assembly_state": "exact_installable_source_metadata_present"
+    }
+  ],
+  "resolution": {
+    "state": "exact_unified_transitive_candidate",
+    "unified_lock": "harness/open-alpha-requirements.lock",
+    "unified_lock_sha256": "sha256:20842e38c9a067c33a6d7cb2b5f8c500822b54f7c52f36c27af76dfa00e86468",
+    "source_locks": [
+      "harness/uv.lock",
+      "oss/flowness-oss-harness/uv.lock",
+      "harness/build-system-requirements.lock"
+    ],
+    "source_lock_sha256": {
+      "harness/uv.lock": "sha256:d4daefe66ed39e0d2603da0928fa4b9fd9c0c4a6c80ee468ef067b025c305c28",
+      "oss/flowness-oss-harness/uv.lock": "sha256:b10b61342fa57d7f1988a314a8840f945768c3a786cc8732c1b043432813994f",
+      "harness/build-system-requirements.lock": "sha256:192507377d4e349d6bea7b00ef2f140e235ccdae267d73612e3835f4c20ca4da"
+    },
+    "canonical_sbom": "harness/sbom.cdx.json",
+    "canonical_sbom_sha256": "sha256:288095753f9b9b0acd2341568c1ea486de90d51a7d3c4568a897d16173fe37d3",
+    "component_sbom_mirror": "public-core/flowness-ledger-core/sbom.cdx.json",
+    "component_sbom_mirror_sha256": "sha256:288095753f9b9b0acd2341568c1ea486de90d51a7d3c4568a897d16173fe37d3",
+    "sbom_state": "locked-transitive-candidate"
+  },
+  "assembly_invariants": [
+    "Each package row must exactly mirror its named pyproject, including version, Python requirement, direct runtime and build dependencies, and console entrypoint.",
+    "Every unified lock pin must have the same exact component version in both CycloneDX SBOM copies and an exact coordinate in a named source lock.",
+    "Do not include any path whose exact package-manifest disposition is hold or exclude.",
+    "Do not infer a dependency from an ambient developer environment.",
+    "Owner release approval and independent external acceptance remain separate pre-release gates."
+  ]
+}

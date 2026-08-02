@@ -1,4 +1,0 @@
-interface:
-  display_name: "Towow Bridge"
-  short_description: "Towow bridge design, repair, and runtime engineering"
-  default_prompt: "Use $towow-bridge to diagnose, design, implement, or repair a Towow bridge issue end to end."

@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=83,<84"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flowness-oss-harness"
+version = "1.0.0a1"
+description = "Evidence-first multi-agent orchestration, jury, rework, and release tooling for Flowness."
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+readme = "README.md"
+keywords = ["agents", "harness", "jury", "orchestration", "open-source"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = ["cryptography>=43,<47", "jsonschema>=4.23,<5"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+flowness-oss = "flowness_oss_harness.public_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"flowness-oss-harness/config" = [
+  "config/architecture-atlas.json",
+  "config/channel-staging.json",
+  "config/content-graph.json",
+  "config/gates.json",
+  "config/governance-policy.json",
+  "config/open-alpha-package-scope.json",
+  "config/roles.json",
+]
+"flowness-oss-harness/schemas" = ["schemas/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+  "execution_policy_enforced: run without the normal unit-test execution-policy bypass",
+]

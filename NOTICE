@@ -1,0 +1,12 @@
+Flowness
+Copyright 2026 Towow AI and Flowness contributors.
+
+Flowness is a ground-up major-version evolution of Wow-Harness. Historical
+authorship and attribution remain in the Git history. Historic stars, forks,
+issues, and pull requests describe that lineage; they do not validate the
+Flowness v1 implementation.
+
+The current public tree uses the version- and path-level rules described in
+LICENSE-MATRIX.md. This NOTICE is informational and does not modify those
+licenses. Third-party copyright, license, and attribution notices remain in
+the relevant package metadata, lockfiles, SBOMs, and third-party notice files.

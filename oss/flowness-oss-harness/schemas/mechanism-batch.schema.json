@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mechanism excavation batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["role_id", "snapshot_ids", "source_inspection", "mechanisms", "unknowns", "drift_findings"],
+  "properties": {
+    "role_id": {"type": "string", "minLength": 1},
+    "snapshot_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "source_inspection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inventory_use", "archives", "access_failures"],
+      "properties": {
+        "inventory_use": {
+          "type": "string",
+          "const": "discovery_map_only"
+        },
+        "archives": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "archive_path", "archive_content_hash", "extraction_root",
+              "extracted", "source_files_read", "test_files_read"
+            ],
+            "properties": {
+              "archive_path": {"type": "string", "minLength": 1},
+              "archive_content_hash": {"$ref": "#/$defs/sha256"},
+              "extraction_root": {"type": "string", "minLength": 1},
+              "extracted": {"type": "boolean"},
+              "source_files_read": {"$ref": "#/$defs/strings"},
+              "test_files_read": {"$ref": "#/$defs/strings"}
+            }
+          }
+        },
+        "access_failures": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "mechanisms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mechanism_id", "public_name", "internal_names", "problem_and_failure",
+          "status", "schema_version", "triggers", "inputs", "outputs", "authoritative_state",
+          "state_transitions", "invariants", "authority_and_permissions",
+          "producers", "consumers", "dependencies", "failure_modes",
+          "recovery_and_rollback", "inventory_item_ids", "verification_trace", "evidence",
+          "known_drift", "public_scope", "public_claims", "confidence",
+          "unresolved_questions"
+        ],
+        "properties": {
+          "mechanism_id": {"type": "string", "minLength": 1},
+          "public_name": {"type": "string", "minLength": 1},
+          "internal_names": {"$ref": "#/$defs/strings"},
+          "problem_and_failure": {"type": "string", "minLength": 1},
+          "status": {
+            "type": "string",
+            "enum": ["legacy", "current_verified", "experimental", "designed_target", "blocked", "unknown", "written_only"]
+          },
+          "schema_version": {"type": "string", "const": "mechanism-card/v1"},
+          "triggers": {"$ref": "#/$defs/strings"},
+          "inputs": {"$ref": "#/$defs/strings"},
+          "outputs": {"$ref": "#/$defs/strings"},
+          "authoritative_state": {"$ref": "#/$defs/strings"},
+          "state_transitions": {"$ref": "#/$defs/strings"},
+          "invariants": {"$ref": "#/$defs/strings"},
+          "authority_and_permissions": {"$ref": "#/$defs/strings"},
+          "producers": {"$ref": "#/$defs/strings"},
+          "consumers": {"$ref": "#/$defs/strings"},
+          "dependencies": {"$ref": "#/$defs/strings"},
+          "failure_modes": {"$ref": "#/$defs/nonemptyStrings"},
+          "recovery_and_rollback": {"$ref": "#/$defs/strings"},
+          "inventory_item_ids": {"$ref": "#/$defs/strings"},
+          "verification_trace": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "function_definitions", "callers", "consumers",
+              "test_body_observations", "execution_event_runtime_observations"
+            ],
+            "properties": {
+              "function_definitions": {"$ref": "#/$defs/strings"},
+              "callers": {"$ref": "#/$defs/strings"},
+              "consumers": {"$ref": "#/$defs/strings"},
+              "test_body_observations": {"$ref": "#/$defs/strings"},
+              "execution_event_runtime_observations": {"$ref": "#/$defs/strings"}
+            }
+          },
+          "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+          "known_drift": {"$ref": "#/$defs/strings"},
+          "public_scope": {"type": "string"},
+          "public_claims": {"$ref": "#/$defs/strings"},
+          "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
+          "unresolved_questions": {"$ref": "#/$defs/strings"}
+        }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "unknown_id", "inventory_item_id", "object_type", "locator",
+          "question", "blocking", "evidence", "next_check"
+        ],
+        "properties": {
+          "unknown_id": {"type": "string", "minLength": 1},
+          "inventory_item_id": {"type": "string", "minLength": 1},
+          "object_type": {"type": "string", "minLength": 1},
+          "locator": {"type": "string", "minLength": 1},
+          "question": {"type": "string", "minLength": 1},
+          "blocking": {"type": "boolean"},
+          "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+          "next_check": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "drift_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "drift_id", "surface_from", "surface_to", "source_locators",
+          "affected_consumers", "severity", "public_impact",
+          "remediation_or_downgrade", "state", "evidence"
+        ],
+        "properties": {
+          "drift_id": {"type": "string", "minLength": 1},
+          "surface_from": {"type": "string", "minLength": 1},
+          "surface_to": {"type": "string", "minLength": 1},
+          "source_locators": {"$ref": "#/$defs/nonemptyStrings"},
+          "affected_consumers": {"$ref": "#/$defs/strings"},
+          "severity": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+          "public_impact": {"type": "string"},
+          "remediation_or_downgrade": {"type": "string", "minLength": 1},
+          "state": {"type": "string", "enum": ["open", "accepted", "resolved", "disputed"]},
+          "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "nonemptyStrings": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id", "kind", "basis", "locator", "observed_excerpt",
+        "hash_scope", "source_snapshot_id", "content_hash", "captured_at",
+        "independent_group", "summary"
+      ],
+      "properties": {
+        "evidence_id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "enum": ["code", "runtime", "test", "event", "schema", "commit", "transcript", "document", "external"]},
+        "basis": {
+          "type": "string",
+          "enum": [
+            "source_file", "test_file", "execution_record", "event_record",
+            "runtime_trace", "schema_file", "commit_record",
+            "transcript_excerpt", "document_excerpt", "external_capture"
+          ]
+        },
+        "locator": {"type": "string", "minLength": 1},
+        "observed_excerpt": {"type": "string", "minLength": 1},
+        "hash_scope": {"type": "string", "enum": ["exact_file_bytes", "exact_excerpt_utf8"]},
+        "source_snapshot_id": {"type": "string", "minLength": 1},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "captured_at": {"type": "string", "minLength": 1},
+        "independent_group": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

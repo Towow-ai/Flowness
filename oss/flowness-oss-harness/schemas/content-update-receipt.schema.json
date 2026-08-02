@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/content-update-receipt.schema.json",
+  "title": "Immutable private Content Graph update receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "authorization", "source_review_plan", "role_registry", "staged_update_plan", "effect_attestation", "boundary", "receipt_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "content-update-receipt/v1"},
+    "receipt_id": {"type": "string", "pattern": "^content-update-[0-9a-f]{24}$"},
+    "authorization": {"type": "string", "const": "local_review_only"},
+    "source_review_plan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_path", "plan_id", "plan_hash", "verification"],
+      "properties": {
+        "source_path": {"$ref": "#/$defs/relative_json"},
+        "plan_id": {"type": "string", "minLength": 1},
+        "plan_hash": {"$ref": "#/$defs/sha256"},
+        "verification": {"type": "string", "const": "verified_content_impact_review_plan"}
+      }
+    },
+    "role_registry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_path", "content_hash", "assignment_policy_id"],
+      "properties": {
+        "source_path": {"$ref": "#/$defs/relative_json"},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "assignment_policy_id": {"type": "string", "const": "content-machine/CM-009/v1"}
+      }
+    },
+    "staged_update_plan": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/work_item"}
+    },
+    "effect_attestation": {"$ref": "#/$defs/effects"},
+    "boundary": {"type": "string", "const": "private deterministic update planning only; assignments are not dispatched and cannot mutate claims, evidence, candidate state, approvals, source material, publish, collect network data, use credentials, schedule, or send externally."},
+    "receipt_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "relative_json": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+\\.json$"},
+    "ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "work_item": {
+      "type": "object", "additionalProperties": false,
+      "required": ["work_item_id", "source_obligation_id", "kind", "target_id", "assignment_state", "private_stage", "assigned_role_ids", "reviewer_role_ids", "completion_condition"],
+      "properties": {
+        "work_item_id": {"type": "string", "pattern": "^content-update-work-[0-9a-f]{24}$"},
+        "source_obligation_id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "enum": ["revalidate_claim", "review_asset", "reassemble_channel_package", "review_predecessor_removal"]},
+        "target_id": {"type": "string", "minLength": 1},
+        "assignment_state": {"type": "string", "const": "planned_not_dispatched"},
+        "private_stage": {"type": "string", "const": "private_review_queue_only"},
+        "assigned_role_ids": {"$ref": "#/$defs/ids"},
+        "reviewer_role_ids": {"$ref": "#/$defs/ids"},
+        "completion_condition": {"type": "string", "const": "typed_private_output_and_all_assigned_independent_reviews_required"}
+      }
+    },
+    "effects": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role_dispatch", "claim_registry", "evidence_registry", "candidate_state", "approval_state", "source_material", "publish", "network", "credential_use", "external_send", "schedule"],
+      "properties": {
+        "role_dispatch": {"type": "string", "const": "not_attempted"},
+        "claim_registry": {"type": "string", "const": "not_mutated"},
+        "evidence_registry": {"type": "string", "const": "not_mutated"},
+        "candidate_state": {"type": "string", "const": "not_mutated"},
+        "approval_state": {"type": "string", "const": "not_mutated"},
+        "source_material": {"type": "string", "const": "not_mutated"},
+        "publish": {"type": "string", "const": "not_attempted"},
+        "network": {"type": "string", "const": "not_attempted"},
+        "credential_use": {"type": "string", "const": "not_attempted"},
+        "external_send": {"type": "string", "const": "not_attempted"},
+        "schedule": {"type": "string", "const": "not_attempted"}
+      }
+    }
+  }
+}

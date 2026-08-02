@@ -1,0 +1,517 @@
+{
+  "schema_version": "open-alpha-release-audit-policy/v2",
+  "policy_id": "flowness-open-alpha-release-audit-v1",
+  "license_plan": {
+    "state": "active_candidate_license_selection",
+    "code_spdx": "Apache-2.0",
+    "documentation_spdx": "CC-BY-4.0",
+    "legacy_spdx": "MIT",
+    "proprietary_boundary": "Hosted, enterprise, credential, Transcript, customer, fleet, account/quota, and server-operational surfaces remain proprietary and excluded.",
+    "full_license_texts_present": true,
+    "license_texts": [
+      {
+        "path": "LICENSE",
+        "spdx": "Apache-2.0",
+        "source_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "source_sha256": "sha256:cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "public-core/flowness-ledger-core/LICENSE",
+        "spdx": "Apache-2.0",
+        "source_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "source_sha256": "sha256:cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "public-core/flowness-ledger-core/LICENSES/CC-BY-4.0.txt",
+        "spdx": "CC-BY-4.0",
+        "source_url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
+        "source_sha256": "sha256:9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+      },
+      {
+        "path": "harness/LICENSE",
+        "spdx": "Apache-2.0",
+        "source_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "source_sha256": "sha256:cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "oss/flowness-oss-harness/LICENSE",
+        "spdx": "Apache-2.0",
+        "source_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "source_sha256": "sha256:cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    ],
+    "candidate_files": [
+      "LICENSE",
+      "LICENSE-MATRIX.md",
+      "NOTICE",
+      "harness/THIRD_PARTY.md"
+    ],
+    "spdx_header_policy": "New or materially rewritten public code should carry SPDX-License-Identifier: Apache-2.0; public prose/material should carry SPDX-License-Identifier: CC-BY-4.0 where the format permits. Legal text files are exempt. Inclusion in this Open Alpha policy records the intended mapping but does not replace exact sealed-export, rights, clean-room, jury, and owner gates."
+  },
+  "package_metadata": [
+    {
+      "path": "harness/pyproject.toml",
+      "expected_name": "flowness-harness",
+      "expected_version": "1.0.0a1",
+      "expected_spdx": "Apache-2.0"
+    },
+    {
+      "path": "oss/flowness-oss-harness/pyproject.toml",
+      "expected_name": "flowness-oss-harness",
+      "expected_version": "1.0.0a1",
+      "expected_spdx": "Apache-2.0"
+    },
+    {
+      "path": "public-core/flowness-ledger-core/pyproject.toml",
+      "expected_name": "flowness-ledger-core",
+      "expected_version": "1.0.0a1",
+      "expected_spdx": "Apache-2.0"
+    }
+  ],
+  "public_package_assembly": {
+    "contract_path": "harness/pyproject.toml",
+    "state": "exact_installable_harness_metadata_present",
+    "canonical_harness_pyproject": "harness/pyproject.toml",
+    "canonical_harness_metadata_disposition": "include",
+    "reason": "The canonical Open Alpha pyproject packages only the towow tree present in the sealed export; held and excluded modules are absent before build.",
+    "owner_exact_export_approval": false
+  },
+  "community_files": [
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "oss/flowness-oss-harness/CONTRIBUTING.md",
+    "oss/flowness-oss-harness/CODE_OF_CONDUCT.md",
+    "oss/flowness-oss-harness/SECURITY.md"
+  ],
+  "security_contact": {
+    "state": "pending_public_repository_private_reporting_flow",
+    "evidence_refs": []
+  },
+  "rights_groups": [
+    {
+      "group_id": "root-release-license-matrix",
+      "patterns": [
+        "LICENSE-MATRIX.md"
+      ],
+      "license_expression": "CC-BY-4.0",
+      "origin_class": "owner_repository_license_policy",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "root-public-documentation-and-community",
+      "patterns": [
+        "README.md",
+        "NOTICE",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "CODE_OF_CONDUCT.md",
+        "MIGRATION.md"
+      ],
+      "license_expression": "CC-BY-4.0",
+      "origin_class": "owner_repository_documentation",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "root-public-ci-source",
+      "patterns": [
+        ".github/workflows/ci.yml"
+      ],
+      "license_expression": "Apache-2.0",
+      "origin_class": "owner_repository_source",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "official-license-legal-texts",
+      "patterns": [
+        "LICENSE",
+        "public-core/flowness-ledger-core/LICENSE",
+        "public-core/flowness-ledger-core/LICENSES/CC-BY-4.0.txt",
+        "harness/LICENSE",
+        "oss/flowness-oss-harness/LICENSE"
+      ],
+      "license_expression": "NOASSERTION",
+      "origin_class": "official_license_legal_text",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "official_source_hash_verified",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "ledger-owner-source-code-tests-tools",
+      "patterns": [
+        "public-core/flowness-ledger-core/pyproject.toml",
+        "public-core/flowness-ledger-core/src/**",
+        "public-core/flowness-ledger-core/tests/**",
+        "public-core/flowness-ledger-core/tools/**"
+      ],
+      "license_expression": "Apache-2.0",
+      "origin_class": "owner_repository_source",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "ledger-generated-machine-readable-assets",
+      "patterns": [
+        "public-core/flowness-ledger-core/candidate-dependency-source-inventory-v0.json",
+        "public-core/flowness-ledger-core/open-alpha-public-package-metadata.json",
+        "public-core/flowness-ledger-core/sbom.cdx.json",
+        "harness/sbom.cdx.json"
+      ],
+      "license_expression": "Apache-2.0",
+      "origin_class": "generated_or_assembled_asset",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "generated_from_reviewed_repository_inputs",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "ledger-generated-or-adapted-docs",
+      "patterns": [
+        "public-core/flowness-ledger-core/README.md",
+        "public-core/flowness-ledger-core/docs/**"
+      ],
+      "license_expression": "CC-BY-4.0",
+      "origin_class": "generated_or_adapted_material",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_original_or_permitted_generated_material",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "staging-harness-owner-source-code-tests-config",
+      "patterns": [
+        "oss/flowness-oss-harness/src/**",
+        "oss/flowness-oss-harness/tests/**",
+        "oss/flowness-oss-harness/schemas/**",
+        "oss/flowness-oss-harness/tools/**",
+        "oss/flowness-oss-harness/config/**",
+        "oss/flowness-oss-harness/pyproject.toml",
+        "oss/flowness-oss-harness/uv.lock"
+      ],
+      "license_expression": "Apache-2.0",
+      "origin_class": "owner_repository_source",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "staging-harness-generated-or-adapted-materials",
+      "patterns": [
+        "oss/flowness-oss-harness/*.md",
+        "oss/flowness-oss-harness/docs/**",
+        "oss/flowness-oss-harness/docs/open-alpha-discovery-launch-pack-v0.md",
+        "oss/flowness-oss-harness/docs/open-alpha-selector-packet-v0.md",
+        "oss/flowness-oss-harness/registries/**",
+        "oss/flowness-oss-harness/registries/content-graph-open-alpha-launch-v0.json",
+        "oss/flowness-oss-harness/registries/open-alpha-discovery-launch-pack-v0.json",
+        "oss/flowness-oss-harness/assets/**"
+      ],
+      "license_expression": "CC-BY-4.0",
+      "origin_class": "generated_or_adapted_material",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_original_or_permitted_generated_material",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "canonical-harness-owner-source-code-tests",
+      "patterns": [
+        "harness/src/towow/**",
+        "harness/tests/**",
+        "harness/pyproject.toml",
+        "harness/MANIFEST.in",
+        "harness/uv.lock",
+        "harness/open-alpha-requirements.lock",
+        "harness/build-system-requirements.lock"
+      ],
+      "license_expression": "Apache-2.0",
+      "origin_class": "owner_repository_source",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "canonical-harness-generated-package-materials",
+      "patterns": [
+        "harness/README.md",
+        "harness/THIRD_PARTY.md"
+      ],
+      "license_expression": "CC-BY-4.0",
+      "origin_class": "generated_or_assembled_asset",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "generated_from_reviewed_repository_inputs",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    },
+    {
+      "group_id": "operational-agent-source-assets",
+      "patterns": [
+        ".agents/skills/work/**",
+        ".claude/commands/**",
+        ".claude/skills/**"
+      ],
+      "license_expression": "Apache-2.0",
+      "origin_class": "owner_repository_operational_source",
+      "rights_state": "cleared",
+      "ip_review_state": "cleared",
+      "provenance_state": "owner_attested_and_independently_scope_reviewed",
+      "evidence_refs": [
+        {
+          "evidence_type": "owner_rights_attestation",
+          "path": "oss/flowness-oss-harness/registries/open-alpha-owner-rights-attestation-v1.json",
+          "sha256": "sha256:4bce64b7c673d7c9d74e1f743d1a99b84167a85d7ca56f329c4cf9b775cb8919"
+        }
+      ]
+    }
+  ],
+  "supply_chain": {
+    "candidate_sbom_path": "harness/sbom.cdx.json",
+    "state": "locked_transitive_candidate",
+    "unified_lock_path": "harness/open-alpha-requirements.lock",
+    "source_lock_paths": [
+      "harness/uv.lock",
+      "oss/flowness-oss-harness/uv.lock",
+      "harness/build-system-requirements.lock"
+    ],
+    "offline_wheelhouse_state": "not_sealed_cross_platform",
+    "final_requirement": "Build and hash a sealed cross-platform wheelhouse from the exact locked resolution; preserve the locked SBOM and license review.",
+    "third_party_notice": "harness/THIRD_PARTY.md"
+  },
+  "cleanroom_acceptance": {
+    "receipt_schema_path": "oss/flowness-oss-harness/schemas/open-alpha-cleanroom-receipt.schema.json",
+    "support_matrix": [
+      {
+        "python": "3.12",
+        "system": "Linux",
+        "machine": "aarch64",
+        "platform_pattern": "^Linux-.+-aarch64-with-glibc[0-9]+(?:\\.[0-9]+)*$"
+      }
+    ],
+    "required_stage_ids": [
+      "create-fresh-venv",
+      "install-offline-dependencies",
+      "install-ledger-package",
+      "install-public-harness-package",
+      "install-public-oss-package",
+      "ledger-cli-run",
+      "ledger-cli-verify",
+      "harness-cli-inspect",
+      "canonical-import-mock-realspawn",
+      "open-alpha-demo",
+      "open-alpha-demo-inspect",
+      "canonical-representative-tests",
+      "sealed-export-post-verify"
+    ],
+    "required_stage_commands": [
+      {"stage_id": "create-fresh-venv", "expected_executable": "uv", "required_argv_tokens": ["venv", "--python"]},
+      {"stage_id": "install-offline-dependencies", "expected_executable": "uv", "required_argv_tokens": ["pip", "install", "--offline", "--python", "--find-links", "--requirement"]},
+      {"stage_id": "install-ledger-package", "expected_executable": "uv", "required_argv_tokens": ["pip", "install", "--offline", "--no-deps", "--no-build-isolation", "--python"]},
+      {"stage_id": "install-public-harness-package", "expected_executable": "uv", "required_argv_tokens": ["pip", "install", "--offline", "--no-deps", "--no-build-isolation", "--python"]},
+      {"stage_id": "install-public-oss-package", "expected_executable": "uv", "required_argv_tokens": ["pip", "install", "--offline", "--no-deps", "--no-build-isolation", "--python"]},
+      {"stage_id": "ledger-cli-run", "expected_executable": "flowness-ledger-demo", "required_argv_tokens": ["--demo-dir"]},
+      {"stage_id": "ledger-cli-verify", "expected_executable": "flowness-ledger-demo", "required_argv_tokens": ["--verify-demo-dir"]},
+      {"stage_id": "harness-cli-inspect", "expected_executable": "flowness-harness", "required_argv_tokens": ["--json"]},
+      {"stage_id": "canonical-import-mock-realspawn", "expected_executable": "python", "required_argv_tokens": ["-c"]},
+      {"stage_id": "open-alpha-demo", "expected_executable": "flowness-oss", "required_argv_tokens": ["open-alpha-demo", "--output"]},
+      {"stage_id": "open-alpha-demo-inspect", "expected_executable": "flowness-oss", "required_argv_tokens": ["open-alpha-demo-inspect", "--run-root"]},
+      {"stage_id": "canonical-representative-tests", "expected_executable": "python", "required_argv_tokens": ["-m", "pytest", "-q", "--disable-warnings"]},
+      {"stage_id": "sealed-export-post-verify", "expected_executable": "internal", "required_argv_tokens": ["verify-export-byte-for-byte"]}
+    ],
+    "acceptance_cache": {
+      "required_wheel_count": 21,
+      "source_url_pattern": "^https://files\\.pythonhosted\\.org/.+\\.whl$"
+    }
+  },
+  "sensitive_rules": [
+    {
+      "rule_id": "private-key",
+      "pattern": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "flags": ""
+    },
+    {
+      "rule_id": "aws-access-key",
+      "pattern": "\\bAKIA[0-9A-Z]{16}\\b",
+      "flags": ""
+    },
+    {
+      "rule_id": "openai-secret",
+      "pattern": "\\bsk-[A-Za-z0-9_-]{20,}\\b",
+      "flags": ""
+    },
+    {
+      "rule_id": "github-token",
+      "pattern": "\\bgh[pousr]_[A-Za-z0-9]{20,}\\b",
+      "flags": ""
+    },
+    {
+      "rule_id": "owner-local-path",
+      "pattern": "/(?:Users|home)/[A-Za-z0-9._-]+(?:/|\\b)",
+      "flags": ""
+    },
+    {
+      "rule_id": "private-transcript-coordinate",
+      "pattern": "\\b[0-9a-f]{8}-[0-9a-f-]{27,}\\.jsonl\\b",
+      "flags": "i"
+    },
+    {
+      "rule_id": "owner-verbatim-marker",
+      "pattern": "(?:Nature|owner|用户)\\s*(?:原话|澄清)\\s*[:：]?\\s*[\\\"“『]",
+      "flags": "i"
+    },
+    {
+      "rule_id": "wechat-identity",
+      "pattern": "(?:wxid_[a-z0-9]+|xwechat_files)",
+      "flags": "i"
+    },
+    {
+      "rule_id": "email-address",
+      "pattern": "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b",
+      "flags": "i"
+    },
+    {
+      "rule_id": "credential-assignment",
+      "pattern": "(?:password|passwd|api[_-]?key|access[_-]?token|secret[_-]?key)\\s*[:=]\\s*[\\\"'][^\\\"'\\s]{8,}[\\\"']",
+      "flags": "i"
+    }
+  ],
+  "line_allowances": [
+    {
+      "path": "oss/flowness-oss-harness/config/open-alpha-release-audit.json",
+      "rule_id": "wechat-identity",
+      "line_sha256": "sha256:bba26d3b69806b93e1b8a443077afe5c68f2f575043d717d5906e4ac0918043a",
+      "reason": "The scanner definition contains its own WeChat-identity alternatives; the allowance is bound to this exact policy line."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_open_alpha_release_audit.py",
+      "rule_id": "openai-secret",
+      "line_sha256": "sha256:c055612ad331f1ed6fb2ad24f4444303dd2c1902018d6e15c6827d446dddea93",
+      "reason": "Negative test fixture proving that the release audit catches and hashes an OpenAI-shaped token."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_open_alpha_release_audit.py",
+      "rule_id": "email-address",
+      "line_sha256": "sha256:6bbb4077dde376b3e4be0b3e0a6ab88d9a9b7a27c99296c0059e128e0abe72c8",
+      "reason": "Exact synthetic Git identity used by the byte-drift allowance negative test."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_open_alpha_release_audit.py",
+      "rule_id": "email-address",
+      "line_sha256": "sha256:62b2b8b8822bf92ffdecc7ea190e4e4bc076161992d8e2d0bac1cee540f14d15",
+      "reason": "Exact changed synthetic identity proving that a prior byte-bound allowance becomes stale."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_open_alpha_package_scope.py",
+      "rule_id": "email-address",
+      "line_sha256": "sha256:fd4579ef50f4288a5e74e986337a20b746fd8cc93c5a843869a7b68260ac152e",
+      "reason": "Synthetic Git identity used only inside an isolated repository fixture."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_public_export.py",
+      "rule_id": "email-address",
+      "line_sha256": "sha256:1b68b2c44a53b0e0800bf49f30af0976967d81b472e1366056adcc3ac21bcacc",
+      "reason": "Synthetic Git identity used only inside an isolated repository fixture."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_rc0_sealed_export.py",
+      "rule_id": "email-address",
+      "line_sha256": "sha256:1b68b2c44a53b0e0800bf49f30af0976967d81b472e1366056adcc3ac21bcacc",
+      "reason": "Synthetic Git identity used only inside an isolated repository fixture."
+    },
+    {
+      "path": "harness/tests/unit/l2/test_reflow_sentinel_reconciliation_v2.py",
+      "rule_id": "email-address",
+      "line_sha256": "sha256:77d744d6ea1ee351d345631dd2191124b9647769baf0d2a6176cd6e851c5a045",
+      "reason": "Synthetic Git identity used only inside an isolated repository fixture."
+    },
+    {
+      "path": "oss/flowness-oss-harness/tests/test_public_export.py",
+      "rule_id": "credential-assignment",
+      "line_sha256": "sha256:e9c2b470b50fe29fd314cc56bcbcd270c12a5d78453fed61470ba1a45f40cb10",
+      "reason": "Negative test fixture proving that public export rejects a credential-like assignment."
+    }
+  ],
+  "owner_authorization": {
+    "state": "not_present",
+    "evidence_refs": []
+  }
+}

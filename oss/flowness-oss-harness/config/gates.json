@@ -1,0 +1,32 @@
+{
+  "hard_dimensions": [
+    "mechanism_coverage",
+    "truth_claim",
+    "architecture",
+    "security_privacy_ip",
+    "reliability_recovery",
+    "install_dx",
+    "benchmark",
+    "professional_value",
+    "public_clarity",
+    "oss_community",
+    "adversarial_meta"
+  ],
+  "judges_per_dimension": 2,
+  "required_dimensions": [
+    "mechanism_coverage",
+    "truth_claim",
+    "architecture",
+    "install_dx",
+    "security_privacy_ip",
+    "reliability_recovery",
+    "benchmark",
+    "professional_value",
+    "public_clarity",
+    "visual_demo",
+    "oss_community",
+    "channel_distribution",
+    "adversarial_meta"
+  ],
+  "schema_version": "simple-jury-policy/v1"
+}

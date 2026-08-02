@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/sealed-export-rights-evidence.schema.json",
+  "title": "Private sealed export and rights evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "evidence_id", "candidate_binding", "rights_review_id", "rights_review_state", "authorization", "boundary", "evidence_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "sealed-export-rights-evidence/v1"},
+    "evidence_id": {"$ref": "#/$defs/id"},
+    "candidate_binding": {"$ref": "#/$defs/binding"},
+    "rights_review_id": {"$ref": "#/$defs/id"},
+    "rights_review_state": {"type": "string", "const": "approved"},
+    "authorization": {"type": "string", "const": "private_staging_only"},
+    "boundary": {"type": "string", "minLength": 1, "maxLength": 800},
+    "evidence_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assembly_id", "assembly_hash", "assembly_file_sha256", "candidate_id", "snapshot_id"],
+      "properties": {
+        "assembly_id": {"$ref": "#/$defs/id"},
+        "assembly_hash": {"$ref": "#/$defs/hash"},
+        "assembly_file_sha256": {"$ref": "#/$defs/hash"},
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "snapshot_id": {"$ref": "#/$defs/hash"}
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private evidence-bound multi-audience narrative candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "boundary", "source_inputs", "limitations", "audiences", "claims", "locale_pairs", "whitepaper", "manifest_hash"],
+  "properties": {
+    "schema_version": {"const": "flowness-narrative-candidate-manifest/v2"},
+    "boundary": {"const": "PRIVATE-UNSEALED-NARRATIVE-CANDIDATE;NO-RUNTIME-RIGHTS-RELEASE-OR-PUBLICATION-CLAIM"},
+    "source_inputs": {"type": "array", "minItems": 14, "uniqueItems": true, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/limitation"}},
+    "audiences": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"$ref": "#/$defs/audience"}},
+    "claims": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/claim"}},
+    "locale_pairs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/locale_pair"}},
+    "whitepaper": {"$ref": "#/$defs/whitepaper"},
+    "manifest_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "localized": {"type": "object", "additionalProperties": false, "required": ["en", "zh-CN"], "properties": {"en": {"type": "string", "minLength": 1}, "zh-CN": {"type": "string", "minLength": 1}}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["source_id", "path", "sha256"], "properties": {"source_id": {"type": "string", "minLength": 1}, "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "limitation": {"type": "object", "additionalProperties": false, "required": ["limitation_id", "localized"], "properties": {"limitation_id": {"type": "string", "minLength": 1}, "localized": {"$ref": "#/$defs/localized"}}},
+    "audience": {"type": "object", "additionalProperties": false, "required": ["audience_id", "localized_primary_question"], "properties": {"audience_id": {"type": "string", "enum": ["general", "developer", "professional", "owner", "writer"]}, "localized_primary_question": {"$ref": "#/$defs/localized"}}},
+    "localized_claim": {"type": "object", "additionalProperties": false, "required": ["question", "statement", "action"], "properties": {"question": {"type": "string", "minLength": 1}, "statement": {"type": "string", "minLength": 1}, "action": {"type": "string", "minLength": 1}}},
+    "claim_localized": {"type": "object", "additionalProperties": false, "required": ["en", "zh-CN"], "properties": {"en": {"$ref": "#/$defs/localized_claim"}, "zh-CN": {"$ref": "#/$defs/localized_claim"}}},
+    "ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claim": {"type": "object", "additionalProperties": false, "required": ["claim_id", "audience_id", "localized", "status", "mechanism_ids", "source_ids", "limitation_ids", "architecture_view_ids"], "properties": {"claim_id": {"type": "string", "pattern": "^NAR-[A-Z]+-[0-9]{3}$"}, "audience_id": {"type": "string", "enum": ["general", "developer", "professional", "owner", "writer"]}, "localized": {"$ref": "#/$defs/claim_localized"}, "status": {"type": "string", "enum": ["current_verified", "experimental", "designed_target", "written_only", "unknown"]}, "mechanism_ids": {"$ref": "#/$defs/ids"}, "source_ids": {"$ref": "#/$defs/ids"}, "limitation_ids": {"$ref": "#/$defs/ids"}, "architecture_view_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^D[0-9]$"}}}},
+    "documents": {"type": "object", "additionalProperties": false, "required": ["en", "zh-CN"], "properties": {"en": {"type": "string", "minLength": 1}, "zh-CN": {"type": "string", "minLength": 1}}},
+    "claim_status": {"type": "object", "additionalProperties": false, "required": ["claim_id", "status"], "properties": {"claim_id": {"type": "string", "pattern": "^NAR-[A-Z]+-[0-9]{3}$"}, "status": {"type": "string", "enum": ["current_verified", "experimental", "designed_target", "written_only", "unknown"]}}},
+    "reviewer": {"type": "object", "additionalProperties": false, "required": ["reviewer_role", "status", "review_id"], "properties": {"reviewer_role": {"enum": ["bilingual_semantics", "claim_boundary"]}, "status": {"const": "pending"}, "review_id": {"type": "null"}}},
+    "locale_pair": {"type": "object", "additionalProperties": false, "required": ["pair_id", "artifact", "documents", "parity_state", "claim_statuses", "mechanism_ids", "limitation_ids", "source_ids", "reviewer_slots"], "properties": {"pair_id": {"type": "string", "minLength": 1}, "artifact": {"enum": ["narrative", "whitepaper_outline"]}, "documents": {"$ref": "#/$defs/documents"}, "parity_state": {"const": "unreviewed"}, "claim_statuses": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/claim_status"}}, "mechanism_ids": {"$ref": "#/$defs/ids"}, "limitation_ids": {"$ref": "#/$defs/ids"}, "source_ids": {"$ref": "#/$defs/ids"}, "reviewer_slots": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/reviewer"}}}},
+    "whitepaper": {"type": "object", "additionalProperties": false, "required": ["status", "publication_state", "admission_rule", "localized_admission_rule", "required_evidence_classes"], "properties": {"status": {"const": "designed_target"}, "publication_state": {"const": "not_authored_or_published"}, "admission_rule": {"type": "string", "minLength": 1}, "localized_admission_rule": {"$ref": "#/$defs/localized"}, "required_evidence_classes": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}
+  }
+}

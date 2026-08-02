@@ -1,0 +1,41 @@
+{
+  "schema_version": "open-alpha-owner-rights-attestation/v1",
+  "attestation_id": "flowness-open-alpha-public-scope-rights-2026-08-02",
+  "attested_on": "2026-08-02",
+  "owner_role": "repository_owner",
+  "scope": {
+    "policy_path": "oss/flowness-oss-harness/config/open-alpha-release-audit.json",
+    "covered_rights_group_ids": [
+      "root-release-license-matrix",
+      "root-public-documentation-and-community",
+      "root-public-ci-source",
+      "official-license-legal-texts",
+      "ledger-owner-source-code-tests-tools",
+      "ledger-generated-machine-readable-assets",
+      "ledger-generated-or-adapted-docs",
+      "staging-harness-owner-source-code-tests-config",
+      "staging-harness-generated-or-adapted-materials",
+      "canonical-harness-owner-source-code-tests",
+      "canonical-harness-generated-package-materials",
+      "operational-agent-source-assets"
+    ]
+  },
+  "rights_review_state": "owner_attested",
+  "ip_review_state": "owner_attested",
+  "attestations": [
+    {
+      "statement_id": "distribution-rights",
+      "statement": "For the Open Alpha public scope classified by the named policy groups, the repository owner attests that the included owner-authored, generated, adapted, and assembled material is original to the project or may be distributed under the mapped license; official license texts remain governed by their own terms and exact source hashes."
+    },
+    {
+      "statement_id": "source-ip-review",
+      "statement": "The repository owner attests that the named public scope has been reviewed for copied, reference-derived, transcript-derived, customer, credential, and proprietary material, and that unresolved material is excluded rather than cleared by this record."
+    }
+  ],
+  "cryptographic_signature": {
+    "present": false
+  },
+  "publication_authorization": false,
+  "boundary": "This machine-readable record preserves the repository owner's rights and source-review attestation for the named Open Alpha policy groups. Its schema, self-hash, included-file membership, and file digest are verifiable; it is not a cryptographic signature, legal opinion, release approval, or publication authorization.",
+  "attestation_hash": "sha256:b78845f51de15a77b9712f9d87877f29747f1844290955c657ff467da1177145"
+}

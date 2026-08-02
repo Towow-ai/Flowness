@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/content-role-output.schema.json",
+  "title": "Private typed output from a bounded Content Machine producer",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "role_id", "contract_id", "output_kind", "source_graph", "impact_review_plan", "drafts", "mutation_attestation", "effect_attestation", "boundary"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "content-role-output/v1"},
+    "role_id": {"type": "string", "enum": ["content.compiler", "visual_demo.compiler", "channel.adapter", "publisher.stager", "analytics.interpreter"]},
+    "contract_id": {"type": "string", "const": "content-machine/CM-007/v1"},
+    "output_kind": {"type": "string", "enum": ["content_draft", "visual_demo_draft", "channel_adapter_draft", "package_review", "analytics_interpretation"]},
+    "source_graph": {"$ref": "#/$defs/graph"},
+    "impact_review_plan": {"$ref": "#/$defs/plan"},
+    "drafts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/draft"}},
+    "mutation_attestation": {"$ref": "#/$defs/mutation"},
+    "effect_attestation": {"$ref": "#/$defs/effects"},
+    "boundary": {"type": "string", "const": "private typed draft/review output only; no Content Graph mutation, claim promotion, approval, publication, network action, credential use, scheduling, or external send."}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "graph": {"type": "object", "additionalProperties": false, "required": ["graph_id", "graph_hash", "candidate_id", "snapshot_id", "version_id", "verification"], "properties": {"graph_id": {"type": "string", "minLength": 1}, "graph_hash": {"$ref": "#/$defs/sha256"}, "candidate_id": {"type": "string", "minLength": 1}, "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"type": "string", "minLength": 1}, "verification": {"type": "string", "const": "verified_content_graph_v3"}}},
+    "plan": {"type": "object", "additionalProperties": false, "required": ["plan_id", "plan_hash", "verification"], "properties": {"plan_id": {"type": "string", "minLength": 1}, "plan_hash": {"$ref": "#/$defs/sha256"}, "verification": {"type": "string", "const": "verified_content_impact_review_plan"}}},
+    "draft": {"type": "object", "additionalProperties": false, "required": ["draft_id", "artifact_type", "content", "claim_ids", "limitation_ids", "state"], "properties": {"draft_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"}, "artifact_type": {"type": "string", "enum": ["article", "diagram_brief", "demo_brief", "channel_copy", "manual_package_review", "analytics_note"]}, "content": {"type": "string", "minLength": 1}, "claim_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "limitation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "state": {"type": "string", "const": "draft_or_review_only"}}},
+    "mutation": {"type": "object", "additionalProperties": false, "required": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"], "properties": {"claim_registry": {"type": "string", "const": "not_mutated"}, "evidence_registry": {"type": "string", "const": "not_mutated"}, "candidate_state": {"type": "string", "const": "not_mutated"}, "approval_state": {"type": "string", "const": "not_mutated"}, "analytics_source_data": {"type": "string", "const": "not_mutated"}}},
+    "effects": {"type": "object", "additionalProperties": false, "required": ["publish", "network", "credential_use", "external_send", "schedule"], "properties": {"publish": {"type": "string", "const": "not_attempted"}, "network": {"type": "string", "const": "not_attempted"}, "credential_use": {"type": "string", "const": "not_attempted"}, "external_send": {"type": "string", "const": "not_attempted"}, "schedule": {"type": "string", "const": "not_attempted"}}}
+  }
+}

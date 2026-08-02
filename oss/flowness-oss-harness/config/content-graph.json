@@ -1,0 +1,67 @@
+{
+  "schema_version": "content-graph-policy/v2",
+  "node_types": [
+    "claim",
+    "mechanism",
+    "evidence",
+    "module",
+    "diagram",
+    "case",
+    "benchmark",
+    "demo",
+    "section",
+    "asset",
+    "channel_package",
+    "limitation",
+    "audience_profile",
+    "channel",
+    "version"
+  ],
+  "edge_types": [
+    "supports",
+    "disproves",
+    "limits",
+    "implements",
+    "depends_on",
+    "depicts",
+    "exercises",
+    "tests",
+    "replays",
+    "explains",
+    "derived_from",
+    "contains",
+    "localized_as",
+    "supersedes"
+  ],
+  "states": [
+    "draft",
+    "evidence_bound",
+    "jury_accepted",
+    "staged",
+    "owner_approved",
+    "published",
+    "withdrawn",
+    "superseded"
+  ],
+  "publish_transition": {
+    "from": "owner_approved",
+    "to": "published",
+    "requires": ["owner authorization", "candidate snapshot", "asset hashes", "accepted source edges"]
+  },
+  "hard_rules": [
+    "Channels may not create claims absent from the candidate claim registry.",
+    "Every derived asset records source ids, snapshot id, transform owner, content hash, and review state.",
+    "A broader channel claim invalidates the package.",
+    "Changed support evidence returns downstream assets to evidence_bound.",
+    "English and Chinese claim variants require parity review.",
+    "V3 candidate assets must bind audience, channel, locale, semantic version, transform producer, source-node hashes, review IDs and retained limitations, or explicitly record NotApplicable.",
+    "V3 draft package validation rejects source candidate/snapshot/hash drift, omitted retained limitations, and bilingual localization without parity review."
+  ],
+  "v3_private_staging": {
+    "source_graph_required": "content-graph/v2",
+    "candidate_capability": "draft",
+    "allowed_channel_capabilities": ["draft"],
+    "publication_capability_present": false,
+    "boundary": "v3 validates private draft relationships only; it cannot publish, schedule, send, or authorize a channel package."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private evidence-bounded Flowness system narrative trace map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "boundary", "source_inputs", "asset_catalog", "traces", "coverage", "map_hash"],
+  "properties": {
+    "schema_version": {"const": "system-narrative-trace-map/v1"},
+    "boundary": {"const": "LOCAL-UNSEALED-NARRATIVE-MAP;STATIC-HISTORY-ONLY;NO-RUNTIME-RIGHTS-OR-PUBLICATION-CLAIM"},
+    "source_inputs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mechanism_cards", "architecture_atlas_config", "architecture_atlas_d0_d5", "architecture_atlas_d6_d9", "content_graph_v3", "content_graph_v2", "scenario_pack", "evaluation_kit", "evaluation_report_compiler"],
+      "properties": {
+        "mechanism_cards": {"$ref": "#/$defs/source_ref"}, "architecture_atlas_config": {"$ref": "#/$defs/source_ref"}, "architecture_atlas_d0_d5": {"$ref": "#/$defs/source_ref"}, "architecture_atlas_d6_d9": {"$ref": "#/$defs/source_ref"}, "content_graph_v3": {"$ref": "#/$defs/source_ref"}, "content_graph_v2": {"$ref": "#/$defs/source_ref"}, "scenario_pack": {"$ref": "#/$defs/source_ref"}, "evaluation_kit": {"$ref": "#/$defs/source_ref"}, "evaluation_report_compiler": {"$ref": "#/$defs/source_ref"}
+      }
+    },
+    "asset_catalog": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/asset"}},
+    "traces": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/trace"}},
+    "coverage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mechanism_card_count", "architecture_view_ids", "all_mechanisms_have_runtime_unknowns", "all_audience_assets_are_draft_only", "public_claims"],
+      "properties": {"mechanism_card_count": {"type": "integer", "minimum": 1}, "architecture_view_ids": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string"}}, "all_mechanisms_have_runtime_unknowns": {"const": true}, "all_audience_assets_are_draft_only": {"const": true}, "public_claims": {"const": 0}}
+    },
+    "map_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "source_ref": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "trace": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mechanism_id", "mechanism_node_id", "status", "architecture_view_ids", "evidence_boundary", "unknown_boundaries", "audience_asset_ids"],
+      "properties": {"mechanism_id": {"type": "string", "minLength": 1}, "mechanism_node_id": {"type": "string", "minLength": 1}, "status": {"const": "experimental"}, "architecture_view_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}, "evidence_boundary": {"$ref": "#/$defs/evidence_boundary"}, "unknown_boundaries": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "audience_asset_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}
+    },
+    "evidence_boundary": {"type": "object", "additionalProperties": false, "required": ["card_registry_path", "rendered_card_path", "status_ceiling", "history_anchor_count", "static_coordinate_roles"], "properties": {"card_registry_path": {"type": "string", "minLength": 1}, "rendered_card_path": {"type": "string", "minLength": 1}, "status_ceiling": {"const": "candidate_mapped_only"}, "history_anchor_count": {"type": "integer", "minimum": 1}, "static_coordinate_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}},
+    "asset": {"type": "object", "additionalProperties": false, "required": ["asset_id", "source_path", "audience_ids", "channel_ids", "locale", "capability", "boundary_ids"], "properties": {"asset_id": {"type": "string", "minLength": 1}, "source_path": {"type": "string", "minLength": 1}, "audience_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}, "channel_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}, "locale": {"type": "string", "minLength": 1}, "capability": {"const": "draft"}, "boundary_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}}}
+  }
+}

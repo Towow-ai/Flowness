@@ -1,0 +1,17 @@
+flowchart LR
+  H["D0 | open-alpha-v1\nMIXED TRUTH: experimental + target + unknown"]:::status
+  Goal["A goal\nUNKNOWN intake authority"] --> Work["Multiple agents act\nEXPERIMENTAL / LOCAL"]
+  Work --> Risk["Failure: weak or partial work can look finished"]
+  Risk --> Ledger["EXPERIMENTAL / LOCAL\ntraceable candidate ledger"]
+  Ledger --> Review["review / finding / closure candidate"]
+  Review --> Outcome["candidate accepted outcome\nUNKNOWN terminal authority"]
+  Risk --> Recovery["Recovery: retest, reflow, dead letter, or owner return"]
+  External["UNKNOWN / EXTERNAL\nmodels, servers, channels, effects"] -.-> Work
+  Fit["EXPERIMENTAL / LOCAL\nfit: traceable candidate work"] -.-> Ledger
+  NoFit["NO-FIT\nsimple work that needs no orchestration"] -.-> Goal
+  Target["DESIGNED TARGET\nsealed evidence-backed outcome"] -.-> Outcome
+  Unknown["UNKNOWN / BLOCKED\nlive users, runtime traversal, adoption"] -.-> Work
+  Evidence["CURRENT_VERIFIED Evidence: static cards + trace map only"] -.-> Ledger
+  Ceiling["PROOF CEILING\nCannot prove runtime adoption, performance, public availability"]:::boundary
+  classDef status fill:#fff8e1,stroke:#b26a00,color:#4a2900;
+  classDef boundary fill:#fdecec,stroke:#b91c1c,color:#5f1111;

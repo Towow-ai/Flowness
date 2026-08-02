@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coverage challenge sealed sample manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "phase", "state", "sealed_inputs", "algorithm", "agent", "samples", "blockers", "manifest_hash"],
+  "properties": {
+    "schema_version": {"const": "coverage-sample-manifest/v2"},
+    "phase": {"const": "trace_sampling"},
+    "state": {"enum": ["ready", "blocked"]},
+    "sealed_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_snapshot", "inventory", "merge_report", "registries", "runtime_evidence", "roles", "prompt"],
+      "properties": {
+        "source_snapshot": {"$ref": "#/$defs/fileBinding"},
+        "inventory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["filename", "file_sha256", "repository_content_hash", "schema_version"],
+          "properties": {
+            "filename": {"type": "string", "minLength": 1},
+            "file_sha256": {"$ref": "#/$defs/sha256"},
+            "repository_content_hash": {"type": "string", "minLength": 1},
+            "schema_version": {"type": "string", "minLength": 1}
+          }
+        },
+        "merge_report": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["filename", "file_sha256", "report_hash"],
+          "properties": {
+            "filename": {"type": "string", "minLength": 1},
+            "file_sha256": {"$ref": "#/$defs/sha256"},
+            "report_hash": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "registries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["combined_registry_hash", "mechanisms_hash", "unknowns_hash", "drift_findings_hash"],
+          "properties": {
+            "combined_registry_hash": {"$ref": "#/$defs/sha256"},
+            "mechanisms_hash": {"$ref": "#/$defs/sha256"},
+            "unknowns_hash": {"$ref": "#/$defs/sha256"},
+            "drift_findings_hash": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "runtime_evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "protocol", "filename", "file_sha256", "content_hash"],
+          "properties": {
+            "state": {"const": "absent"},
+            "protocol": {"const": "unsupported"},
+            "filename": {"type": "null"},
+            "file_sha256": {"type": "null"},
+            "content_hash": {"type": "null"}
+          }
+        },
+        "roles": {"$ref": "#/$defs/fileBinding"},
+        "prompt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["template_id", "template_hash"],
+          "properties": {
+            "template_id": {"type": "string", "minLength": 1},
+            "template_hash": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    },
+    "algorithm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "seed", "search_seed_quota", "sample_size", "population_size", "required_selected", "search_seed_selected", "ordering", "shard"],
+      "properties": {
+        "version": {"type": "string", "minLength": 1},
+        "seed": {"$ref": "#/$defs/sha256"},
+        "search_seed_quota": {"type": "integer", "minimum": 0},
+        "sample_size": {"type": "integer", "minimum": 0},
+        "population_size": {"type": "integer", "minimum": 0},
+        "required_selected": {"type": "integer", "minimum": 0},
+        "search_seed_selected": {"type": "integer", "minimum": 0},
+        "ordering": {"const": "all required_mechanism/required_registration, then sha256(seed+canonical_item_hash), then item_id"},
+        "shard": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "index", "count"],
+          "properties": {
+            "mode": {"const": "all_required"},
+            "index": {"const": 0},
+            "count": {"const": 1}
+          }
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role_id", "agent_instance_id"],
+      "properties": {
+        "role_id": {"type": "string", "minLength": 1},
+        "agent_instance_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "samples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sample_id", "inventory_item_id", "kind", "locator", "criticality", "coverage_strategy", "blocking_reason", "selection_hash"],
+        "properties": {
+          "sample_id": {"type": "string", "minLength": 1},
+          "inventory_item_id": {"type": "string", "minLength": 1},
+          "kind": {"type": "string", "minLength": 1},
+          "locator": {"type": "string", "minLength": 1},
+          "criticality": {"type": "string", "minLength": 1},
+          "coverage_strategy": {"enum": ["required_mechanism", "required_registration", "search_seed"]},
+          "blocking_reason": {"type": ["string", "null"]},
+          "selection_hash": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    },
+    "blockers": {"type": "array", "items": {"$ref": "#/$defs/blocker"}},
+    "manifest_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "fileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "file_sha256"],
+      "properties": {
+        "filename": {"type": "string", "minLength": 1},
+        "file_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocker_id", "code", "detail"],
+      "properties": {
+        "blocker_id": {"type": "string", "minLength": 1},
+        "code": {"type": "string", "minLength": 1},
+        "detail": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

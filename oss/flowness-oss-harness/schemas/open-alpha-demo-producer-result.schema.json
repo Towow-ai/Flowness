@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Flowness Open Alpha demo producer result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "role_id", "agent_instance_id", "source_mode", "result"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "open-alpha-demo-producer-result/v1"},
+    "role_id": {"type": "string", "pattern": "^producer\\.[a-z-]+$"},
+    "agent_instance_id": {"type": "string", "pattern": "^agent-[a-z0-9-]+$"},
+    "source_mode": {"type": "string", "enum": ["fixture", "codex"]},
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "summary", "claims", "deliverables"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1},
+        "claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["claim_id", "text", "maturity", "evidence_ids", "limitations"],
+            "properties": {
+              "claim_id": {"type": "string", "pattern": "^claim-[a-z0-9-]+$"},
+              "text": {"type": "string", "minLength": 1},
+              "maturity": {"type": "string", "enum": ["current_verified", "experimental", "designed_target"]},
+              "evidence_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+              "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+            }
+          }
+        },
+        "deliverables": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    }
+  }
+}

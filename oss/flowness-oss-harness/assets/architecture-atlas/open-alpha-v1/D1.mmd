@@ -1,0 +1,29 @@
+flowchart LR
+  H["D1 | open-alpha-v1\nMIXED TRUTH: candidate path, not live proof"]:::status
+  goal["goal / brief\nUNKNOWN / BLOCKED"] -.->|goal becomes plan candidate · EDGE-D1-001| plan["plan + task graph\nEXPERIMENTAL / LOCAL"]
+  plan -->|ready work becomes claimable · EDGE-D1-002| dispatch["ready set + claim fence\nEXPERIMENTAL / LOCAL"]
+  dispatch -.->|claim prepares worker · EDGE-D1-003| worker["worker / worktree\nUNKNOWN / BLOCKED"]
+  worker -.->|worker submits result envelope · EDGE-D1-004| envelope["result envelope\nUNKNOWN / BLOCKED"]
+  envelope -->|validate envelope · EDGE-D1-005| gate["commit gate\nEXPERIMENTAL / LOCAL"]
+  gate -->|accepted sentinel enters ledger · EDGE-D1-006| eventlog["event ledger\nEXPERIMENTAL / LOCAL"]
+  eventlog -->|visible batch advances projection · EDGE-D1-007| projection["projection + watermark\nEXPERIMENTAL / LOCAL"]
+  projection -->|projected result enters review · EDGE-D1-008| review["review / finding\nEXPERIMENTAL / LOCAL"]
+  review -->|finding triggers fix and retest · EDGE-D1-009| closure["fix / retest / closure\nEXPERIMENTAL / LOCAL"]
+  closure -.->|closure proposes accepted outcome · EDGE-D1-010| accepted["candidate accepted outcome\nUNKNOWN / BLOCKED"]
+  gate -->|rejection returns to rework · EDGE-D1-011| rework["Failure: stale / conflict / audit fail\nRecovery: reassemble / rebase"]
+  worker -.->|stranded work opens recovery · EDGE-D1-012| recovery["Failure: stranded work\nRecovery: reflow / dead letter / owner route"]
+  recovery -.->|governed resume recomputes ready set · EDGE-D1-013| dispatch
+  rework -.->|redo revises plan · EDGE-D1-014| plan
+  worker -.->|cancel request reaches authority boundary · EDGE-D1-015| Cancel["UNKNOWN / BLOCKED\ncancel requested; authority unsealed"]
+  Cancel -.->|resume requires governed re-entry · EDGE-D1-016| Resume["UNKNOWN / BLOCKED\nresume authorization unsealed"]
+  Resume -.->|authorized resume recomputes ready set · EDGE-D1-017| dispatch
+  accepted -.->|accepted is not published without owner gate · EDGE-D1-018| PublishBoundary["UNKNOWN / OWNER GATE\npublish / external-effect authorization"]
+  PublishBoundary -.->|DESIGNED TARGET only: authorized release · EDGE-D1-019| Published["DESIGNED TARGET\npublished external effect"]
+  Target["DESIGNED TARGET\nsealed end-to-end acceptance"] -.-> accepted
+  Evidence["CURRENT_VERIFIED Evidence: static cards + semantic edge registry"] -.-> gate
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling["PROOF CEILING\nCannot prove every goal traverses a running service"]:::boundary
+  classDef status fill:#fff8e1,stroke:#b26a00,color:#4a2900;
+  classDef boundary fill:#fdecec,stroke:#b91c1c,color:#5f1111;
+
+%% ARCH-EDGE-IDS:D1: EDGE-D1-001, EDGE-D1-002, EDGE-D1-003, EDGE-D1-004, EDGE-D1-005, EDGE-D1-006, EDGE-D1-007, EDGE-D1-008, EDGE-D1-009, EDGE-D1-010, EDGE-D1-011, EDGE-D1-012, EDGE-D1-013, EDGE-D1-014, EDGE-D1-015, EDGE-D1-016, EDGE-D1-017, EDGE-D1-018, EDGE-D1-019

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/content-package-instance-registry.schema.json",
+  "title": "Immutable private channel package instance registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "scope", "source_graph", "instances", "boundary", "registry_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "content-package-instance-registry/v1"},
+    "registry_id": {"type": "string", "pattern": "^content-package-registry-[0-9a-f]{24}$"},
+    "scope": {"type": "object", "additionalProperties": false, "required": ["package_directory", "package_paths"], "properties": {"package_directory": {"type": "string", "minLength": 1}, "package_paths": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+\\.json$"}}}},
+    "source_graph": {"$ref": "#/$defs/graph"},
+    "instances": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/instance"}},
+    "boundary": {"type": "string", "const": "private package-instance inventory only; it proves local immutable bindings and planned withdrawal/rebuild routing, never publication, dispatch, authorization, or external reach."},
+    "registry_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "graph": {"type": "object", "additionalProperties": false, "required": ["graph_id", "graph_hash", "candidate_id", "snapshot_id", "version_id"], "properties": {"graph_id": {"type": "string", "minLength": 1}, "graph_hash": {"$ref": "#/$defs/sha256"}, "candidate_id": {"type": "string", "minLength": 1}, "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"type": "string", "minLength": 1}}},
+    "instance": {"type": "object", "additionalProperties": false, "required": ["instance_id", "package_path", "package_id", "package_hash", "channel_id", "locale", "asset_ids", "dependency_channel_ids", "limitation_ids"], "properties": {"instance_id": {"type": "string", "pattern": "^channel-package-[0-9a-f]{24}$"}, "package_path": {"type": "string", "minLength": 1}, "package_id": {"type": "string", "pattern": "^channel-package-[0-9a-f]{24}$"}, "package_hash": {"$ref": "#/$defs/sha256"}, "channel_id": {"type": "string", "minLength": 1}, "locale": {"type": "string", "minLength": 1}, "asset_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "dependency_channel_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "limitation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}
+  }
+}

@@ -1,0 +1,344 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evidence-bounded local Mechanism Card registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "boundary", "source_inputs", "cards", "counts", "registry_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "mechanism-card-registry/v1"},
+    "boundary": {"type": "string", "const": "UNSEALED-LOCAL-SOURCE;LOCAL-GIT-HISTORY-ONLY;DOES-NOT-PROVE-RUNTIME-RIGHTS-OR-PUBLIC-CLAIMS"},
+    "source_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed", "static_manifests", "history", "drift_atlas", "content_graph_mapping", "semantic_chain", "scope_policy"],
+      "properties": {
+        "seed": {"$ref": "#/$defs/source_ref"},
+        "static_manifests": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/withheld_source_ref"}},
+        "history": {"$ref": "#/$defs/withheld_source_ref"},
+        "drift_atlas": {"$ref": "#/$defs/source_ref"},
+        "content_graph_mapping": {"$ref": "#/$defs/withheld_source_ref"},
+        "semantic_chain": {"$ref": "#/$defs/source_ref"},
+        "scope_policy": {"$ref": "#/$defs/source_ref"}
+      }
+    },
+    "cards": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/card"}},
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed_mechanisms", "experimental_local_static_candidates", "public_claims"],
+      "properties": {
+        "seed_mechanisms": {"type": "integer", "minimum": 1},
+        "experimental_local_static_candidates": {"type": "integer", "minimum": 1},
+        "public_claims": {"type": "integer", "const": 0}
+      }
+    },
+    "registry_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "withheld_source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "sha256", "availability"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^withheld:[a-z0-9-]+$"},
+        "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "availability": {"const": "withheld_from_open_alpha"}
+      }
+    },
+    "coordinate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "start_line", "end_line", "excerpt_sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "start_line": {"type": "integer", "minimum": 1},
+        "end_line": {"type": "integer", "minimum": 1},
+        "excerpt_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "public_evidence_locator": {
+      "oneOf": [
+        {"$ref": "#/$defs/coordinate"},
+        {"$ref": "#/$defs/withheld_source_ref"}
+      ]
+    },
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mechanism_id", "public_name", "status", "status_ceiling", "why_it_exists", "semantic_surface", "static_coordinates", "mechanism_semantic_contract", "failure_dispositions", "history", "drift_ids", "public_claim_ceiling", "unresolved_questions", "content_graph"],
+      "properties": {
+        "mechanism_id": {"type": "string", "minLength": 1},
+        "public_name": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "const": "experimental"},
+        "status_ceiling": {"type": "string", "const": "candidate_mapped_only"},
+        "why_it_exists": {"$ref": "#/$defs/why"},
+        "semantic_surface": {"$ref": "#/$defs/semantic_surface"},
+        "static_coordinates": {"$ref": "#/$defs/static_coordinates"},
+        "mechanism_semantic_contract": {"$ref": "#/$defs/mechanism_semantic_contract"},
+        "failure_dispositions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/failure_disposition"}},
+        "history": {"$ref": "#/$defs/history"},
+        "drift_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "public_claim_ceiling": {"type": "string", "minLength": 1},
+        "unresolved_questions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "content_graph": {"$ref": "#/$defs/content_graph"}
+      }
+    },
+    "why": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "anchors", "unknown_boundary"],
+      "properties": {
+        "basis": {"type": "string", "const": "local_git_history_only"},
+        "anchors": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/anchor"}},
+        "unknown_boundary": {"type": "string", "minLength": 1}
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "relation_kind", "reason", "current", "evolution"],
+      "properties": {
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "relation_kind": {"type": "string", "enum": ["introduced", "changed", "superseded", "removed"]},
+        "reason": {"type": "string", "minLength": 1},
+        "current": {"type": "object"},
+        "evolution": {"type": "object"}
+      }
+    },
+    "semantic_surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trigger_and_input", "output_and_consumer", "authoritative_state", "state_transitions", "authority_and_permission", "failure_boundary", "recovery_boundary"],
+      "properties": {
+        "trigger_and_input": {"type": "string", "minLength": 1},
+        "output_and_consumer": {"type": "string", "minLength": 1},
+        "authoritative_state": {"type": "string", "minLength": 1},
+        "state_transitions": {"type": "string", "minLength": 1},
+        "authority_and_permission": {"type": "string", "minLength": 1},
+        "failure_boundary": {"type": "string", "minLength": 1},
+        "recovery_boundary": {"type": "string", "minLength": 1}
+      }
+    },
+    "static_coordinates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definition", "caller", "consumer", "test", "failure", "recovery"],
+      "properties": {
+        "definition": {"type": "array", "items": {"$ref": "#/$defs/public_evidence_locator"}},
+        "caller": {"type": "array", "items": {"$ref": "#/$defs/public_evidence_locator"}},
+        "consumer": {"type": "array", "items": {"$ref": "#/$defs/public_evidence_locator"}},
+        "test": {"type": "array", "items": {"$ref": "#/$defs/public_evidence_locator"}},
+        "failure": {"type": "array", "items": {"$ref": "#/$defs/public_evidence_locator"}},
+        "recovery": {"type": "array", "items": {"$ref": "#/$defs/public_evidence_locator"}}
+      }
+    },
+    "mechanism_semantic_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_status", "runtime_status", "objects", "state_chain", "authority"],
+      "properties": {
+        "contract_status": {"type": "string", "const": "local_static_candidate"},
+        "runtime_status": {"type": "string", "const": "unknown"},
+        "objects": {"type": "array", "minItems": 4, "items": {"$ref": "#/$defs/semantic_object"}},
+        "state_chain": {"$ref": "#/$defs/state_chain"},
+        "authority": {"$ref": "#/$defs/authority_boundary"}
+      }
+    },
+    "semantic_object": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["object_id", "object_kind", "role", "evidence_status", "purpose", "coordinate", "does_not_prove"],
+          "properties": {
+            "object_id": {"type": "string", "pattern": "^static\\."},
+            "object_kind": {"type": "string", "const": "static_coordinate"},
+            "role": {"type": "string", "enum": ["definition", "caller", "consumer", "test", "failure", "recovery"]},
+            "evidence_status": {"type": "string", "const": "local_static_candidate"},
+            "purpose": {"type": "string", "minLength": 1},
+            "coordinate": {"$ref": "#/$defs/public_evidence_locator"},
+            "does_not_prove": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["object_id", "object_kind", "role", "evidence_status", "question"],
+          "properties": {
+            "object_id": {"type": "string", "pattern": "^unknown\\."},
+            "object_kind": {"type": "string", "enum": ["trigger_input", "authoritative_state", "authority", "terminal_policy", "output_consumer", "failure_detection", "failure_owner", "failure_handoff"]},
+            "role": {"type": "string", "const": "Unknown"},
+            "evidence_status": {"type": "string", "const": "unknown"},
+            "question": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "state_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trigger_object_id", "input_status", "authoritative_state_object_id", "transition_object_id", "output_consumer_object_id", "terminal_policy_object_id", "transitions", "does_not_prove"],
+      "properties": {
+        "trigger_object_id": {"type": "string", "minLength": 1},
+        "input_status": {"type": "string", "enum": ["local_static_candidate", "unknown"]},
+        "authoritative_state_object_id": {"type": "string", "const": "unknown.authoritative-state"},
+        "transition_object_id": {"type": "string", "minLength": 1},
+        "output_consumer_object_id": {"type": "string", "minLength": 1},
+        "terminal_policy_object_id": {"type": "string", "const": "unknown.terminal-policy"},
+        "transitions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/semantic_transition"}},
+        "does_not_prove": {"type": "string", "minLength": 1}
+      }
+    },
+    "semantic_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "from_object_id", "to_object_id", "relation", "evidence_status", "evidence", "does_not_prove"],
+      "properties": {
+        "edge_id": {"type": "string", "minLength": 1},
+        "from_object_id": {"type": "string", "minLength": 1},
+        "to_object_id": {"type": "string", "minLength": 1},
+        "relation": {"type": "string", "minLength": 1},
+        "evidence_status": {"type": "string", "enum": ["local_static_candidate", "unknown"]},
+        "evidence": {"oneOf": [{"$ref": "#/$defs/ast_call_evidence"}, {"$ref": "#/$defs/unknown_edge_evidence"}]},
+        "does_not_prove": {"type": "string", "minLength": 1}
+      }
+    },
+    "ast_call_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_kind", "source_object_id", "source_coordinate", "target_object_id", "target_coordinate", "target_qualified_owner", "target_symbol", "target_resolution", "source_call", "proves", "does_not_prove"],
+      "properties": {
+        "evidence_kind": {"type": "string", "const": "ast_call"},
+        "source_object_id": {"type": "string", "pattern": "^static\\."},
+        "source_coordinate": {"$ref": "#/$defs/public_evidence_locator"},
+        "target_object_id": {"type": "string", "pattern": "^static\\."},
+        "target_coordinate": {"$ref": "#/$defs/public_evidence_locator"},
+        "target_qualified_owner": {"type": "string", "minLength": 1},
+        "target_symbol": {"type": "string", "minLength": 1},
+        "target_resolution": {"type": "string", "enum": ["same_class_self", "same_module_name", "direct_import_name", "imported_module_attribute"]},
+        "source_call": {"$ref": "#/$defs/source_call"},
+        "proves": {"type": "string", "minLength": 1},
+        "does_not_prove": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_call": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["form", "symbol"],
+          "properties": {
+            "form": {"type": "string", "const": "name"},
+            "symbol": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["form", "receiver", "symbol"],
+          "properties": {
+            "form": {"type": "string", "const": "attribute"},
+            "receiver": {"type": "string", "minLength": 1},
+            "symbol": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "unknown_edge_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_kind", "next_evidence", "proves", "does_not_prove"],
+      "properties": {
+        "evidence_kind": {"type": "string", "const": "explicit_unknown"},
+        "next_evidence": {"type": "string", "minLength": 1},
+        "proves": {"type": "string", "minLength": 1},
+        "does_not_prove": {"type": "string", "minLength": 1}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_id", "status", "next_evidence"],
+      "properties": {
+        "object_id": {"type": "string", "const": "unknown.effective-authority"},
+        "status": {"type": "string", "const": "unknown"},
+        "next_evidence": {"type": "string", "minLength": 1}
+      }
+    },
+    "failure_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failure_mode_id", "classification", "detection_object_id", "owner", "terminal_policy", "recovery_or_handoff", "negative_test_evidence_object_id", "boundary"],
+      "properties": {
+        "failure_mode_id": {"type": "string", "minLength": 1},
+        "classification": {"type": "string", "enum": ["located_static_failure_boundary", "no_distinct_static_failure_node"]},
+        "detection_object_id": {"type": "string", "minLength": 1},
+        "owner": {"$ref": "#/$defs/disposition_owner"},
+        "terminal_policy": {"$ref": "#/$defs/disposition_terminal"},
+        "recovery_or_handoff": {"$ref": "#/$defs/recovery_handoff"},
+        "negative_test_evidence_object_id": {"type": "string", "minLength": 1},
+        "boundary": {"type": "string", "minLength": 1}
+      }
+    },
+    "disposition_owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mechanism_id", "object_id", "status"],
+      "properties": {
+        "mechanism_id": {"type": "string", "const": "Unknown"},
+        "object_id": {"type": "string", "const": "unknown.failure-owner"},
+        "status": {"type": "string", "const": "unknown"}
+      }
+    },
+    "disposition_terminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_id", "status"],
+      "properties": {
+        "object_id": {"type": "string", "const": "unknown.terminal-policy"},
+        "status": {"type": "string", "const": "unknown"}
+      }
+    },
+    "recovery_handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_id", "status", "relation"],
+      "properties": {
+        "object_id": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["local_static_candidate", "unknown"]},
+        "relation": {"type": "string", "enum": ["candidate_recovery_boundary", "static_recovery_not_bound_to_failure", "recovery_owner_unknown"]}
+      }
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "boundary", "verified_anchor_count"],
+      "properties": {
+        "status": {"type": "string", "const": "anchored_local_only"},
+        "boundary": {"type": "string", "minLength": 1},
+        "verified_anchor_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "content_graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mechanism_node_id", "recommended_asset_node_id", "rendered_markdown_path", "required_edge", "binding_state"],
+      "properties": {
+        "mechanism_node_id": {"type": "string", "minLength": 1},
+        "recommended_asset_node_id": {"type": "string", "minLength": 1},
+        "rendered_markdown_path": {"type": "string", "minLength": 1},
+        "required_edge": {"type": "string", "const": "derived_from"},
+        "binding_state": {"type": "string", "const": "evidence_bound_local_candidate"}
+      }
+    }
+  }
+}

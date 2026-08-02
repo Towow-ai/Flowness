@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/rc0-export-manifest.schema.json",
+  "title": "Flowness Open Alpha RC0 sealed export manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "export_id", "source_repository", "scope", "rights_policy", "payload", "files", "release_authorized", "claim_boundary", "manifest_hash"],
+  "properties": {
+    "schema_version": {"const": "flowness-rc0-export-manifest/v1"},
+    "export_id": {"type": "string", "pattern": "^flowness-open-alpha-rc0-[0-9a-f]{24}$"},
+    "source_repository": {
+      "type": "object", "additionalProperties": false,
+      "required": ["commit", "tree"],
+      "properties": {
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["manifest_id", "manifest_hash", "policy_path", "policy_sha256"],
+      "properties": {
+        "manifest_id": {"type": "string", "minLength": 1},
+        "manifest_hash": {"$ref": "#/$defs/sha256"},
+        "policy_path": {"$ref": "#/$defs/path"},
+        "policy_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "rights_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_path", "metadata_path", "sha256"],
+      "properties": {
+        "source_path": {"$ref": "#/$defs/path"},
+        "metadata_path": {"const": "OPEN_ALPHA_RIGHTS_POLICY.json"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "payload": {
+      "type": "object", "additionalProperties": false,
+      "required": ["files", "bytes", "aggregate_hash"],
+      "properties": {
+        "files": {"type": "integer", "minimum": 1},
+        "bytes": {"type": "integer", "minimum": 1},
+        "aggregate_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "files": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "git_mode", "git_blob_sha1", "sha256", "bytes", "maturity", "component", "rights_group", "license_expression", "rights_state", "ip_review_state"],
+        "properties": {
+          "path": {"$ref": "#/$defs/path"},
+          "git_mode": {"enum": ["100644", "100755"]},
+          "git_blob_sha1": {"type": "string", "pattern": "^sha1:[0-9a-f]{40}$"},
+          "sha256": {"$ref": "#/$defs/sha256"},
+          "bytes": {"type": "integer", "minimum": 0},
+          "maturity": {"enum": ["stable", "experimental", "design_target"]},
+          "component": {"type": "string", "minLength": 1},
+          "rights_group": {"type": "string", "minLength": 1},
+          "license_expression": {"type": "string", "minLength": 1},
+          "rights_state": {"type": "string", "minLength": 1},
+          "ip_review_state": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "release_authorized": {"const": false},
+    "claim_boundary": {"type": "string", "minLength": 1},
+    "manifest_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\u0000).+$"}
+  }
+}

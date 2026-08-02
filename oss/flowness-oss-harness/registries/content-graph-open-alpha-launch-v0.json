@@ -1,0 +1,532 @@
+{
+  "schema_version": "content-graph/v2",
+  "nodes": [
+    {
+      "node_id": "asset.launch.discovery-pack",
+      "type": "asset",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:9f51a61a28b5fc7e541fd31143af92b3c195e806ad3647c026d6808d763a83ad",
+      "source_path": "docs/open-alpha-discovery-launch-pack-v0.md"
+    },
+    {
+      "node_id": "asset.launch.readme",
+      "type": "asset",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:c3a699266b745307fa4eac943b7b20e5395bb6b191248ca1bf9aec3c8d9999e8",
+      "source_path": "README.md"
+    },
+    {
+      "node_id": "asset.launch.selector-packet",
+      "type": "asset",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:988b7ce3413ab719314f6c95001d6d6904904f0dcd0e19acd92c4d0024ecb925",
+      "source_path": "docs/open-alpha-selector-packet-v0.md"
+    },
+    {
+      "node_id": "channel.launch.draft-1",
+      "type": "channel_package",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:fe753bf418c22f00ca8747744899a6ac61bd0fe82e277a06ff9e22ba3aa1bd0b"
+    },
+    {
+      "node_id": "channel.launch.draft-2",
+      "type": "channel_package",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:bd0676ef7aa08eed51ea78b656c7cdadce6c554eaadaabed4d5237161d3fe144"
+    },
+    {
+      "node_id": "channel.launch.draft-3",
+      "type": "channel_package",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:f8754299f4151545d804275d2d1b10cff9f346a349751c7a20f099d7b340e96a"
+    },
+    {
+      "node_id": "channel.launch.draft-4",
+      "type": "channel_package",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:1d82de73781834ea88011dfa9db4fc58a6ab97b6834cf9c2e027c288e9ff721a"
+    },
+    {
+      "node_id": "claim.launch.architecture-atlas",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:bc106a0aab4f29cab136caddfa31cfd1667e6f715a593d297acac5693404899a"
+    },
+    {
+      "node_id": "claim.launch.content-graph",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:2fbb996fb7f262c51135f02786d270acc6147682cd9d660c2c0e153706e9f60d"
+    },
+    {
+      "node_id": "claim.launch.deepseek-owner-hypothesis",
+      "type": "claim",
+      "state": "draft",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:98980713d59336a369f160a83a9eddfa0cb9bf7675d501134b95e107dfcccc69"
+    },
+    {
+      "node_id": "claim.launch.evidence-binding",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:aba2647d7d96e910bada2fce7358e82dda707ef543a33061beeb5f5da0f23961"
+    },
+    {
+      "node_id": "claim.launch.flow-loop",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:65f53f7b2de246dffcc9a9b624708df87848b30069a4769b99ffed3af4df025b"
+    },
+    {
+      "node_id": "claim.launch.ledger-candidate",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:49d587b16ee36c6fc92679a0568ae1209f94d3a2e4f62497768a0710fb4f0bf1"
+    },
+    {
+      "node_id": "claim.launch.no-average",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:e1780ae243a7ecdcc0e3b8c9f26f2a11a919d5fa0ef053ae682373582813b8b9"
+    },
+    {
+      "node_id": "claim.launch.public-boundary",
+      "type": "claim",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:8dd8529e03eb9306da4d890751375305413b97ec60c59587bcfe56f0e35c0836"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-arch",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:3e742fe11503f88457264354e824386247541986a6bb2045016cd07f464e40d3"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-boundary",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:e2034449a633891ece8f73e09b43c7a25f15b7c89417b0f35aacb41d13f8c53d"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-content",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:27a2a7a618ad399803c6eef3955c725fc6e30c91271beee11169aaccbb5184b3"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-evidence",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:ea28bddf2088503e82130e2c6b8132cca88627aa7211025c50edcb0c545d0680"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-ledger",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:be2ea1ac9574a2bcaeeec22385087866f318e165ce163797add17599b37cf3c3"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-loop",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:0aaaeb403d443c1d2e17199d50816ab984d2765b54e380e830f756e0b9e95e9e"
+    },
+    {
+      "node_id": "evidence.launch.clm-flow-noaverage",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:2693cc53faf4058c6c55bad684e431d22ec1edb06f5f16ec854079d12d707b2e"
+    },
+    {
+      "node_id": "evidence.launch.drift-atlas",
+      "type": "evidence",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:8bd1184ec19dfc531a3f98262f2335ec6fbbd67d59e71c53cc66223c85e39313"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-CLOSURE-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:df4af0e827cd4e7be0fbcf96708f3f71b9cd673f91019ff387f2d721c710b6ae"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-COMMIT-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:6eee1e3f968393188b7bd3b52aa4c2d628019aad339327ca3d792b0e767153f1"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-EVT-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:73d5847b52f631b64dd967631b99f375393dde44c45d3f2d7c25ba9a0c7e1573"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-OWNER-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:15990a8ef8cbc0f010fee27bb95bb65f683f2f322adfff67c2df3c9b9aee0e14"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-PROJ-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:9b7c09bd182da07c07df0a10d08f94e5f7985aca4d7fcaa7715a9869276719f8"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-PROV-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:84df468cfd5c319967aac40de4138936747bbd3edcebe853ba8c1cae6312a61f"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-REVIEW-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:11118cbb822b73dd9456629f58093d0d232576e5b864ae01b69d3f5bf498657a"
+    },
+    {
+      "node_id": "mechanism.launch.MECH-VERIFY-001",
+      "type": "mechanism",
+      "state": "evidence_bound",
+      "snapshot_id": "open-alpha-launch-successor-v1",
+      "content_hash": "sha256:de62e6b77c01a9209e0d819b707204459d994f0cdb382460e653cb0d948ce580"
+    }
+  ],
+  "edges": [
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.architecture-atlas",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.content-graph",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.deepseek-owner-hypothesis",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.no-average",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.discovery-pack",
+      "to_id": "claim.launch.public-boundary",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.architecture-atlas",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.content-graph",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.no-average",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.readme",
+      "to_id": "claim.launch.public-boundary",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.selector-packet",
+      "to_id": "claim.launch.content-graph",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.selector-packet",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.selector-packet",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.selector-packet",
+      "to_id": "claim.launch.no-average",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "asset.launch.selector-packet",
+      "to_id": "claim.launch.public-boundary",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-1",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-1",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-1",
+      "to_id": "claim.launch.no-average",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-1",
+      "to_id": "claim.launch.public-boundary",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-2",
+      "to_id": "claim.launch.architecture-atlas",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-2",
+      "to_id": "claim.launch.content-graph",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-2",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-2",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-2",
+      "to_id": "claim.launch.public-boundary",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-3",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-3",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-3",
+      "to_id": "claim.launch.no-average",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-4",
+      "to_id": "claim.launch.content-graph",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-4",
+      "to_id": "claim.launch.flow-loop",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "channel.launch.draft-4",
+      "to_id": "claim.launch.public-boundary",
+      "type": "derived_from"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-arch",
+      "to_id": "claim.launch.architecture-atlas",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-boundary",
+      "to_id": "claim.launch.public-boundary",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-content",
+      "to_id": "claim.launch.content-graph",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-evidence",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-ledger",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-loop",
+      "to_id": "claim.launch.flow-loop",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.clm-flow-noaverage",
+      "to_id": "claim.launch.no-average",
+      "type": "supports"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.architecture-atlas",
+      "type": "limits"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.content-graph",
+      "type": "limits"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "limits"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.flow-loop",
+      "type": "limits"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "limits"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.no-average",
+      "type": "limits"
+    },
+    {
+      "from_id": "evidence.launch.drift-atlas",
+      "to_id": "claim.launch.public-boundary",
+      "type": "limits"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-CLOSURE-001",
+      "to_id": "claim.launch.flow-loop",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-COMMIT-001",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-EVT-001",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-OWNER-001",
+      "to_id": "claim.launch.public-boundary",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-PROJ-001",
+      "to_id": "claim.launch.ledger-candidate",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-PROV-001",
+      "to_id": "claim.launch.architecture-atlas",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-PROV-001",
+      "to_id": "claim.launch.content-graph",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-PROV-001",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-REVIEW-001",
+      "to_id": "claim.launch.flow-loop",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-REVIEW-001",
+      "to_id": "claim.launch.no-average",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-VERIFY-001",
+      "to_id": "claim.launch.content-graph",
+      "type": "implements"
+    },
+    {
+      "from_id": "mechanism.launch.MECH-VERIFY-001",
+      "to_id": "claim.launch.evidence-binding",
+      "type": "implements"
+    }
+  ]
+}

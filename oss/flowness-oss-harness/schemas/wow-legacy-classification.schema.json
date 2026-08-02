@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/wow-legacy-classification.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "classification_id", "scope", "snapshot", "state", "mode", "review", "refs", "issues", "pull_requests", "contributors", "classification_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "wow-legacy-classification/v1"},
+    "classification_id": {"$ref": "#/$defs/id"},
+    "scope": {"type": "string", "const": "private_staging_only"},
+    "snapshot": {"$ref": "#/$defs/snapshot"},
+    "state": {"type": "string", "enum": ["template_pending", "verified_for_preflight"]},
+    "mode": {"type": "string", "const": "planned_only"},
+    "review": {"$ref": "#/$defs/review"},
+    "refs": {"type": "array", "items": {"$ref": "#/$defs/refResolution"}},
+    "issues": {"type": "array", "items": {"$ref": "#/$defs/workResolution"}},
+    "pull_requests": {"type": "array", "items": {"$ref": "#/$defs/workResolution"}},
+    "contributors": {"type": "array", "items": {"$ref": "#/$defs/contributorResolution"}},
+    "classification_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "snapshot": {"type": "object", "additionalProperties": false, "required": ["snapshot_id", "snapshot_hash"], "properties": {"snapshot_id": {"$ref": "#/$defs/id"}, "snapshot_hash": {"$ref": "#/$defs/hash"}}},
+    "review": {"type": "object", "additionalProperties": false, "required": ["state", "reviewer_id", "evidence_ref"], "properties": {"state": {"type": "string", "enum": ["not_reviewed", "independently_verified"]}, "reviewer_id": {"type": "string", "minLength": 1, "maxLength": 128}, "evidence_ref": {"type": "string", "minLength": 1, "maxLength": 500}}},
+    "refResolution": {"type": "object", "additionalProperties": false, "required": ["ref_id", "treatment"], "properties": {"ref_id": {"type": "string", "pattern": "^refs/(heads|tags)/[A-Za-z0-9][A-Za-z0-9._/-]{0,127}$"}, "treatment": {"type": "string", "enum": ["retain_legacy_history", "record_as_legacy_target", "needs_owner_resolution"]}}},
+    "workResolution": {"type": "object", "additionalProperties": false, "required": ["node_id", "disposition"], "properties": {"node_id": {"type": "string", "pattern": "^[A-Za-z0-9_:-]{3,128}$"}, "disposition": {"type": "string", "enum": ["fixed-in-flowness-v1", "migration-required", "legacy-wont-fix", "still-relevant", "needs-owner-resolution"]}}},
+    "contributorResolution": {"type": "object", "additionalProperties": false, "required": ["node_id", "treatment"], "properties": {"node_id": {"type": "string", "pattern": "^[A-Za-z0-9_:-]{3,128}$"}, "treatment": {"type": "string", "enum": ["preserve-attribution-in-migration-guide", "retain-history-only", "needs-rights-review"]}}}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Metadata-only runtime Evidence Seal collector receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "request_sha256", "seal_id", "trace_id", "collector_identity", "scope_binding", "source_identity_binding", "collection_state", "objects", "chain_observations", "gaps", "receipt_sha256"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "runtime-evidence-seal-collector-receipt/v1"},
+    "request_id": {"type": "string"},
+    "request_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "seal_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "trace_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "collector_identity": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "scope_binding": {"type": "object", "additionalProperties": false, "required": ["vault_locator_fence_sha256", "record_range", "cutoff", "subject_link", "subject_token_policy"], "properties": {"vault_locator_fence_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "record_range": {"type": "object", "additionalProperties": false, "required": ["start_sequence", "end_sequence", "inclusion"], "properties": {"start_sequence": {"type": "integer", "minimum": 0}, "end_sequence": {"type": "integer", "minimum": 0}, "inclusion": {"type": "string", "const": "closed"}}}, "cutoff": {"type": "object", "additionalProperties": false, "required": ["start_bucket", "end_bucket", "window_kind", "rule"], "properties": {"start_bucket": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z$"}, "end_bucket": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z$"}, "window_kind": {"type": "string", "const": "closed_utc_minute_window"}, "rule": {"type": "string", "const": "event_sequence_at_or_before_cutoff_and_projection_watermark_covers_event"}}}, "subject_link": {"type": "string", "pattern": "^slr_[A-Za-z0-9_-]{8,64}$"}, "subject_token_policy": {"type": "string", "const": "seal_local_nonreversible_no_cross_seal_linkage"}}},
+    "source_identity_binding": {"type": "object", "additionalProperties": false, "required": ["source_object_id", "source_identity_digest", "audit_object_sha256"], "properties": {"source_object_id": {"type": "string"}, "source_identity_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "audit_object_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "collection_state": {"type": "string", "enum": ["not_collected", "rejected_before_read", "incoherent", "captured_ready_for_independent_verification"]},
+    "objects": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["object_id", "object_class", "capture_status", "included_fields", "audit_object_sha256", "derived_object_sha256"], "properties": {"object_id": {"type": "string"}, "object_class": {"type": "string", "enum": ["source_identity", "producer_observation", "event_segment", "projection_state", "consumer_observation", "failure_recovery", "independent_postcondition"]}, "capture_status": {"type": "string", "enum": ["captured", "absent", "redacted", "incoherent"]}, "included_fields": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}, "audit_object_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "derived_object_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}},
+    "chain_observations": {"type": "array", "minItems": 6, "items": {"type": "object", "additionalProperties": false, "required": ["role", "object_id", "subject_link", "capture_status", "audit_object_sha256", "derived_object_sha256"], "properties": {"role": {"type": "string", "enum": ["producer", "event", "projection", "consumer", "failure_recovery", "postcondition"]}, "object_id": {"type": "string"}, "subject_link": {"type": "string", "pattern": "^slr_[A-Za-z0-9_-]{8,64}$"}, "capture_status": {"type": "string", "enum": ["captured", "absent", "redacted", "incoherent"]}, "audit_object_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "derived_object_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}},
+    "gaps": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_-]{2,127}$"}},
+    "receipt_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

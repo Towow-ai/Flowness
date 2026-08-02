@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private Content Graph v3 migration contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "graph_id", "source_graph", "candidate", "policy", "nodes", "claim_limitations", "asset_relations", "localization_pairs"],
+  "properties": {
+    "schema_version": {"const": "content-graph/v3"},
+    "graph_id": {"type": "string", "minLength": 1},
+    "source_graph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_path", "schema_version", "content_hash"],
+      "properties": {
+        "source_path": {"type": "string", "minLength": 1},
+        "schema_version": {"const": "content-graph/v2"},
+        "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "snapshot_id", "version_id", "semantic_version", "capability"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "snapshot_id": {"type": "string", "minLength": 1},
+        "version_id": {"type": "string", "minLength": 1},
+        "semantic_version": {"type": "string", "minLength": 1},
+        "capability": {"const": "draft"}
+      }
+    },
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["allowed_transform_producers"],
+      "properties": {
+        "allowed_transform_producers": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "nodes": {
+      "type": "array", "minItems": 4,
+      "items": {"$ref": "#/$defs/relation_node"}
+    },
+    "claim_limitations": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["claim_id", "limitation_ids"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "limitation_ids": {"$ref": "#/$defs/id_list"}
+        }
+      }
+    },
+    "asset_relations": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/asset_relation"}
+    },
+    "localization_pairs": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["pair_id", "asset_ids", "status", "review_ids"],
+        "properties": {
+          "pair_id": {"type": "string", "minLength": 1},
+          "asset_ids": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "status": {"enum": ["unreviewed", "reviewed"]},
+          "review_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id_list": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "relation_node": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_id", "type", "candidate_id", "snapshot_id", "version_id", "content_hash", "capability"],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "type": {"enum": ["limitation", "audience_profile", "channel", "version"]},
+        "candidate_id": {"type": "string", "minLength": 1},
+        "snapshot_id": {"type": "string", "minLength": 1},
+        "version_id": {"type": "string", "minLength": 1},
+        "content_hash": {"type": "string", "minLength": 1},
+        "capability": {"enum": ["draft", "manual_publish_pack", "analytics_only", "NotApplicable"]}
+      }
+    },
+    "asset_relation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["asset_id", "audience_ids", "channel_ids", "locale", "capability", "version_id", "boundary_ids", "source_node_ids", "source_node_hashes", "transform", "review_ids", "scope"],
+      "properties": {
+        "asset_id": {"type": "string", "minLength": 1},
+        "audience_ids": {"$ref": "#/$defs/id_list"},
+        "channel_ids": {"$ref": "#/$defs/id_list"},
+        "locale": {"enum": ["en", "zh-CN", "NotApplicable"]},
+        "capability": {"enum": ["draft", "manual_publish_pack", "analytics_only", "NotApplicable"]},
+        "version_id": {"type": "string", "minLength": 1},
+        "boundary_ids": {"$ref": "#/$defs/id_list"},
+        "source_node_ids": {"$ref": "#/$defs/id_list"},
+        "source_node_hashes": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
+        "transform": {
+          "type": "object", "additionalProperties": false,
+          "required": ["producer_id", "template_version", "model_id"],
+          "properties": {
+            "producer_id": {"type": "string", "minLength": 1},
+            "template_version": {"type": "string", "minLength": 1},
+            "model_id": {"type": "string", "minLength": 1}
+          }
+        },
+        "review_ids": {"$ref": "#/$defs/id_list"},
+        "scope": {
+          "type": "object", "additionalProperties": false,
+          "required": ["claim_ids"],
+          "properties": {"claim_ids": {"$ref": "#/$defs/id_list"}}
+        }
+      }
+    }
+  }
+}

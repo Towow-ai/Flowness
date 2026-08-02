@@ -1,0 +1,30 @@
+flowchart LR
+  H["D9 / open-alpha-v1 / maintainer + ecosystem reviewer<br/>LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / UNKNOWN / EXTERNAL"]
+  Local["allowlisted package + registries<br/>CURRENT_VERIFIED narrow evidence"]
+  Candidate["candidate harness + canonical demo<br/>EXPERIMENTAL"]
+  Alpha["Open Alpha<br/>EXPERIMENTAL, not production"]
+  Beta["Beta<br/>DESIGNED_TARGET / conditional"]
+  Public["general public release<br/>DESIGNED_TARGET / conditional"]
+  OptionalBoundary["OPTIONAL / EXTERNAL boundary<br/>not required for public core"]
+  External["external installs, adoption, and effectiveness<br/>UNKNOWN"]
+  Adapters["adapters<br/>OPTIONAL / WRITTEN-ONLY"]
+  Skills["skills<br/>OPTIONAL / WRITTEN-ONLY"]
+  Plugins["plugins<br/>OPTIONAL / WRITTEN-ONLY"]
+  ApiBoundary["extension / channel API boundary<br/>UNKNOWN compatibility contract"]
+  Gate["evidence + jury + owner gate<br/>EXTERNAL decision"]
+  Failure["FAILURE: credible FAIL, critical drift, or key UNKNOWN"]
+  Recovery["bounded rework + same blocker retest"]
+  Ceiling["PROOF CEILING: no proof of release authorization, dates, production readiness, adoption, or benchmark advantage"]
+
+  H -.-> Local
+  Local --> Candidate
+  Candidate --> Gate --> Alpha -.-> Beta -.-> Public
+  External -. "adoption evidence" .-> OptionalBoundary
+  Adapters -.-> OptionalBoundary
+  Skills -.-> OptionalBoundary
+  Plugins -.-> OptionalBoundary
+  OptionalBoundary -.-> Gate
+  ApiBoundary -. "compatibility unsealed" .-> Gate
+  Failure --> Recovery --> Candidate
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling -.-> Gate

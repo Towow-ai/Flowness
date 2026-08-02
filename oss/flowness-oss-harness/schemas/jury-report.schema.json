@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/jury-report.schema.json",
+  "title": "Independent jury report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "candidate_id",
+    "snapshot_id",
+    "policy_version",
+    "phase",
+    "judge",
+    "started_at",
+    "finished_at",
+    "checks",
+    "signature"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "report_id": {"$ref": "#/$defs/id"},
+    "candidate_id": {"$ref": "#/$defs/id"},
+    "snapshot_id": {"$ref": "#/$defs/sha256"},
+    "policy_version": {"$ref": "#/$defs/nonemptyString"},
+    "phase": {"type": "string", "enum": ["first_pass", "retest", "adjudication"]},
+    "judge": {"$ref": "#/$defs/judge"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": "string", "format": "date-time"},
+    "checks": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/check"},
+      "minItems": 1
+    },
+    "adjudication": {"$ref": "#/$defs/adjudication"},
+    "signature": {
+      "$ref": "#/$defs/sha256",
+      "description": "Canonical SHA-256 self-hash of every report field except signature. This is integrity binding, not owner authorization."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"phase": {"type": "string", "const": "first_pass"}},
+        "required": ["phase"]
+      },
+      "then": {
+        "properties": {
+          "judge": {
+            "properties": {
+              "attestations": {
+                "properties": {
+                  "blind_first_pass": {"type": "boolean", "const": true},
+                  "no_shared_verdicts": {"type": "boolean", "const": true},
+                  "not_candidate_author": {"type": "boolean", "const": true}
+                }
+              }
+            }
+          }
+        },
+        "not": {"required": ["adjudication"]}
+      }
+    },
+    {
+      "if": {
+        "properties": {"phase": {"type": "string", "const": "adjudication"}},
+        "required": ["phase"]
+      },
+      "then": {
+        "required": ["adjudication"],
+        "properties": {
+          "judge": {
+            "properties": {
+              "role_id": {"type": "string", "const": "judge.adjudicator"}
+            }
+          }
+        }
+      },
+      "else": {
+        "not": {"required": ["adjudication"]}
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "judge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role_id",
+        "agent_instance_id",
+        "organization",
+        "conflicts",
+        "attestations"
+      ],
+      "properties": {
+        "role_id": {"$ref": "#/$defs/id"},
+        "agent_instance_id": {"$ref": "#/$defs/id"},
+        "organization": {"type": "string", "enum": ["independent", "internal"]},
+        "conflicts": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonemptyString"},
+          "uniqueItems": true
+        },
+        "attestations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "blind_first_pass",
+            "no_shared_verdicts",
+            "not_candidate_author"
+          ],
+          "properties": {
+            "blind_first_pass": {"type": "boolean"},
+            "no_shared_verdicts": {"type": "boolean"},
+            "not_candidate_author": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "reproduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command_template", "environment_hash", "attempts"],
+      "properties": {
+        "command_template": {"$ref": "#/$defs/nonemptyString"},
+        "environment_hash": {"$ref": "#/$defs/sha256"},
+        "attempts": {"type": "integer", "minimum": 1}
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "gate_id",
+        "dimension",
+        "critical",
+        "verdict",
+        "confidence",
+        "tested_claim_ids",
+        "evidence_ids",
+        "reproduction",
+        "expected",
+        "observed",
+        "blocker_id",
+        "missing_evidence",
+        "na_rationale",
+        "remediation",
+        "retest_condition"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"
+        },
+        "gate_id": {"type": "string", "enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+        "dimension": {"$ref": "#/$defs/nonemptyString"},
+        "critical": {"type": "boolean"},
+        "verdict": {"type": "string", "enum": ["pass", "fail", "unknown", "na"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "tested_claim_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/id"},
+          "uniqueItems": true
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/id"},
+          "uniqueItems": true
+        },
+        "reproduction": {
+          "anyOf": [
+            {"$ref": "#/$defs/reproduction"},
+            {"type": "null"}
+          ]
+        },
+        "expected": {"type": "string"},
+        "observed": {"type": "string"},
+        "blocker_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(BLK|SYSTEM|UNKNOWN|JURY|MATURITY|CHECK)-[A-Za-z0-9._:-]+$"
+            },
+            {"type": "null"}
+          ]
+        },
+        "missing_evidence": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonemptyString"},
+          "uniqueItems": true
+        },
+        "na_rationale": {
+          "type": ["string", "null"]
+        },
+        "remediation": {"type": "string"},
+        "retest_condition": {"type": "string"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"verdict": {"type": "string", "const": "pass"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "evidence_ids": {"minItems": 1},
+              "blocker_id": {"type": "null"},
+              "missing_evidence": {"maxItems": 0},
+              "na_rationale": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"verdict": {"type": "string", "const": "fail"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "evidence_ids": {"minItems": 1},
+              "reproduction": {"$ref": "#/$defs/reproduction"},
+              "observed": {"minLength": 1},
+              "blocker_id": {"type": "string", "minLength": 1},
+              "remediation": {"minLength": 1},
+              "retest_condition": {"minLength": 1},
+              "na_rationale": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"verdict": {"type": "string", "const": "unknown"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "missing_evidence": {"minItems": 1},
+              "na_rationale": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {"type": "string", "const": "unknown"},
+              "critical": {"type": "boolean", "const": true}
+            },
+            "required": ["verdict", "critical"]
+          },
+          "then": {
+            "properties": {
+              "blocker_id": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"verdict": {"type": "string", "const": "na"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "na_rationale": {"type": "string", "minLength": 1},
+              "blocker_id": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disputed_report_ids",
+        "resolution",
+        "rationale",
+        "retest_report_id"
+      ],
+      "properties": {
+        "disputed_report_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/id"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "resolution": {"type": "string", "enum": ["uphold_fail", "clear_after_retest"]},
+        "rationale": {"$ref": "#/$defs/nonemptyString"},
+        "retest_report_id": {
+          "anyOf": [
+            {"$ref": "#/$defs/id"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"resolution": {"type": "string", "const": "clear_after_retest"}},
+            "required": ["resolution"]
+          },
+          "then": {
+            "properties": {
+              "retest_report_id": {"$ref": "#/$defs/id"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"resolution": {"type": "string", "const": "uphold_fail"}},
+            "required": ["resolution"]
+          },
+          "then": {
+            "properties": {
+              "retest_report_id": {"type": "null"}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

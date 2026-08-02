@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/successor-retest-attestation.schema.json",
+  "title": "Flowness successor retest attestation",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "attestation_id", "blocker_case", "rework_manifest", "original", "successor", "targeted_check", "successor_reports", "missing_evidence_resolution", "attestation_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "successor-retest-attestation/v1"}, "attestation_id": {"$ref": "#/$defs/id"},
+    "blocker_case": {"$ref": "#/$defs/caseRef"}, "rework_manifest": {"$ref": "#/$defs/manifestRef"},
+    "original": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "snapshot_id", "report_id", "check_id", "check_hash"], "properties": {"candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"$ref": "#/$defs/sha256"}, "report_id": {"$ref": "#/$defs/id"}, "check_id": {"$ref": "#/$defs/checkId"}, "check_hash": {"$ref": "#/$defs/sha256"}}},
+    "successor": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "snapshot_id", "candidate", "snapshot"], "properties": {"candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"$ref": "#/$defs/sha256"}, "candidate": {"$ref": "#/$defs/artifact"}, "snapshot": {"$ref": "#/$defs/artifact"}}},
+    "targeted_check": {"type": "object", "additionalProperties": false, "required": ["check_id", "gate_id", "dimension", "critical", "blocker_id"], "properties": {"check_id": {"$ref": "#/$defs/checkId"}, "gate_id": {"type": "string", "pattern": "^G[0-5]$"}, "dimension": {"type": "string", "minLength": 1}, "critical": {"type": "boolean"}, "blocker_id": {"type": "string", "minLength": 1}}},
+    "successor_reports": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/reportRef"}},
+    "missing_evidence_resolution": {"type": "array", "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["missing_evidence", "evidence_ids"], "properties": {"missing_evidence": {"type": "string", "minLength": 1}, "evidence_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}}}},
+    "attestation_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "checkId": {"type": "string", "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"},
+    "artifact": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "sha256"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}},
+    "caseRef": {"type": "object", "additionalProperties": false, "required": ["blocker_case_id", "case_hash", "artifact"], "properties": {"blocker_case_id": {"$ref": "#/$defs/id"}, "case_hash": {"$ref": "#/$defs/sha256"}, "artifact": {"$ref": "#/$defs/artifact"}}},
+    "manifestRef": {"type": "object", "additionalProperties": false, "required": ["rework_manifest_id", "manifest_hash", "artifact"], "properties": {"rework_manifest_id": {"$ref": "#/$defs/id"}, "manifest_hash": {"$ref": "#/$defs/sha256"}, "artifact": {"$ref": "#/$defs/artifact"}}},
+    "reportRef": {"type": "object", "additionalProperties": false, "required": ["report_id", "sha256", "role_id", "agent_instance_id"], "properties": {"report_id": {"$ref": "#/$defs/id"}, "sha256": {"$ref": "#/$defs/sha256"}, "role_id": {"$ref": "#/$defs/id"}, "agent_instance_id": {"$ref": "#/$defs/id"}}}
+  }
+}

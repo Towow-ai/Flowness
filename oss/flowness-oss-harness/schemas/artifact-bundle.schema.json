@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evidence-bound producer artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["role_id", "snapshot_ids", "findings", "unknowns", "recommended_actions"],
+  "properties": {
+    "role_id": {"type": "string"},
+    "snapshot_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "state", "statement", "evidence_locators", "affected_consumers", "public_impact"],
+        "properties": {
+          "finding_id": {"type": "string"},
+          "state": {"type": "string", "enum": ["verified", "candidate", "negative", "unknown", "blocked"]},
+          "statement": {"type": "string"},
+          "evidence_locators": {"type": "array", "items": {"type": "string"}},
+          "affected_consumers": {"type": "array", "items": {"type": "string"}},
+          "public_impact": {"type": "string"}
+        }
+      }
+    },
+    "unknowns": {"type": "array", "items": {"type": "string"}},
+    "recommended_actions": {"type": "array", "items": {"type": "string"}}
+  }
+}

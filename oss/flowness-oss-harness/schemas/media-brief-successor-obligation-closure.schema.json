@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private media-brief successor obligation closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "closure_id", "boundary", "obligation_packet", "successor_contract", "action_closures", "semantic_review_state", "claim_boundary_review_state", "external_release_effect", "closure_hash"],
+  "properties": {
+    "schema_version": {"const": "media-brief-successor-obligation-closure/v1"},
+    "closure_id": {"type": "string", "minLength": 1},
+    "boundary": {"const": "PRIVATE-MECHANICAL-OBLIGATION-CLOSURE;SUCCESSOR-BINDING-ONLY;NO-SEMANTIC-APPROVAL-NO-PUBLISH"},
+    "obligation_packet": {"$ref": "#/$defs/packetBinding"},
+    "successor_contract": {"$ref": "#/$defs/contractBinding"},
+    "action_closures": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/actionClosure"}},
+    "semantic_review_state": {"const": "unreviewed"},
+    "claim_boundary_review_state": {"const": "unreviewed"},
+    "external_release_effect": {"const": "no_promotion"},
+    "closure_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "packetBinding": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "packet_hash"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "packet_hash": {"$ref": "#/$defs/hash"}}},
+    "contractBinding": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "contract_hash"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "contract_hash": {"$ref": "#/$defs/hash"}}},
+    "actionClosure": {"type": "object", "additionalProperties": false, "required": ["action_instance_id", "state", "effect"], "properties": {"action_instance_id": {"type": "string", "minLength": 1}, "state": {"const": "mechanically_rebound_unreviewed"}, "effect": {"const": "no_semantic_or_release_promotion"}}}
+  }
+}

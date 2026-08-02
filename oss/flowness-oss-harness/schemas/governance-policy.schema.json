@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/governance-policy.schema.json",
+  "title": "Release governance policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policy_version",
+    "maturity_levels",
+    "stage_profiles",
+    "gates",
+    "roles",
+    "independence_rules"
+  ],
+  "properties": {
+    "policy_version": {"$ref": "#/$defs/nonemptyString"},
+    "maturity_levels": {"$ref": "#/$defs/maturityLevels"},
+    "stage_profiles": {"$ref": "#/$defs/stageProfiles"},
+    "gates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/gate"},
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "roles": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/role"},
+      "minItems": 5
+    },
+    "independence_rules": {"$ref": "#/$defs/independenceRules"}
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonemptyStrings": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/nonemptyString"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "evidenceTypes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "definition",
+          "prototype",
+          "passing_test",
+          "canonical_integration",
+          "dogfood_run",
+          "clean_reproduction",
+          "external_validation"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "maturityLevels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["0", "1", "2", "3", "4", "5", "6"],
+      "properties": {
+        "0": {"type": "array", "maxItems": 0},
+        "1": {"$ref": "#/$defs/evidenceTypes"},
+        "2": {"$ref": "#/$defs/evidenceTypes"},
+        "3": {"$ref": "#/$defs/evidenceTypes"},
+        "4": {"$ref": "#/$defs/evidenceTypes"},
+        "5": {"$ref": "#/$defs/evidenceTypes"},
+        "6": {"$ref": "#/$defs/evidenceTypes"}
+      }
+    },
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "layer": {
+          "type": "array",
+          "items": {"enum": ["L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "critical": {"type": "boolean"}
+      }
+    },
+    "moduleRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_maturity"],
+      "properties": {
+        "module_id": {"$ref": "#/$defs/id"},
+        "selector": {"$ref": "#/$defs/selector"},
+        "min_maturity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "required_if_claimed": {"type": "boolean"}
+      },
+      "oneOf": [
+        {
+          "required": ["module_id"],
+          "not": {"required": ["selector"]}
+        },
+        {
+          "required": ["selector"],
+          "not": {"required": ["module_id"]}
+        }
+      ]
+    },
+    "stageProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module_requirements",
+        "mandatory_gates",
+        "advisory_gates"
+      ],
+      "properties": {
+        "module_requirements": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/moduleRequirement"},
+          "minItems": 1
+        },
+        "mandatory_gates": {
+          "type": "array",
+          "items": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "advisory_gates": {
+          "type": "array",
+          "items": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+          "uniqueItems": true
+        }
+      }
+    },
+    "stageProfiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alpha", "beta", "1.0"],
+      "properties": {
+        "alpha": {"$ref": "#/$defs/stageProfile"},
+        "beta": {"$ref": "#/$defs/stageProfile"},
+        "1.0": {"$ref": "#/$defs/stageProfile"}
+      }
+    },
+    "requiredCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "dimension",
+        "critical",
+        "allow_na",
+        "required_roles",
+        "allowed_roles"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"
+        },
+        "dimension": {"$ref": "#/$defs/nonemptyString"},
+        "critical": {"type": "boolean"},
+        "allow_na": {"type": "boolean"},
+        "required_roles": {"$ref": "#/$defs/rolePair"},
+        "allowed_roles": {"$ref": "#/$defs/rolePair"}
+      }
+    },
+    "rolePair": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/id"},
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "requiredRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role_id", "min_count"],
+      "properties": {
+        "role_id": {"$ref": "#/$defs/id"},
+        "min_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gate_id",
+        "mandatory",
+        "required_checks",
+        "required_roles"
+      ],
+      "properties": {
+        "gate_id": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+        "mandatory": {"type": "boolean"},
+        "required_checks": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/requiredCheck"},
+          "minItems": 1
+        },
+        "required_roles": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/requiredRole"},
+          "minItems": 2,
+          "description": "Union of roles used to plan this gate. Per-check required_roles and allowed_roles are the authorization and coverage source."
+        }
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role_id",
+        "kind",
+        "dimensions",
+        "gates",
+        "may_judge",
+        "required_inputs",
+        "required_outputs",
+        "forbidden_actions"
+      ],
+      "properties": {
+        "role_id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["builder", "judge", "adjudicator", "owner"]},
+        "dimensions": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonemptyString"},
+          "uniqueItems": true
+        },
+        "gates": {
+          "type": "array",
+          "items": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+          "uniqueItems": true
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"
+          },
+          "uniqueItems": true
+        },
+        "may_judge": {"type": "boolean"},
+        "required_inputs": {"$ref": "#/$defs/nonemptyStrings"},
+        "required_outputs": {"$ref": "#/$defs/nonemptyStrings"},
+        "forbidden_actions": {"$ref": "#/$defs/nonemptyStrings"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"kind": {"const": "judge"}},
+            "required": ["kind"]
+          },
+          "then": {
+            "required": ["checks"],
+            "properties": {
+              "dimensions": {"minItems": 1},
+              "gates": {"minItems": 1},
+              "checks": {"minItems": 1},
+              "may_judge": {"const": true}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"kind": {"enum": ["builder", "owner"]}},
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "may_judge": {"const": false}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"kind": {"const": "adjudicator"}},
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "may_judge": {"const": true}
+            }
+          }
+        }
+      ]
+    },
+    "independenceRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "distinct_agent_instances_per_required_role",
+        "blind_first_pass",
+        "candidate_author_may_judge",
+        "majority_vote_may_override_fail",
+        "adjudicator_must_be_independent",
+        "judges_per_check"
+      ],
+      "properties": {
+        "distinct_agent_instances_per_required_role": {"const": true},
+        "blind_first_pass": {"const": true},
+        "candidate_author_may_judge": {"const": false},
+        "majority_vote_may_override_fail": {"const": false},
+        "adjudicator_must_be_independent": {"const": true},
+        "judges_per_check": {"type": "integer", "minimum": 2}
+      }
+    }
+  }
+}

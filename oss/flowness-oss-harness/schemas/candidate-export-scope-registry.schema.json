@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Candidate export scope registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "scope", "records", "boundary", "registry_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "candidate-export-scope-registry/v1"},
+    "registry_id": {"type": "string", "pattern": "^ledger-candidate-export-scope-[0-9a-f]{16}$"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_head_at_observation", "scope_path", "scope_tree_sha1"],
+      "properties": {
+        "repository_head_at_observation": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "scope_path": {"type": "string", "pattern": "^[^/].*$"},
+        "scope_tree_sha1": {"type": "string", "pattern": "^sha1:[0-9a-f]{40}$"}
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["record_id", "path", "git_mode", "git_blob_sha1", "sha256", "bytes", "proposal_state", "reason", "origin_evidence_slot", "rights_evidence_slot", "public_surface_implication"],
+        "properties": {
+          "record_id": {"type": "string", "pattern": "^ledger-file-[0-9a-f]{20}$"},
+          "path": {"type": "string", "pattern": "^[^/].*$"},
+          "git_mode": {"type": "string", "enum": ["100644", "100755"]},
+          "git_blob_sha1": {"type": "string", "pattern": "^sha1:[0-9a-f]{40}$"},
+          "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "bytes": {"type": "integer", "minimum": 0},
+          "proposal_state": {"type": "string", "enum": ["include_proposed", "hold", "exclude"]},
+          "reason": {"type": "string", "minLength": 1},
+          "origin_evidence_slot": {"$ref": "#/$defs/evidence_slot"},
+          "rights_evidence_slot": {"$ref": "#/$defs/evidence_slot"},
+          "public_surface_implication": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "boundary": {"type": "string", "minLength": 1},
+    "registry_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "evidence_slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot_id", "state"],
+      "properties": {
+        "slot_id": {"type": "string", "pattern": "^(origin|rights)-evidence:ledger-file-[0-9a-f]{20}$"},
+        "state": {"type": "string", "const": "unfilled"}
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Local non-public dependent successor rebuild packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "boundary", "predecessor_registry", "actions", "external_effect", "packet_hash"],
+  "properties": {
+    "schema_version": {"const": "non-public-dependent-artifact-successor-rebuild/v1"},
+    "packet_id": {"type": "string", "minLength": 1},
+    "boundary": {"const": "LOCAL-NON-PUBLIC-DEPENDENT-SUCCESSOR-REBUILD;PENDING-ONLY-NO-DISCLOSURE-NO-PUBLISH"},
+    "predecessor_registry": {"$ref": "#/$defs/registryRef"},
+    "actions": {"type": "array", "minItems": 1, "maxItems": 1, "items": {"$ref": "#/$defs/action"}},
+    "external_effect": {"const": "no_public_claim_no_transmission_no_publication"},
+    "packet_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "registryRef": {"type": "object", "additionalProperties": false, "required": ["registry_id", "registry_hash", "path", "sha256"], "properties": {"registry_id": {"const": "local-governance-and-media-dependent-artifacts-v0"}, "registry_hash": {"$ref": "#/$defs/hash"}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["binding_id", "path", "sha256"], "properties": {"binding_id": {"enum": ["mechanism_cards", "system_narrative_trace"]}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "action": {"type": "object", "additionalProperties": false, "required": ["action_id", "artifact_id", "artifact_path", "changed_source_bindings", "rebuild_action", "state", "external_effect"], "properties": {"action_id": {"type": "string", "minLength": 1}, "artifact_id": {"const": "artifact.pro-blind-mechanism-architecture-preparation"}, "artifact_path": {"const": "oss/flowness-oss-harness/registries/pro-blind-review-preparation-local-v0.json"}, "changed_source_bindings": {"type": "array", "minItems": 1, "maxItems": 2, "items": {"$ref": "#/$defs/ref"}}, "rebuild_action": {"const": "rebuild_local_packet_and_reverify_disclosure_boundary"}, "state": {"const": "required_pending"}, "external_effect": {"const": "no_public_claim_no_transmission_no_publication"}}}
+  }
+}

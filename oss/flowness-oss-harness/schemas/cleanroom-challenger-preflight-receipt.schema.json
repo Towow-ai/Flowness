@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "scope", "authorization", "input_binding", "challenge_plan", "checks", "preflight_state", "not_proven", "boundary", "receipt_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "cleanroom-challenger-preflight-receipt/v1"},
+    "receipt_id": {"type": "string", "pattern": "^cleanroom-challenger-[0-9a-f]{16}$"},
+    "scope": {"type": "string", "const": "private_staging_cleanroom_challenger_preflight"},
+    "authorization": {"type": "string", "const": "not_authorized"},
+    "input_binding": {"$ref": "#/$defs/binding"},
+    "challenge_plan": {"$ref": "#/$defs/file_name_hash"},
+    "checks": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "object", "additionalProperties": false, "required": ["check_id", "outcome", "codes"], "properties": {"check_id": {"type": "string"}, "outcome": {"type": "string", "enum": ["passed", "blocked"]}, "codes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}}},
+    "preflight_state": {"type": "string", "enum": ["local_preflight_passed", "local_preflight_blocked"]},
+    "not_proven": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "boundary": {"type": "string", "minLength": 1},
+    "receipt_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "file_name_hash": {"type": "object", "additionalProperties": false, "required": ["file_name", "sha256"], "properties": {"file_name": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "binding_item": {"type": "object", "additionalProperties": false, "required": ["file_name", "bytes", "sha256"], "properties": {"file_name": {"type": "string", "minLength": 1}, "bytes": {"type": "integer", "minimum": 0}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "binding": {"type": "object", "additionalProperties": false, "required": ["sealed_candidate_artifact", "sealed_candidate_artifact_manifest", "sealed_candidate_export_manifest", "challenge_plan"], "properties": {"sealed_candidate_artifact": {"$ref": "#/$defs/binding_item"}, "sealed_candidate_artifact_manifest": {"$ref": "#/$defs/binding_item"}, "sealed_candidate_export_manifest": {"$ref": "#/$defs/binding_item"}, "challenge_plan": {"$ref": "#/$defs/binding_item"}}}
+  }
+}

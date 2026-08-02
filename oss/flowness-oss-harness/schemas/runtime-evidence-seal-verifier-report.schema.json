@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Independent metadata verifier report for a runtime Evidence Seal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "request_sha256", "receipt_sha256", "seal_id", "trace_id", "scope_binding_sha256", "receipt_object_set_sha256", "verifier_identity", "verification_basis", "verification_state", "checks", "gaps", "claim_effect", "report_sha256"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "runtime-evidence-seal-verifier-report/v1"},
+    "request_id": {"type": "string"},
+    "request_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "receipt_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "seal_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "trace_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "scope_binding_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "receipt_object_set_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "verifier_identity": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "verification_basis": {"type": "string", "enum": ["contract_only", "receipt_hash_bound_derivation"]},
+    "verification_state": {"type": "string", "enum": ["not_verified", "rejected", "scope_limited_evidence_ready_for_registry_review"]},
+    "checks": {"type": "array", "minItems": 8, "items": {"type": "object", "additionalProperties": false, "required": ["check_id", "result", "review_basis"], "properties": {"check_id": {"type": "string", "enum": ["scope_freeze", "source_identity", "event_coherence", "projection_coherence", "consumer_link", "failure_recovery", "redaction_derivation", "independent_postcondition"]}, "result": {"type": "string", "enum": ["pass", "fail", "unknown"]}, "review_basis": {"type": "string", "enum": ["contract_only", "receipt_hash_bound_derivation"]}, "derivation_audit_binding": {"type": "object", "additionalProperties": false, "required": ["object_ids", "object_bindings_sha256"], "properties": {"object_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}, "object_bindings_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}}}},
+    "gaps": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_-]{2,127}$"}},
+    "claim_effect": {"type": "string", "const": "scope_limited_runtime_evidence_group_only_registry_review_required"},
+    "report_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

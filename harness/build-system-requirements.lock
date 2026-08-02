@@ -1,0 +1,4 @@
+# Exact build backend used to assemble the Open Alpha RC0 wheels.
+# Kept separate from runtime/test uv locks because PEP 517 resolves this
+# requirement in an isolated build environment.
+setuptools==83.0.0

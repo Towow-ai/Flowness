@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://towow.ai/schemas/flowness-work-admission-ledger-entry-v1.json",
+  "title": "Flowness OSS immutable work admission ledger entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "program_id", "sequence", "admission_id", "task_id", "admitted_at", "policy_hash", "controller_version", "card_hash", "card", "task_class", "wave_id", "lane", "role_id", "budget_reservation", "change_intent", "blocker", "previous_entry_hash", "entry_hash"],
+  "properties": {
+    "schema_version": {"const": "work-admission-ledger-entry/v1"},
+    "program_id": {"const": "flowness-oss-v2"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "admission_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "task_id": {"type": "string", "minLength": 1},
+    "admitted_at": {"type": "string", "format": "date-time"},
+    "policy_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "controller_version": {"type": "string", "minLength": 1},
+    "card_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "card": {"type": "object"},
+    "task_class": {"enum": ["core", "enablement", "judge"]},
+    "wave_id": {"type": "string", "minLength": 1},
+    "lane": {"type": "string", "minLength": 1},
+    "role_id": {"type": "string", "minLength": 1},
+    "budget_reservation": {"type": "object", "additionalProperties": false, "required": ["units", "charged_wave_id"], "properties": {"units": {"const": 1}, "charged_wave_id": {"type": "string", "minLength": 1}}},
+    "change_intent": {"type": "object", "additionalProperties": false, "required": ["code_changes", "deployments", "meta_reviews"], "properties": {"code_changes": {"enum": [0, 1]}, "deployments": {"enum": [0, 1]}, "meta_reviews": {"enum": [0, 1]}}},
+    "blocker": {"oneOf": [{"type": "null"}, {"type": "object", "additionalProperties": false, "required": ["fingerprint_id", "components", "imported_usage"], "properties": {"fingerprint_id": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "components": {"type": "object", "additionalProperties": false, "required": ["adjudicated_root_cause_family", "sealed_canonical_consumer_id", "normalized_error_or_stack_signature_hash", "source_or_entry_coordinates"], "properties": {"adjudicated_root_cause_family": {"type": "string", "minLength": 1}, "sealed_canonical_consumer_id": {"type": "string", "minLength": 1}, "normalized_error_or_stack_signature_hash": {"type": "string", "minLength": 1}, "source_or_entry_coordinates": {"type": "string", "minLength": 1}}}, "imported_usage": {"type": "object", "additionalProperties": false, "required": ["attempts", "code_changes", "deployments", "meta_reviews"], "properties": {"attempts": {"type": "integer", "minimum": 0}, "code_changes": {"type": "integer", "minimum": 0}, "deployments": {"type": "integer", "minimum": 0}, "meta_reviews": {"type": "integer", "minimum": 0}}}}}]},
+    "previous_entry_hash": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}]},
+    "entry_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,184 @@
+[project]
+name = "flowness-harness"
+version = "1.0.0a1"
+description = "Evidence-driven multi-agent engineering harness kernel."
+requires-python = ">=3.12"
+readme = "README.md"
+authors = [{ name = "Towow AI" }]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["agents", "harness", "event-sourcing", "orchestration", "recovery"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+    "pydantic>=2.13,<3",
+    "click>=8.4,<9",
+    "PyYAML>=6.0.3,<7",
+]
+
+[project.scripts]
+flowness-harness = "towow.open_alpha_cli:main"
+
+[build-system]
+requires = ["setuptools>=83,<84"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+test = ["pytest>=9.0.3,<10"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["towow*"]
+
+[tool.setuptools.package-data]
+towow = [
+    "glue/**/*.json",
+    "glue/**/*.md",
+    "glue/**/*.py",
+    "glue/**/*.sh",
+    "skills/**/*.md",
+]
+
+[tool.setuptools.exclude-package-data]
+towow = [
+    "skills/downtime-recovery/anchors/README.md",
+    "skills/fix-self-check/anchors/n1-ep-b-unilateral-flag-flip.md",
+    "skills/fix-self-check/anchors/p1-fork-verdict-exemplars.md",
+    "skills/handoff/anchors/regression-anchors.md",
+    "skills/meta-review/anchors/regression-anchors.md",
+]
+
+# ---------- ruff ----------
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "UP",    # pyupgrade
+    "RUF",   # ruff-specific
+    "SIM",   # simplify
+    "TC",    # flake8-type-checking
+    "ANN",   # flake8-annotations
+    "S",     # bandit security
+    "RET",   # flake8-return
+    "PIE",   # flake8-pie
+    "PT",    # pytest-style
+]
+ignore = [
+    "ANN401",  # Any allowed at boundaries (e.g., JSON serde)
+    "S101",    # assert allowed in v3 invariant code
+    "RUF001",  # 中文标点/Unicode 数学符号在字符串中允许 (spec 原文 + 中文沟通项目)
+    "RUF002",  # 中文标点在 docstring 中允许 (spec source 注释)
+    "RUF003",  # 中文标点在 comment 中允许 (spec source 注释)
+    "BLE001",  # broad except in resume-on-malformed-tail recovery is intentional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "ANN001", "ANN201", "ANN202", "S105", "S106", "S603", "S607", "PLR2004"]
+"**/__init__.py" = ["F401"]
+# scripts/ 是 one-shot emit utilities，含长 string literal (concept rules / rationale)，E501 在 narrative content 中无意义
+"scripts/**" = ["E501", "ANN001", "ANN201"]
+# claude_bg_helper.py runs external CLIs (claude, tmux) by PATH lookup;
+# list-args + shell=False already mitigates injection; S603/S607 are intentional.
+"src/towow/l2/claude_bg_helper.py" = ["S603", "S607"]
+"src/towow/l2/bg_worktree_poller.py" = ["S603", "S607"]
+# orchestrator.py safe-pause runs `claude stop <id>` by PATH (list-args, shell=False)
+"src/towow/l2/orchestrator.py" = ["S603", "S607"]
+# task_run_completed_checks.py verifies git commit refs via `git cat-file` (list-args, shell=False)
+"src/towow/schemas/payloads/task_run_completed_checks.py" = ["S603", "S607"]
+# cli/main.py `work patch` (T-L1-37) verifies worktree commit + derives diff_hash via
+# `git cat-file` / `git show` (list-args, shell=False) — same intentional git use.
+"src/towow/cli/main.py" = ["S603", "S607"]
+# closure_verification.py (RUN-036 T-L1-76) 门自己跑 grep / pytest 复算 closure_contract
+# (list-args, shell=False) — fail-closed verification, 同 precedent。
+"src/towow/l1/closure_verification.py" = ["S404", "S603", "S607"]
+# verification_fork.py (RUN-039) 起 `claude -p` 独立验证子会话 (list-args, shell=False) —
+# 同 claude_bg_helper precedent, S603/S607 是 intentional 外部 CLI by-PATH 调用。
+"src/towow/l1/verification_fork.py" = ["S603", "S607"]
+# memory_admission.py (口子4 补防线) 采系统内存走 `memory_pressure` by-PATH (list-args,
+# shell=False) — 同 precedent, S603/S607 是 intentional 外部 CLI 调用。
+"src/towow/l1/memory_admission.py" = ["S603", "S607"]
+"scripts/verify_run006_fixes.py" = ["S603", "S607"]
+"scripts/verify_e4_pipeline.py" = ["S603", "S607"]
+# pydantic v2 uses runtime introspection on field annotations — TC001/TC002/TC003 break it.
+"src/towow/schemas/**" = ["TC001", "TC002", "TC003"]
+# l0/* and shell/* import types at runtime (pydantic model_validate, fs paths, etc.)
+"src/towow/l0/**" = ["TC001", "TC002", "TC003"]
+"src/towow/shell/**" = ["TC001", "TC002", "TC003"]
+"src/towow/cli/**" = ["TC001", "TC002", "TC003"]
+"src/towow/l1/**" = ["TC001", "TC002", "TC003"]
+"src/towow/l2/**" = ["TC001", "TC002", "TC003"]
+"src/towow/obs/**" = ["TC001", "TC002", "TC003"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["towow"]
+
+# ---------- mypy strict ----------
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = false  # tests.* override is conditionally consumed; mypy reports false-positive when run on src only
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+extra_checks = true
+files = ["src/towow", "tests"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+# Test fixtures via pytest are not annotated by convention — keep strictness on src/ but
+# loosen annotation requirements on tests/.
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+
+# ---------- pytest ----------
+# coverage 通过 CLI flag 触发，避免空 testset 时 --cov-fail-under 阻塞：
+#   uv run pytest --cov=towow --cov-report=term-missing --cov-fail-under=80
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "invariant: §13 spec invariant verification test",
+    "patch: Phase D narrow patch grep-anchor verification",
+    "integration: end-to-end scenario using harness repo itself",
+    "stress: B-5 multi-lane concurrency stress (true cross-process, layer-2 done-real)",
+]
+
+# ---------- coverage ----------
+[tool.coverage.run]
+source = ["towow"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    'if __name__ == "__main__":',
+    "@abstractmethod",
+]

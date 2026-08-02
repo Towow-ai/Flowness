@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Local sealed preparation for an independent Pro blind review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "boundary", "case_id", "local_sealed_judgment", "external_blind_review_card", "disclosure_manifest", "preparation_hash"],
+  "properties": {
+    "schema_version": {"const": "pro-blind-review-preparation/v1"},
+    "boundary": {"const": "LOCAL-SEALED-BLIND-REVIEW-PREPARATION;EXTERNAL-DISCLOSURE-NOT-AUTHORIZED;NO-TRANSMISSION-OR-EXTERNAL-VERDICT"},
+    "case_id": {"const": "PRO-BLIND-MECH-ARCH-001"},
+    "local_sealed_judgment": {"$ref": "#/$defs/local_judgment"},
+    "external_blind_review_card": {"$ref": "#/$defs/external_card"},
+    "disclosure_manifest": {"$ref": "#/$defs/disclosure_manifest"},
+    "preparation_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "source_ref": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "pattern": "^(?!/)(?!.*\\.\\.).+"}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "local_judgment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["storage", "external_disclosure", "source_inputs", "verified_local_facts", "codex_judgment"],
+      "properties": {
+        "storage": {"const": "local_sealed_only"}, "external_disclosure": {"const": "not_authorized"},
+        "source_inputs": {"type": "object", "additionalProperties": false, "required": ["mechanism_cards", "system_narrative_trace", "architecture_atlas_d0_d5", "architecture_atlas_d6_d9", "architecture_edges"], "properties": {"mechanism_cards": {"$ref": "#/$defs/source_ref"}, "system_narrative_trace": {"$ref": "#/$defs/source_ref"}, "architecture_atlas_d0_d5": {"$ref": "#/$defs/source_ref"}, "architecture_atlas_d6_d9": {"$ref": "#/$defs/source_ref"}, "architecture_edges": {"$ref": "#/$defs/source_ref"}}},
+        "verified_local_facts": {"type": "object", "additionalProperties": false, "required": ["mechanism_card_count", "architecture_view_ids", "public_claim_count", "status_ceiling", "runtime_authority_recovery"], "properties": {"mechanism_card_count": {"const": 15}, "architecture_view_ids": {"type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true, "items": {"type": "string"}}, "public_claim_count": {"const": 0}, "status_ceiling": {"const": "experimental/candidate_mapped_only"}, "runtime_authority_recovery": {"const": "unknown"}}},
+        "codex_judgment": {"type": "object", "additionalProperties": false, "required": ["question", "why_independent_review_has_information_value", "success_is_not", "local_unknowns_to_preserve"], "properties": {"question": {"type": "string", "minLength": 1}, "why_independent_review_has_information_value": {"type": "string", "minLength": 1}, "success_is_not": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}}, "local_unknowns_to_preserve": {"type": "array", "minItems": 4, "items": {"type": "string", "minLength": 1}}}}
+      }
+    },
+    "external_card": {
+      "type": "object", "additionalProperties": false,
+      "required": ["task_id", "external_disclosure", "send_status", "reader_context", "neutral_problem", "behavioral_success_criteria", "explicit_non_successes", "materials_for_first_pass", "known_uncovered_areas", "requested_output", "non_assertion"],
+      "properties": {"task_id": {"const": "PRO-BLIND-MECH-ARCH-001-FIRST-PASS"}, "external_disclosure": {"const": "not_authorized"}, "send_status": {"const": "blocked_pending_owner_authorization"}, "reader_context": {"type": "string", "minLength": 1}, "neutral_problem": {"type": "string", "minLength": 1}, "behavioral_success_criteria": {"type": "array", "minItems": 4, "items": {"type": "string", "minLength": 1}}, "explicit_non_successes": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}}, "materials_for_first_pass": {"type": "array", "maxItems": 0}, "known_uncovered_areas": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}}, "requested_output": {"type": "array", "minItems": 5, "items": {"type": "string", "minLength": 1}}, "non_assertion": {"type": "string", "minLength": 1}}
+    },
+    "disclosure_manifest": {"type": "object", "additionalProperties": false, "required": ["external_disclosure", "allowed_materials", "transmission", "prohibited_categories", "authorization_required_before_send"], "properties": {"external_disclosure": {"const": "not_authorized"}, "allowed_materials": {"type": "array", "maxItems": 0}, "transmission": {"const": "prohibited"}, "prohibited_categories": {"type": "array", "minItems": 6, "items": {"type": "string", "minLength": 1}}, "authorization_required_before_send": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}}}}
+  }
+}

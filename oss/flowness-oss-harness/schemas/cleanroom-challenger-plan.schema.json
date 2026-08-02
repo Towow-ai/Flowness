@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_install", "dependency_policy", "environment"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "cleanroom-challenger-plan/v1"},
+    "candidate_install": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "reference_kind", "reference", "artifact_sha256"],
+      "properties": {
+        "mode": {"type": "string", "enum": ["sealed_artifact", "source_checkout", "editable", "local_absolute_path"]},
+        "reference_kind": {"type": "string", "enum": ["opaque_artifact_id", "source_checkout", "editable_install", "local_absolute_path"]},
+        "reference": {"type": "string", "minLength": 1},
+        "artifact_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "dependency_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resolution", "dependencies"],
+      "properties": {
+        "resolution": {"type": "string", "enum": ["offline_no_network", "network_required"]},
+        "dependencies": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inherit_parent", "requested_variables"],
+      "properties": {
+        "inherit_parent": {"type": "boolean"},
+        "requested_variables": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z_][A-Z0-9_]*$"}}
+      }
+    }
+  }
+}

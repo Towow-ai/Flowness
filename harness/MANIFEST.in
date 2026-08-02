@@ -1,0 +1,7 @@
+recursive-include src/towow/glue *.json *.md *.py *.sh
+recursive-include src/towow/skills *.md
+exclude src/towow/skills/downtime-recovery/anchors/README.md
+exclude src/towow/skills/fix-self-check/anchors/n1-ep-b-unilateral-flag-flip.md
+exclude src/towow/skills/fix-self-check/anchors/p1-fork-verdict-exemplars.md
+exclude src/towow/skills/handoff/anchors/regression-anchors.md
+exclude src/towow/skills/meta-review/anchors/regression-anchors.md

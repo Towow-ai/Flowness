@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/wow-continuity-audit-observation.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "audit_id", "scope", "provenance", "github_repository", "unobserved", "preflight_binding", "audit_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "wow-continuity-audit-observation/v1"},
+    "audit_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "scope": {"type": "string", "const": "private_staging_only"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "github_repository": {"$ref": "#/$defs/repository"},
+    "unobserved": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "preflight_binding": {"$ref": "#/$defs/binding"},
+    "audit_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "provenance": {"type": "object", "additionalProperties": false, "required": ["observed_at", "method", "read_only", "external_mutation"], "properties": {"observed_at": {"type": "string", "const": "2026-08-02"}, "method": {"type": "string", "const": "authenticated_read_only_GitHub_repository_metadata"}, "read_only": {"type": "boolean", "const": true}, "external_mutation": {"type": "boolean", "const": false}}},
+    "repository": {"type": "object", "additionalProperties": false, "required": ["name_with_owner", "node_id", "visibility", "archived", "disabled", "default_branch", "license_spdx", "stars", "forks", "watchers", "created_at", "updated_at", "has_issues", "open_issues_count", "has_discussions"], "properties": {"name_with_owner": {"type": "string", "const": "NatureBlueee/wow-harness"}, "node_id": {"type": "string", "const": "R_kgDOR93EIg"}, "visibility": {"type": "string", "const": "public"}, "archived": {"type": "boolean", "const": false}, "disabled": {"type": "boolean", "const": false}, "default_branch": {"type": "string", "const": "main"}, "license_spdx": {"type": "string", "const": "MIT"}, "stars": {"type": "integer", "const": 95}, "forks": {"type": "integer", "const": 14}, "watchers": {"type": "integer", "const": 0}, "created_at": {"type": "string", "const": "2026-04-09T08:06:07Z"}, "updated_at": {"type": "string", "const": "2026-07-27T05:54:35Z"}, "has_issues": {"type": "boolean", "const": true}, "open_issues_count": {"type": "integer", "const": 5}, "has_discussions": {"type": "boolean", "const": false}}},
+    "binding": {"type": "object", "additionalProperties": false, "required": ["consumer", "state", "verified_bindings", "required_unknowns"], "properties": {"consumer": {"type": "string", "const": "wow_migration_preflight"}, "state": {"type": "string", "const": "blocked_missing_required_observations"}, "verified_bindings": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "required_unknowns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Package-specific external-send owner approval binding",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "approval_id", "package_id", "package_hash", "graph_hash", "candidate_id", "snapshot_id", "owner_approval"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "channel-package-external-send-approval/v1"},
+    "approval_id": {"type": "string", "pattern": "^channel-send-approval-[a-f0-9]{24}$"},
+    "package_id": {"type": "string", "minLength": 1}, "package_hash": {"$ref": "#/$defs/sha256"}, "graph_hash": {"$ref": "#/$defs/sha256"}, "candidate_id": {"type": "string", "minLength": 1}, "snapshot_id": {"type": "string", "minLength": 1},
+    "owner_approval": {"$ref": "#/$defs/owner_approval"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "owner_approval": {"type": "object", "additionalProperties": false, "required": ["schema_version", "owner_id", "key_id", "candidate_hash", "snapshot_id", "policy_hash", "decision_hash", "decision", "issued_at", "expires_at", "signature"], "properties": {
+      "schema_version": {"type": "string", "const": "owner-approval/v1"}, "owner_id": {"type": "string", "minLength": 1}, "key_id": {"type": "string", "minLength": 1}, "candidate_hash": {"$ref": "#/$defs/sha256"}, "snapshot_id": {"type": "string", "minLength": 1}, "policy_hash": {"$ref": "#/$defs/sha256"}, "decision_hash": {"$ref": "#/$defs/sha256"}, "decision": {"type": "string", "const": "approve"}, "issued_at": {"type": "string", "format": "date-time"}, "expires_at": {"type": "string", "format": "date-time"},
+      "signature": {"type": "object", "additionalProperties": false, "required": ["algorithm", "value_base64"], "properties": {"algorithm": {"type": "string", "const": "ed25519"}, "value_base64": {"type": "string", "minLength": 88, "maxLength": 88}}}
+    }}
+  }
+}

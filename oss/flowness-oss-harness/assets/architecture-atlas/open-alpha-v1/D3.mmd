@@ -1,0 +1,28 @@
+flowchart TB
+  H["D3 | open-alpha-v1\nMIXED TRUTH: logical planes, not topology"]:::status
+  subgraph Control["CONTROL PLANE — EXPERIMENTAL / LOCAL"]
+    Plan["plan/task graph"] --> Claim["ready set / claim fence"]
+  end
+  subgraph ExecutionData["EXECUTION + DATA PLANE — UNKNOWN / BLOCKED at runtime"]
+    Worker["worktree / worker boundary"] --> Submit["envelope submission"]
+  end
+  subgraph PolicySecurity["POLICY + SECURITY PLANE — UNKNOWN / BLOCKED at runtime"]
+    Policy["policy / permission decision"] --> Security["identity / credential / egress boundary"]
+  end
+  subgraph EvidenceEvaluation["EVIDENCE + EVALUATION PLANE — EXPERIMENTAL / LOCAL"]
+    Gate["commit gate"] --> Log["event ledger"] --> Projection["projection / review / finding"]
+  end
+  Policy -. "authorization crossing" .-> Claim
+  Security -. "execution boundary" .-> Worker
+  Claim -. "UNKNOWN runtime crossing" .-> Worker
+  Submit -. "candidate evidence crossing" .-> Gate
+  Gate --> Recovery["CROSS-PLANE RECOVERY PATH<br/>Failure: evidence or authority crossing fails<br/>Recovery: finding / reflow / owner route"]
+  Projection --> Recovery
+  Recovery -.-> Plan
+  Recovery -.-> Policy
+  Target["DESIGNED TARGET\nsealed deployment-plane wiring"] -.-> Worker
+  Evidence["CURRENT_VERIFIED Evidence: static cards + trace map only"] -.-> EvidenceEvaluation
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling["PROOF CEILING\nCannot prove deployed wiring, security enforcement, SLOs"]:::boundary
+  classDef status fill:#fff8e1,stroke:#b26a00,color:#4a2900;
+  classDef boundary fill:#fdecec,stroke:#b91c1c,color:#5f1111;

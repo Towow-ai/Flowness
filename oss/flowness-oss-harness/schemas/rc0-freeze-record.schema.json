@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/rc0-freeze-record.schema.json",
+  "title": "Flowness Open Alpha RC0 freeze record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "freeze_id", "release_name", "source_commit", "source_tree", "scope_manifest_hash", "export_manifest_hash", "payload_aggregate_hash", "rights_policy_sha256", "publication_state", "release_authorized", "owner_approval_evidence", "next_required_gate", "record_hash"],
+  "properties": {
+    "schema_version": {"const": "flowness-rc0-freeze-record/v1"},
+    "freeze_id": {"type": "string", "pattern": "^rc0-[0-9a-f]{24}$"},
+    "release_name": {"const": "Flowness Open Alpha RC0"},
+    "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "scope_manifest_hash": {"$ref": "#/$defs/sha256"},
+    "export_manifest_hash": {"$ref": "#/$defs/sha256"},
+    "payload_aggregate_hash": {"$ref": "#/$defs/sha256"},
+    "rights_policy_sha256": {"$ref": "#/$defs/sha256"},
+    "publication_state": {"const": "frozen_candidate_not_authorized"},
+    "release_authorized": {"const": false},
+    "owner_approval_evidence": {"type": "array", "maxItems": 0},
+    "next_required_gate": {"const": "sealed-export-clean-install-and-independent-jury"},
+    "record_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

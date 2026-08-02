@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/release-decision.schema.json",
+  "title": "Deterministic release decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_id",
+    "snapshot_id",
+    "policy_version",
+    "target_stage",
+    "computed_at",
+    "module_results",
+    "gate_results",
+    "open_blockers",
+    "engine_verdict",
+    "owner_decision",
+    "release_authorized",
+    "decision_hash"
+  ],
+  "properties": {
+    "candidate_id": {"$ref": "#/$defs/id"},
+    "snapshot_id": {"$ref": "#/$defs/sha256"},
+    "policy_version": {"$ref": "#/$defs/nonemptyString"},
+    "target_stage": {"enum": ["alpha", "beta", "1.0"]},
+    "computed_at": {"type": "string", "format": "date-time"},
+    "module_results": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/moduleResult"},
+      "minItems": 1
+    },
+    "gate_results": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/gateResult"},
+      "minItems": 1
+    },
+    "open_blockers": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/nonemptyString"},
+      "uniqueItems": true
+    },
+    "engine_verdict": {"enum": ["pass", "blocked"]},
+    "owner_decision": {
+      "type": ["string", "null"],
+      "enum": ["approve", "hold", null]
+    },
+    "release_authorized": {"type": "boolean"},
+    "jury_bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bundle_id", "bundle_hash"],
+      "properties": {
+        "bundle_id": {"$ref": "#/$defs/id"},
+        "bundle_hash": {"$ref": "#/$defs/sha256"}
+      },
+      "description": "Present only for the bundle-only evaluation path and included in decision_hash."
+    },
+    "decision_hash": {
+      "$ref": "#/$defs/sha256",
+      "description": "Canonical hash of the engine decision base, including jury_bundle when present, before owner_decision, release_authorized, and decision_hash are added."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"release_authorized": {"const": true}},
+        "required": ["release_authorized"]
+      },
+      "then": {
+        "properties": {
+          "engine_verdict": {"const": "pass"},
+          "owner_decision": {"const": "approve"},
+          "open_blockers": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"engine_verdict": {"const": "pass"}},
+        "required": ["engine_verdict"]
+      },
+      "then": {
+        "properties": {
+          "open_blockers": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "engine_verdict": {"not": {"const": "pass"}}
+        },
+        "required": ["engine_verdict"]
+      },
+      "then": {
+        "properties": {
+          "release_authorized": {"const": false},
+          "owner_decision": {
+            "type": ["string", "null"],
+            "enum": ["hold", null]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maturity": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+    },
+    "moduleResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module_id",
+        "declared_maturity",
+        "effective_maturity",
+        "required_maturity",
+        "dependency_pass",
+        "missing_evidence",
+        "effective_verdict"
+      ],
+      "properties": {
+        "module_id": {"$ref": "#/$defs/id"},
+        "declared_maturity": {"$ref": "#/$defs/maturity"},
+        "effective_maturity": {"$ref": "#/$defs/maturity"},
+        "required_maturity": {"$ref": "#/$defs/maturity"},
+        "dependency_pass": {"type": "boolean"},
+        "missing_evidence": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonemptyString"},
+          "uniqueItems": true
+        },
+        "effective_verdict": {"enum": ["pass", "blocked"]}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"effective_verdict": {"const": "pass"}},
+            "required": ["effective_verdict"]
+          },
+          "then": {
+            "properties": {
+              "dependency_pass": {"const": true},
+              "missing_evidence": {"maxItems": 0}
+            }
+          }
+        }
+      ]
+    },
+    "checkResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "verdict", "judge_states"],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "pending",
+            "blocked_missing_evidence"
+          ]
+        },
+        "judge_states": {
+          "type": "array",
+          "items": {"enum": ["pass", "fail", "unknown", "na"]},
+          "minItems": 1
+        }
+      }
+    },
+    "roleCoverageValue": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "gateResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gate_id",
+        "mandatory",
+        "check_results",
+        "role_coverage",
+        "verdict",
+        "reasons"
+      ],
+      "properties": {
+        "gate_id": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+        "mandatory": {"type": "boolean"},
+        "check_results": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/checkResult"},
+          "minItems": 1
+        },
+        "role_coverage": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/roleCoverageValue"}
+        },
+        "verdict": {"enum": ["pass", "blocked"]},
+        "reasons": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonemptyString"},
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"verdict": {"const": "pass"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "reasons": {"maxItems": 0}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

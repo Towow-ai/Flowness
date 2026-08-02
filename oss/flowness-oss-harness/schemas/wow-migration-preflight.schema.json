@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/wow-migration-preflight.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "preflight_id", "scope", "legacy_audit", "candidate_identity", "migration_plan", "input_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "wow-migration-preflight/v1"},
+    "preflight_id": {"$ref": "#/$defs/id"},
+    "scope": {"type": "string", "const": "private_staging_only"},
+    "legacy_audit": {"$ref": "#/$defs/legacyAudit"},
+    "candidate_identity": {"$ref": "#/$defs/candidate"},
+    "migration_plan": {"$ref": "#/$defs/plan"},
+    "input_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "evidence": {"type": "string", "minLength": 1, "maxLength": 500},
+    "state": {"type": "string", "enum": ["verified", "verified_absent", "unverified"]},
+    "checked": {"type": "object", "additionalProperties": false, "required": ["state", "evidence_ref"], "properties": {"state": {"$ref": "#/$defs/state"}, "evidence_ref": {"$ref": "#/$defs/evidence"}}},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["name", "state", "target_commit_sha", "evidence_ref"], "properties": {"name": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{0,127}$"}, "state": {"$ref": "#/$defs/state"}, "target_commit_sha": {"$ref": "#/$defs/commit"}, "evidence_ref": {"$ref": "#/$defs/evidence"}}},
+    "legacyAudit": {"type": "object", "additionalProperties": false, "required": ["audit_id", "repository", "remote", "default_branch", "legacy_branch", "legacy_tag", "rights", "issue_attribution"], "properties": {"audit_id": {"$ref": "#/$defs/id"}, "repository": {"type": "string", "const": "NatureBlueee/wow-harness"}, "remote": {"type": "object", "additionalProperties": false, "required": ["url", "state", "head_commit_sha", "evidence_ref"], "properties": {"url": {"type": "string", "minLength": 1}, "state": {"$ref": "#/$defs/state"}, "head_commit_sha": {"$ref": "#/$defs/commit"}, "evidence_ref": {"$ref": "#/$defs/evidence"}}}, "default_branch": {"type": "object", "additionalProperties": false, "required": ["name", "state", "evidence_ref"], "properties": {"name": {"type": "string", "minLength": 1}, "state": {"$ref": "#/$defs/state"}, "evidence_ref": {"$ref": "#/$defs/evidence"}}}, "legacy_branch": {"$ref": "#/$defs/ref"}, "legacy_tag": {"$ref": "#/$defs/ref"}, "rights": {"type": "object", "additionalProperties": false, "required": ["state", "evidence_ref", "approved_scope"], "properties": {"state": {"$ref": "#/$defs/state"}, "evidence_ref": {"$ref": "#/$defs/evidence"}, "approved_scope": {"type": "string", "minLength": 1}}}, "issue_attribution": {"type": "object", "additionalProperties": false, "required": ["state", "classification_state", "classification_hash", "snapshot_hash", "evidence_ref", "classification_ref", "issue_count", "pull_request_count", "contributor_count"], "properties": {"state": {"$ref": "#/$defs/state"}, "classification_state": {"type": "string", "enum": ["template_pending", "verified_for_preflight"]}, "classification_hash": {"$ref": "#/$defs/hash"}, "snapshot_hash": {"$ref": "#/$defs/hash"}, "evidence_ref": {"$ref": "#/$defs/evidence"}, "classification_ref": {"$ref": "#/$defs/evidence"}, "issue_count": {"type": "integer", "minimum": 0}, "pull_request_count": {"type": "integer", "minimum": 0}, "contributor_count": {"type": "integer", "minimum": 0}}}}},
+    "candidate": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "snapshot_id", "candidate_sha256", "export_state", "sealed_export_ref"], "properties": {"candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"$ref": "#/$defs/hash"}, "candidate_sha256": {"$ref": "#/$defs/hash"}, "export_state": {"type": "string", "enum": ["sealed_export_verified", "unverified"]}, "sealed_export_ref": {"$ref": "#/$defs/evidence"}}},
+    "step": {"type": "object", "additionalProperties": false, "required": ["action", "mode"], "properties": {"action": {"type": "string", "enum": ["seal_public_export", "create_legacy_branch", "create_legacy_tag", "write_migration_guide", "classify_legacy_issues_and_prs", "create_replacement_commit", "verify_local_history_license_and_clean_install", "owner_gate_before_external_mutation"]}, "mode": {"type": "string", "enum": ["planned_only", "execute"]}}},
+    "plan": {"type": "object", "additionalProperties": false, "required": ["destination", "planned_steps", "external_actions_after_owner_gate"], "properties": {"destination": {"type": "string", "const": "Towow-ai/Flowness"}, "planned_steps": {"type": "array", "minItems": 8, "maxItems": 8, "items": {"$ref": "#/$defs/step"}}, "external_actions_after_owner_gate": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "string"}}}}
+  }
+}

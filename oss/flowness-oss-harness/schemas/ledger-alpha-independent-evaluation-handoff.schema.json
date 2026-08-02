@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kit_id", "scope", "authorization", "input_binding", "runner", "required_assertion_ids", "receipt_contract", "boundary", "handoff_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "ledger-alpha-independent-evaluation-handoff/v1"},
+    "kit_id": {"type": "string", "const": "ledger-alpha-independent-evaluation-kit/v0"},
+    "scope": {"type": "string", "const": "private_staging_evaluator_handoff"},
+    "authorization": {"type": "string", "const": "not_authorized"},
+    "input_binding": {"$ref": "#/$defs/binding"},
+    "runner": {"$ref": "#/$defs/file_name_hash"},
+    "required_assertion_ids": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "string"}},
+    "receipt_contract": {"type": "object", "additionalProperties": false, "required": ["schema_version", "redacted", "retains_every_failure", "preflight_artifact_requirement", "preflight_compatibility_boundary"], "properties": {"schema_version": {"type": "string", "const": "ledger-alpha-independent-evaluation-receipt/v1"}, "redacted": {"type": "boolean", "const": true}, "retains_every_failure": {"type": "boolean", "const": true}, "preflight_artifact_requirement": {"type": "string", "const": "cleanroom"}, "preflight_compatibility_boundary": {"type": "string", "minLength": 1}}},
+    "boundary": {"type": "string", "minLength": 1},
+    "handoff_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "file_name_hash": {"type": "object", "additionalProperties": false, "required": ["file_name", "sha256"], "properties": {"file_name": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "binding_item": {"type": "object", "additionalProperties": false, "required": ["file_name", "bytes", "sha256"], "properties": {"file_name": {"type": "string", "minLength": 1}, "bytes": {"type": "integer", "minimum": 0}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "binding": {"type": "object", "additionalProperties": false, "required": ["sealed_candidate_artifact", "sealed_candidate_artifact_manifest", "sealed_candidate_export_manifest", "candidate_source_inventory"], "properties": {"sealed_candidate_artifact": {"$ref": "#/$defs/binding_item"}, "sealed_candidate_artifact_manifest": {"$ref": "#/$defs/binding_item"}, "sealed_candidate_export_manifest": {"$ref": "#/$defs/binding_item"}, "candidate_source_inventory": {"$ref": "#/$defs/binding_item"}}}
+  }
+}

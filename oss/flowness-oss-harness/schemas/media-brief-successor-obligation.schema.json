@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private media-brief predecessor to successor obligation packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "boundary", "predecessor_contract", "predecessor_media_brief", "successor_media_brief", "actions", "semantic_review_state", "claim_boundary_review_state", "external_release_effect", "packet_hash"],
+  "properties": {
+    "schema_version": {"const": "media-brief-successor-obligation/v1"},
+    "packet_id": {"type": "string", "minLength": 1},
+    "boundary": {"const": "PRIVATE-PREDECESSOR-TO-SUCCESSOR-OBLIGATION;HASH-BOUND-PENDING-ONLY;NO-SEMANTIC-APPROVAL-NO-PUBLISH"},
+    "predecessor_contract": {"$ref": "#/$defs/predecessorContract"},
+    "predecessor_media_brief": {"$ref": "#/$defs/mediaBrief"},
+    "successor_media_brief": {"$ref": "#/$defs/successorBrief"},
+    "actions": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/action"}},
+    "semantic_review_state": {"const": "unreviewed"},
+    "claim_boundary_review_state": {"const": "unreviewed"},
+    "external_release_effect": {"const": "no_promotion"},
+    "packet_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "predecessorContract": {"type": "object", "additionalProperties": false, "required": ["contract_id", "contract_hash", "path", "sha256"], "properties": {"contract_id": {"type": "string", "minLength": 1}, "contract_hash": {"$ref": "#/$defs/hash"}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "mediaBrief": {"type": "object", "additionalProperties": false, "required": ["asset_id", "path", "sha256", "relation_state"], "properties": {"asset_id": {"const": "asset.ledger-media-speaker-video-private-kit"}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "relation_state": {"const": "private_draft"}}},
+    "successorBrief": {"type": "object", "additionalProperties": false, "required": ["asset_id", "path", "sha256"], "properties": {"asset_id": {"const": "asset.ledger-media-speaker-video-private-kit"}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "obligation": {"type": "object", "additionalProperties": false, "required": ["obligation_id", "consumer_kind", "path", "sha256", "action", "semantic_state", "review_state", "claim_boundary_state", "external_release_effect"], "properties": {"obligation_id": {"type": "string", "minLength": 1}, "consumer_kind": {"enum": ["narrative_en", "narrative_zh_cn", "demo_provenance", "whitepaper_outline_en", "whitepaper_outline_zh_cn"]}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "action": {"enum": ["regenerate_and_review", "rebind_and_review"]}, "semantic_state": {"const": "not_proven_by_hash_or_dependency"}, "review_state": {"const": "pending_unreviewed"}, "claim_boundary_state": {"const": "pending_unreviewed"}, "external_release_effect": {"const": "no_promotion"}}},
+    "trigger": {"type": "object", "additionalProperties": false, "required": ["asset_id", "predecessor_hash", "successor_hash"], "properties": {"asset_id": {"const": "asset.ledger-media-speaker-video-private-kit"}, "predecessor_hash": {"$ref": "#/$defs/hash"}, "successor_hash": {"$ref": "#/$defs/hash"}}},
+    "action": {"type": "object", "additionalProperties": false, "required": ["action_instance_id", "trigger", "predecessor_consumer", "state", "closure_state", "effect"], "properties": {"action_instance_id": {"type": "string", "minLength": 1}, "trigger": {"$ref": "#/$defs/trigger"}, "predecessor_consumer": {"$ref": "#/$defs/obligation"}, "state": {"const": "required_pending"}, "closure_state": {"const": "open"}, "effect": {"const": "review_only_no_semantic_or_release_promotion"}}}
+  }
+}

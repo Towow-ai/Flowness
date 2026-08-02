@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "input_slots"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "cleanroom-challenger-preflight-input/v1"},
+    "input_slots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sealed_candidate_artifact", "sealed_candidate_artifact_manifest", "sealed_candidate_export_manifest", "challenge_plan"],
+      "properties": {
+        "sealed_candidate_artifact": {"$ref": "#/$defs/file"},
+        "sealed_candidate_artifact_manifest": {"$ref": "#/$defs/file"},
+        "sealed_candidate_export_manifest": {"$ref": "#/$defs/file"},
+        "challenge_plan": {"$ref": "#/$defs/file"}
+      }
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

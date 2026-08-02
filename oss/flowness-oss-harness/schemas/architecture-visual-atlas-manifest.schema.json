@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private evidence-bounded Flowness D0-D9 visual Atlas",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "boundary", "source_inputs", "views", "coverage", "manifest_hash"],
+  "properties": {
+    "schema_version": {"const": "architecture-visual-atlas-manifest/v1"},
+    "boundary": {"const": "PRIVATE-LOCAL-ATLAS;STATIC-CARD-AND-TRACE-MAP-ONLY;NO-RUNTIME-RIGHTS-OR-PUBLICATION-CLAIM"},
+    "source_inputs": {"type": "object", "additionalProperties": false, "required": ["architecture_config", "mechanism_cards", "system_narrative_trace_map", "cross_layer_edges"], "properties": {"architecture_config": {"$ref": "#/$defs/source"}, "mechanism_cards": {"$ref": "#/$defs/source"}, "system_narrative_trace_map": {"$ref": "#/$defs/source"}, "cross_layer_edges": {"$ref": "#/$defs/source"}}},
+    "views": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/view"}},
+    "coverage": {"type": "object", "additionalProperties": false, "required": ["diagram_ids", "mechanism_count", "all_views_private_local_candidate", "all_views_show_current_target_unknown", "public_claims"], "properties": {"diagram_ids": {"type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true, "items": {"type": "string", "pattern": "^D[0-9]$"}}, "mechanism_count": {"type": "integer", "minimum": 1}, "all_views_private_local_candidate": {"const": true}, "all_views_show_current_target_unknown": {"const": true}, "public_claims": {"const": 0}}},
+    "manifest_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "source": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "view": {"type": "object", "additionalProperties": false, "required": ["diagram_id", "title", "audience", "status", "source", "mechanism_ids", "required_elements", "element_contract", "global_element_contract", "render_status", "evidence_status", "unknown_boundaries", "failure_path", "recovery_path", "target_boundary", "cannot_prove"], "properties": {"diagram_id": {"type": "string", "pattern": "^D[0-9]$"}, "title": {"type": "string", "minLength": 1}, "audience": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "status": {"const": "private_local_candidate"}, "source": {"$ref": "#/$defs/source"}, "mechanism_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "required_elements": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "element_contract": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/element"}}, "global_element_contract": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/element"}}, "render_status": {"const": "unknown_no_pinned_renderer"}, "evidence_status": {"const": "static_card_and_trace_map_only"}, "unknown_boundaries": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "failure_path": {"type": "string", "minLength": 1}, "recovery_path": {"type": "string", "minLength": 1}, "target_boundary": {"type": "string", "minLength": 1}, "cannot_prove": {"type": "string", "minLength": 1}}},
+    "element": {"type":"object", "additionalProperties": false, "required":["element","status","node_ids","evidence_ids","source_coordinate"], "properties":{"element":{"type":"string","minLength":1},"status":{"enum":["present","unknown","out_of_scope","not_applicable"]},"node_ids":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}},"edge_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},"evidence_ids":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}},"source_coordinate":{"type":"string","minLength":1}}}
+  }
+}

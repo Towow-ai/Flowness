@@ -1,0 +1,28 @@
+flowchart LR
+  H["D2 | open-alpha-v1\nMIXED TRUTH: lifecycle candidate, not live state machine"]:::status
+  Planned["EXPERIMENTAL / LOCAL\nplanned"] -->|EDGE-D2-001| Ready["ready"]
+  Ready -->|EDGE-D2-002| Claimed["claimed"]
+  Claimed -.->|EDGE-D2-003| Running["running\nUNKNOWN / BLOCKED worker runtime"]
+  Running -.->|EDGE-D2-004| EnvelopePending["envelope pending"]
+  EnvelopePending -->|EDGE-D2-005| CommitAccepted["commit accepted"]
+  EnvelopePending -->|EDGE-D2-006| CommitRejected["Failure: commit rejected"]
+  CommitAccepted -->|EDGE-D2-007| Projected["projected"]
+  Projected -->|EDGE-D2-008| UnderReview["under review"]
+  UnderReview -->|EDGE-D2-009| Closed["closed candidate\nUNKNOWN terminal authority"]
+  UnderReview -->|EDGE-D2-010| Rework["Recovery: rework / rebase"]
+  CommitRejected -->|EDGE-D2-011| Rework
+  Running -.->|EDGE-D2-012| Stranded["stranded"]
+  Stranded -->|EDGE-D2-013| RecoveryFinding["recovery finding / dead letter"]
+  RecoveryFinding -->|EDGE-D2-014| Ready
+  RecoveryFinding -->|EDGE-D2-015| OwnerEscalated["owner escalation\nUNKNOWN delivery/authority"]
+  InvalidTransitions["UNKNOWN / BLOCKED\ninvalid transition authority"]
+  TerminalAuthority["UNKNOWN / BLOCKED\nterminal-state authority"] -.-> Closed
+  TruthSource["CURRENT_VERIFIED Evidence: static cards + semantic edge registry"] -.-> EnvelopePending
+  Target["DESIGNED TARGET\nsealed transition evidence"] -.-> Closed
+  Unknown["UNKNOWN / BLOCKED\nruntime terminal paths"] -.-> Running
+  InvalidTransitions -. "Recovery: reject and rework" .-> Rework
+  Ceiling["PROOF CEILING\nCannot prove one deployed state machine or runtime liveness"]:::boundary
+  classDef status fill:#fff8e1,stroke:#b26a00,color:#4a2900;
+  classDef boundary fill:#fdecec,stroke:#b91c1c,color:#5f1111;
+
+%% ARCH-EDGE-IDS:D2: EDGE-D2-001, EDGE-D2-002, EDGE-D2-003, EDGE-D2-004, EDGE-D2-005, EDGE-D2-006, EDGE-D2-007, EDGE-D2-008, EDGE-D2-009, EDGE-D2-010, EDGE-D2-011, EDGE-D2-012, EDGE-D2-013, EDGE-D2-014, EDGE-D2-015

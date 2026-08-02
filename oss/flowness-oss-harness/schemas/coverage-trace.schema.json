@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coverage challenge source trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "phase", "manifest_hash", "role_id", "agent_instance_id", "algorithm_version", "seed", "source_snapshot_hash", "roles_file_sha256", "prompt_template_hash", "traces", "unknowns", "trace_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "coverage-trace/v2"},
+    "phase": {"type": "string", "const": "blind_source_trace"},
+    "manifest_hash": {"$ref": "#/$defs/sha256"},
+    "role_id": {"type": "string", "minLength": 1},
+    "agent_instance_id": {"type": "string", "minLength": 1},
+    "algorithm_version": {"type": "string", "minLength": 1},
+    "seed": {"$ref": "#/$defs/sha256"},
+    "source_snapshot_hash": {"$ref": "#/$defs/sha256"},
+    "roles_file_sha256": {"$ref": "#/$defs/sha256"},
+    "prompt_template_hash": {"$ref": "#/$defs/sha256"},
+    "traces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sample_id", "inventory_item_id", "source_chain", "runtime_evidence_ids", "assessment", "notes"],
+        "properties": {
+          "sample_id": {"type": "string", "minLength": 1},
+          "inventory_item_id": {"type": "string", "minLength": 1},
+          "source_chain": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["definitions", "producers_or_callers", "consumers", "failure_paths", "recovery_paths"],
+            "properties": {
+              "definitions": {"$ref": "#/$defs/evidenceRefs"},
+              "producers_or_callers": {"$ref": "#/$defs/evidenceRefs"},
+              "consumers": {"$ref": "#/$defs/evidenceRefs"},
+              "failure_paths": {"$ref": "#/$defs/evidenceRefs"},
+              "recovery_paths": {"$ref": "#/$defs/evidenceRefs"}
+            }
+          },
+          "runtime_evidence_ids": {"type": "array", "maxItems": 0, "items": {"type": "string"}},
+          "assessment": {"type": "string", "enum": ["candidate_source_chain", "incomplete", "unresolved"]},
+          "notes": {"$ref": "#/$defs/strings"}
+        }
+      }
+    },
+    "unknowns": {"$ref": "#/$defs/strings"},
+    "trace_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "evidenceRefs": {"type": "array", "items": {"$ref": "#/$defs/evidenceRef"}},
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locator", "excerpt", "content_hash", "source_snapshot_hash", "hash_scope"],
+      "properties": {
+        "locator": {"type": "string", "pattern": "^.+:[1-9][0-9]*-[1-9][0-9]*$"},
+        "excerpt": {"type": "string", "minLength": 1},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "source_snapshot_hash": {"$ref": "#/$defs/sha256"},
+        "hash_scope": {"type": "string", "const": "exact_excerpt_utf8"}
+      }
+    }
+  }
+}

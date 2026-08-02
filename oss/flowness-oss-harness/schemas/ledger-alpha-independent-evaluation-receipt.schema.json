@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "kit_id", "scope", "authorization", "handoff", "input_binding", "executor", "environment", "assertions", "all_required_assertions_passed", "evaluation_state", "not_proven", "boundary", "receipt_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "ledger-alpha-independent-evaluation-receipt/v1"},
+    "receipt_id": {"type": "string", "pattern": "^ledger-eval-[0-9a-f]{16}$"},
+    "kit_id": {"type": "string", "const": "ledger-alpha-independent-evaluation-kit/v0"},
+    "scope": {"type": "string", "const": "private_staging_evaluator_result"},
+    "authorization": {"type": "string", "const": "not_authorized"},
+    "handoff": {"type": "object", "additionalProperties": false, "required": ["handoff_hash"], "properties": {"handoff_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "input_binding": {"$ref": "#/$defs/binding"},
+    "executor": {"type": "object", "additionalProperties": false, "required": ["python_file_name", "python_sha256", "runner_sha256"], "properties": {"python_file_name": {"type": "string", "minLength": 1}, "python_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "runner_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "environment": {"type": "object", "additionalProperties": false, "required": ["implementation", "platform", "python_version", "candidate_source_match"], "properties": {"implementation": {"type": "string", "minLength": 1}, "platform": {"type": "string", "minLength": 1}, "python_version": {"type": "string", "minLength": 1}, "candidate_source_match": {"type": "string", "minLength": 1}}},
+    "assertions": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "object", "additionalProperties": false, "required": ["assertion_id", "outcome", "code"], "properties": {"assertion_id": {"type": "string"}, "outcome": {"type": "string", "enum": ["passed", "failed", "error"]}, "code": {"type": "string", "minLength": 1}}}},
+    "all_required_assertions_passed": {"type": "boolean"},
+    "evaluation_state": {"type": "string", "enum": ["all_assertions_passed", "assertions_failed"]},
+    "not_proven": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "boundary": {"type": "string", "minLength": 1},
+    "receipt_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "binding_item": {"type": "object", "additionalProperties": false, "required": ["file_name", "bytes", "sha256"], "properties": {"file_name": {"type": "string", "minLength": 1}, "bytes": {"type": "integer", "minimum": 0}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "binding": {"type": "object", "additionalProperties": false, "required": ["sealed_candidate_artifact", "sealed_candidate_artifact_manifest", "sealed_candidate_export_manifest", "candidate_source_inventory"], "properties": {"sealed_candidate_artifact": {"$ref": "#/$defs/binding_item"}, "sealed_candidate_artifact_manifest": {"$ref": "#/$defs/binding_item"}, "sealed_candidate_export_manifest": {"$ref": "#/$defs/binding_item"}, "candidate_source_inventory": {"$ref": "#/$defs/binding_item"}}}
+  }
+}

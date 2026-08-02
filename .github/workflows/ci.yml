@@ -1,105 +1,53 @@
-name: wow-harness CI
+# SPDX-License-Identifier: Apache-2.0
+
+name: Flowness public CI
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  safety-scans:
-    name: safety-scans
-    runs-on: ubuntu-latest
+  public-contracts:
+    name: public package and release contracts
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
     steps:
-      - name: Checkout (full history for claim git-log checks)
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: harness/open-alpha-requirements.lock
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install deps
-        run: pip install pyyaml jsonschema
-
-      # ------------------------------------------------------------------
-      # Core sanitize + L1/L2 integrity
-      # ------------------------------------------------------------------
-      - name: count-components + meta-self-check
-        # AC 2/3: meta-self-check fires if ci.yml no longer references
-        # count-components.sh. This line IS the anchor — don't rename it.
-        run: bash scripts/ci/count-components.sh
-
-      - name: scan yaml schema (ban cmd_template/exec in settings.json + yaml)
+      - name: Install the locked public test environment
         run: |
-          python3 scripts/ci/scan_yaml_schema.py .claude/settings.json
-          python3 scripts/ci/scan_yaml_schema.py .wow-harness/MANIFEST.yaml
-          python3 scripts/ci/scan_yaml_schema.py .wow-harness/issue-adapter.yaml
-          python3 scripts/ci/scan_yaml_schema.py .wow-harness/deploy-allowlist.yaml
+          python -m pip install -r harness/open-alpha-requirements.lock
+          python -m pip install --no-deps --no-build-isolation \
+            -e ./harness \
+            -e ./oss/flowness-oss-harness \
+            -e ./public-core/flowness-ledger-core
 
-      - name: scan subprocess cfg (python hooks + root scripts)
+      - name: Verify public scope, packages, release rules, and clean-room logic
         run: |
-          find scripts -name '*.py' -not -path 'scripts/fragments/*' -print0 \
-            | xargs -0 -r python3 scripts/ci/scan_subprocess_cfg.py
-
-      - name: scan verify artifacts — positive claim cross-source
-        run: python3 scripts/ci/scan_verify_artifacts.py --claims
-
-      - name: detect rebaseline triggers (MANIFEST vs live)
-        run: python3 scripts/ci/detect_rebaseline_triggers.py
-
-      # ------------------------------------------------------------------
-      # WP-SEC-1 seam verifiers
-      # ------------------------------------------------------------------
-      - name: lead INDEX install-wow-harness slot preserved (patch_d)
-        run: grep -q 'install-wow-harness' .claude/skills/lead/INDEX.md
-
-      - name: settings.json command count (15 pre-WP-11, 16 post-WP-11)
-        run: |
-          N=$(python3 -c "import json; s=json.load(open('.claude/settings.json')); print(sum(len(e.get('hooks',[])) for stage in s.get('hooks',{}).values() for e in stage))")
-          echo "settings.json command count: $N"
-          case "$N" in
-            15|16) echo "ok";;
-            *) echo "UNEXPECTED command count: $N (expected 15 pre-WP-11 or 16 post-WP-11)"; exit 2;;
-          esac
-
-      - name: MANIFEST L-registry schema (8 required top-level keys)
-        run: |
-          python3 - <<'PY'
-          import sys, yaml
-          d = yaml.safe_load(open('.wow-harness/MANIFEST.yaml'))
-          required = [
-              'L1_registry', 'L2_registry', 'L3_registry', 'L4_registry',
-              'L5_registry', 'settings_command_registry', 'rebaseline_triggers',
-              'physical_files',
-          ]
-          missing = [k for k in required if k not in d]
-          if missing:
-              print('missing MANIFEST keys:', missing)
-              sys.exit(2)
-          assert len(d['L1_registry']) > 0, 'L1_registry must be non-empty'
-          assert len(d['settings_command_registry']) in (15, 16), \
-              f"settings_command_registry length {len(d['settings_command_registry'])} not in (15, 16)"
-          print('MANIFEST schema ok')
-          PY
-
-      - name: sanitize fixture (47.118.31.230 multi-category resolved_as SECRET)
-        # AC 11: cross-reference with WP-02 test 7. Ground truth is ADR-043
-        # Annex A.1 lines 1106 + 1112 — the IP plus API-key context triggers
-        # SECRET + NETWORK + PROTOCOL_INTERNAL; arbitration hierarchy wins SECRET.
-        run: |
-          python3 - <<'PY'
-          import sys
-          sys.path.insert(0, 'scripts')
-          from sanitize import _classify_line, _arbitrate
-          line = ('https://47.118.31.230/formulation/xyz '
-                  'and key sk-ant-api03-abcdefghijklmnopqrstuvwxyz12')
-          hits = _classify_line(line)
-          resolved = _arbitrate(hits)
-          assert len(hits) >= 3, f'expected >=3 categories, got {hits}'
-          assert 'SECRET' in hits, f'SECRET not in {hits}'
-          assert resolved == 'SECRET', f'arbitration returned {resolved} not SECRET'
-          print(f'sanitize fixture ok: categories={hits} resolved_as={resolved}')
-          PY
+          python -m pytest -q \
+            oss/flowness-oss-harness/tests/test_public_readme.py \
+            oss/flowness-oss-harness/tests/test_discovery_launch_pack.py \
+            oss/flowness-oss-harness/tests/test_open_alpha_package_scope.py \
+            oss/flowness-oss-harness/tests/test_public_export.py \
+            oss/flowness-oss-harness/tests/test_public_harness_package.py \
+            oss/flowness-oss-harness/tests/test_public_package_manifest.py \
+            oss/flowness-oss-harness/tests/test_public_package_preflight.py \
+            oss/flowness-oss-harness/tests/test_open_alpha_release_audit.py \
+            oss/flowness-oss-harness/tests/test_rc0_sealed_export.py \
+            oss/flowness-oss-harness/tests/test_cleanroom_acceptance.py \
+            oss/flowness-oss-harness/tests/test_cleanroom_challenger.py \
+            public-core/flowness-ledger-core/tests/test_readme_entrypoint.py \
+            public-core/flowness-ledger-core/tests/test_alpha_quickstart.py \
+            public-core/flowness-ledger-core/tests/test_install_receipt.py

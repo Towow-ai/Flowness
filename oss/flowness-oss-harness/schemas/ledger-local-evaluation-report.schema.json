@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private local Ledger evaluation report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "report_id", "scope", "authorization", "environment", "candidate", "input_sources", "records", "aggregates", "failure_records", "all_supplied_observations_passed", "not_proven", "boundary", "report_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "ledger-local-evaluation-report/v1"},
+    "report_id": {"type": "string", "pattern": "^ledger-local-evaluation-[0-9a-f]{16}$"},
+    "scope": {"type": "string", "const": "private_staging_local_reproducibility_report"},
+    "authorization": {"type": "string", "const": "not_authorized"},
+    "environment": {"type": "object", "additionalProperties": false, "required": ["python", "platform", "evaluator_implementation", "evaluator_candidate_source_match"], "properties": {"python": {"type": "string", "minLength": 1}, "platform": {"type": "string", "minLength": 1}, "evaluator_implementation": {"type": "string", "minLength": 1}, "evaluator_candidate_source_match": {"type": "string", "minLength": 1}}},
+    "candidate": {"type": "object", "additionalProperties": false, "required": ["measurement_candidate_id", "evaluator_candidate_source_inventory_sha256", "cross_surface_identity_status"], "properties": {"measurement_candidate_id": {"type": "string", "minLength": 1}, "evaluator_candidate_source_inventory_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "cross_surface_identity_status": {"type": "string", "const": "not_established_by_this_report"}}},
+    "input_sources": {"type": "object", "additionalProperties": false, "required": ["semantic", "measurements", "evaluator"], "properties": {"semantic": {"$ref": "#/$defs/sources"}, "measurements": {"$ref": "#/$defs/sources"}, "evaluator": {"$ref": "#/$defs/sources"}}},
+    "records": {"type": "object", "additionalProperties": false, "required": ["semantic_trial_receipts", "raw_measurement_receipts", "evaluator_receipts"], "properties": {"semantic_trial_receipts": {"type": "array", "minItems": 1, "items": {"type": "object"}}, "raw_measurement_receipts": {"type": "array", "minItems": 1, "items": {"type": "object"}}, "evaluator_receipts": {"type": "array", "minItems": 1, "items": {"type": "object"}}}},
+    "aggregates": {"type": "object", "additionalProperties": false, "required": ["semantic_trials", "raw_measurements", "evaluator_assertions"], "properties": {"semantic_trials": {"$ref": "#/$defs/counts"}, "raw_measurements": {"$ref": "#/$defs/measurement_counts"}, "evaluator_assertions": {"$ref": "#/$defs/counts"}}},
+    "failure_records": {"type": "array", "items": {"type": "object"}},
+    "all_supplied_observations_passed": {"type": "boolean"},
+    "not_proven": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "boundary": {"type": "string", "minLength": 1},
+    "report_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "sources": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["file_name", "sha256"], "properties": {"file_name": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}},
+    "counts": {"type": "object", "additionalProperties": false, "required": ["attempts", "passed", "failed", "all_passed"], "properties": {"attempts": {"type": "integer", "minimum": 1}, "passed": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0}, "all_passed": {"type": "boolean"}}},
+    "measurement_counts": {"type": "object", "additionalProperties": false, "required": ["attempts", "passed", "failed", "all_passed", "elapsed_ns"], "properties": {"attempts": {"type": "integer", "minimum": 1}, "passed": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0}, "all_passed": {"type": "boolean"}, "elapsed_ns": {"type": "object", "additionalProperties": false, "required": ["valid_sample_count", "min", "median", "max"], "properties": {"valid_sample_count": {"type": "integer", "minimum": 1}, "min": {"type": "number", "minimum": 0}, "median": {"type": "number", "minimum": 0}, "max": {"type": "number", "minimum": 0}}}}}
+  }
+}

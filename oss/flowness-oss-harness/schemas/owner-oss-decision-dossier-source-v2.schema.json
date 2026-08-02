@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/owner-oss-decision-dossier-source-v2.schema.json",
+  "title": "Flowness owner OSS decision dossier source v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dossier_id", "scope", "sources", "options", "boundary"],
+  "properties": {
+    "schema_version": {"const": "owner-oss-decision-dossier-source/v2"},
+    "dossier_id": {"type": "string", "minLength": 1},
+    "scope": {"const": "private_staging_only"},
+    "sources": {"type": "array", "minItems": 1},
+    "options": {
+      "type": "array",
+      "prefixItems": [
+        {"$ref": "#/$defs/option", "properties": {"option_id": {"const": "stop_now_private_offer"}}},
+        {"$ref": "#/$defs/option", "properties": {"option_id": {"const": "flowness_open_alpha"}}},
+        {"$ref": "#/$defs/option", "properties": {"option_id": {"const": "flowness_verified_alpha"}}},
+        {"$ref": "#/$defs/option", "properties": {"option_id": {"const": "flowness_beta"}}},
+        {"$ref": "#/$defs/option", "properties": {"option_id": {"const": "broad_channel_launch"}}}
+      ],
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "boundary": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "option": {
+      "type": "object",
+      "required": ["option_id", "title", "roadmap_milestone", "user_value", "included", "excluded", "supporting_sources", "static_delta_conditions", "named_blockers", "irreversible_owner_actions", "no_go_conditions"]
+    }
+  }
+}

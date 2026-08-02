@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/public-package-artifacts.schema.json",
+  "title": "Private hash-bound public-package artifacts declaration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manifest_id", "candidate_binding", "artifacts", "rights_evidence", "authorization", "boundary", "manifest_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "public-package-artifacts/v1"},
+    "manifest_id": {"$ref": "#/$defs/id"},
+    "candidate_binding": {"$ref": "#/$defs/binding"},
+    "artifacts": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/artifact"}},
+    "rights_evidence": {"$ref": "#/$defs/rights"},
+    "authorization": {"type": "string", "const": "private_staging_only"},
+    "boundary": {"type": "string", "minLength": 1, "maxLength": 800},
+    "manifest_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "relativePath": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assembly_id", "assembly_hash", "assembly_file_sha256", "candidate_id", "snapshot_id"],
+      "properties": {
+        "assembly_id": {"$ref": "#/$defs/id"},
+        "assembly_hash": {"$ref": "#/$defs/hash"},
+        "assembly_file_sha256": {"$ref": "#/$defs/hash"},
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "snapshot_id": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"$ref": "#/$defs/relativePath"}, "sha256": {"$ref": "#/$defs/hash"}}
+    },
+    "rights": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "evidence_id", "evidence_hash"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "evidence_id": {"$ref": "#/$defs/id"},
+        "evidence_hash": {"$ref": "#/$defs/hash"}
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+# Exact unified Python dependency resolution for Flowness Open Alpha RC0.
+# Generated from both package uv.lock files plus the explicit PEP 517 build
+# lock in harness/build-system-requirements.lock. Artifact hashes remain in the
+# platform-aware uv locks; the build lock binds the backend version. This file
+# does not claim that a sealed cross-platform offline wheelhouse exists.
+annotated-types==0.7.0
+attrs==26.1.0
+cffi==2.1.0
+click==8.4.0
+colorama==0.4.6 ; platform_system == "Windows"
+cryptography==46.0.7
+iniconfig==2.3.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+packaging==26.2
+pluggy==1.6.0
+pycparser==3.0 ; implementation_name != "PyPy"
+pydantic==2.13.4
+pydantic-core==2.46.4
+Pygments==2.20.0
+pytest==9.0.3
+PyYAML==6.0.3
+referencing==0.37.0
+rpds-py==2026.6.3
+setuptools==83.0.0
+typing-extensions==4.16.0
+typing-inspection==0.4.2

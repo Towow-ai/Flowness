@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Simple blind jury verdict",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "verdict_id", "candidate_hash", "judge_id", "dimension", "verdict",
+    "confidence", "tested_claims", "evidence_locators", "blocker_id",
+    "reproduction", "remediation", "retest_condition", "dissent"
+  ],
+  "properties": {
+    "verdict_id": {"type": "string", "minLength": 1},
+    "candidate_hash": {"type": "string", "pattern": "^(sha256:)?[0-9a-f]{64}$"},
+    "judge_id": {"type": "string", "pattern": "^judge\\.[A-Za-z0-9._-]+$"},
+    "dimension": {
+      "enum": [
+        "mechanism_coverage",
+        "truth_claim",
+        "architecture",
+        "install_dx",
+        "security_privacy_ip",
+        "reliability_recovery",
+        "benchmark",
+        "professional_value",
+        "public_clarity",
+        "visual_demo",
+        "oss_community",
+        "channel_distribution",
+        "adversarial_meta"
+      ]
+    },
+    "verdict": {"enum": ["PASS", "FAIL", "UNKNOWN", "N/A"]},
+    "confidence": {"enum": ["low", "medium", "high"]},
+    "tested_claims": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "evidence_locators": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "blocker_id": {"type": ["string", "null"]},
+    "reproduction": {"type": "array", "items": {"type": "string"}},
+    "remediation": {"type": "string"},
+    "retest_condition": {"type": "string"},
+    "dissent": {"type": "string"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"verdict": {"const": "PASS"}},
+        "required": ["verdict"]
+      },
+      "then": {
+        "properties": {
+          "evidence_locators": {"minItems": 1},
+          "blocker_id": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"verdict": {"const": "FAIL"}},
+        "required": ["verdict"]
+      },
+      "then": {
+        "properties": {
+          "evidence_locators": {"minItems": 1},
+          "blocker_id": {"type": "string", "minLength": 1},
+          "reproduction": {"minItems": 1},
+          "remediation": {"minLength": 1},
+          "retest_condition": {"minLength": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"verdict": {"const": "UNKNOWN"}},
+        "required": ["verdict"]
+      },
+      "then": {
+        "properties": {
+          "blocker_id": {"type": "string", "minLength": 1},
+          "retest_condition": {"minLength": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"verdict": {"const": "N/A"}},
+        "required": ["verdict"]
+      },
+      "then": {
+        "properties": {
+          "dissent": {"minLength": 1},
+          "blocker_id": {"type": "null"}
+        }
+      }
+    }
+  ]
+}

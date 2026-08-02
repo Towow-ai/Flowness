@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coverage challenge comparator verdict",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "phase", "state", "agent", "bindings", "rows", "blockers", "counts", "verdict_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "coverage-verdict/v2"},
+    "phase": {"type": "string", "const": "registry_comparison"},
+    "state": {"type": "string", "enum": ["evaluated", "blocked"]},
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role_id", "agent_instance_id"],
+      "properties": {
+        "role_id": {"type": "string", "minLength": 1},
+        "agent_instance_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_snapshot_hash", "sample_manifest_hashes", "trace_hashes", "merge_report_hash", "combined_registry_hash", "runtime_evidence", "roles_file_sha256", "prompt_template_hashes"],
+      "properties": {
+        "source_snapshot_hash": {"$ref": "#/$defs/sha256"},
+        "sample_manifest_hashes": {"type": "array", "items": {"$ref": "#/$defs/sha256"}},
+        "trace_hashes": {"type": "array", "items": {"$ref": "#/$defs/sha256"}},
+        "merge_report_hash": {"$ref": "#/$defs/sha256"},
+        "combined_registry_hash": {"$ref": "#/$defs/sha256"},
+        "runtime_evidence": {"type": "string", "const": "absent"},
+        "roles_file_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_template_hashes": {"type": "array", "items": {"$ref": "#/$defs/sha256"}}
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sample_id", "inventory_item_id", "kind", "criticality", "coverage_strategy", "blocking_reason", "coverage_state", "mechanism_ids", "trace_hashes", "runtime_evidence_ids", "blocking"],
+        "properties": {
+          "sample_id": {"type": "string", "minLength": 1},
+          "inventory_item_id": {"type": "string", "minLength": 1},
+          "kind": {"type": "string", "minLength": 1},
+          "criticality": {"type": "string", "minLength": 1},
+          "coverage_strategy": {"type": "string", "enum": ["required_mechanism", "required_registration", "search_seed"]},
+          "blocking_reason": {"type": ["string", "null"]},
+          "coverage_state": {"type": "string", "enum": ["unmapped", "declared_only", "candidate_mapped"]},
+          "mechanism_ids": {"$ref": "#/$defs/strings"},
+          "trace_hashes": {"type": "array", "items": {"$ref": "#/$defs/sha256"}},
+          "runtime_evidence_ids": {"type": "array", "maxItems": 0, "items": {"type": "string"}},
+          "blocking": {"type": "boolean"}
+        }
+      }
+    },
+    "blockers": {"type": "array", "items": {"$ref": "#/$defs/blocker"}},
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["samples", "unmapped", "declared_only", "candidate_mapped", "source_chain_verified", "runtime_verified", "blockers"],
+      "properties": {
+        "samples": {"type": "integer", "minimum": 0},
+        "unmapped": {"type": "integer", "minimum": 0},
+        "declared_only": {"type": "integer", "minimum": 0},
+        "candidate_mapped": {"type": "integer", "minimum": 0},
+        "source_chain_verified": {"type": "integer", "const": 0},
+        "runtime_verified": {"type": "integer", "const": 0},
+        "blockers": {"type": "integer", "minimum": 0}
+      }
+    },
+    "verdict_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocker_id", "code", "inventory_item_id", "detail"],
+      "properties": {
+        "blocker_id": {"type": "string", "minLength": 1},
+        "code": {"type": "string", "minLength": 1},
+        "inventory_item_id": {"type": "string"},
+        "detail": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

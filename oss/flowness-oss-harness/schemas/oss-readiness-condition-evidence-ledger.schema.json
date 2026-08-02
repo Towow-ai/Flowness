@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/oss-readiness-condition-evidence-ledger.schema.json",
+  "title": "Private OSS readiness condition evidence ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "module_id", "candidate_binding", "conditions", "boundary"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "oss-readiness-condition-evidence-ledger/v1"},
+    "module_id": {"$ref": "#/$defs/id"},
+    "candidate_binding": {"$ref": "#/$defs/binding"},
+    "conditions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/condition"}},
+    "boundary": {"type": "string", "minLength": 1, "maxLength": 1200}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "snapshot_id"],
+      "properties": {"candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"type": "string", "minLength": 1, "maxLength": 200}}
+    },
+    "reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "required_markers"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "required_markers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "condition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["condition_id", "kind", "state", "detail", "evidence_record", "authority_record"],
+      "properties": {
+        "condition_id": {"$ref": "#/$defs/id"},
+        "kind": {"type": "string", "enum": ["product", "evidence", "expression", "authority"]},
+        "state": {"type": "string", "enum": ["verified", "missing", "blocked", "unknown", "required"]},
+        "detail": {"type": "string", "minLength": 1, "maxLength": 1200},
+        "evidence_record": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/reference"}]},
+        "authority_record": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/reference"}]}
+      }
+    }
+  }
+}

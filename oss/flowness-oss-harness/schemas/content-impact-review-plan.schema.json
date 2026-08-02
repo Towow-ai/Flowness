@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Immutable private Content Graph impact review plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "plan_id", "authorization", "predecessor", "current", "changes", "ripple", "review_obligations", "boundary", "plan_hash"],
+  "properties": {
+    "schema_version": {"const": "content-impact-review-plan/v1"},
+    "plan_id": {"type": "string", "minLength": 1},
+    "authorization": {"const": "local_review_only"},
+    "predecessor": {"$ref": "#/$defs/identity"},
+    "current": {"$ref": "#/$defs/identity"},
+    "changes": {
+      "type": "object", "additionalProperties": false,
+      "required": ["added_node_ids", "removed_node_ids", "changed_node_ids", "changed_asset_relation_ids"],
+      "properties": {
+        "added_node_ids": {"$ref": "#/$defs/ids"},
+        "removed_node_ids": {"$ref": "#/$defs/ids"},
+        "changed_node_ids": {"$ref": "#/$defs/ids"},
+        "changed_asset_relation_ids": {"$ref": "#/$defs/ids"}
+      }
+    },
+    "ripple": {
+      "type": "object", "additionalProperties": false,
+      "required": ["current_affected_node_ids", "predecessor_affected_node_ids", "review_asset_ids", "invalidated_channel_package_ids"],
+      "properties": {
+        "current_affected_node_ids": {"$ref": "#/$defs/ids"},
+        "predecessor_affected_node_ids": {"$ref": "#/$defs/ids"},
+        "review_asset_ids": {"$ref": "#/$defs/ids"},
+        "invalidated_channel_package_ids": {"$ref": "#/$defs/ids"}
+      }
+    },
+    "review_obligations": {
+      "type": "array", "items": {"$ref": "#/$defs/obligation"}
+    },
+    "boundary": {"type": "string", "minLength": 1},
+    "plan_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["graph_path", "graph_schema_version", "graph_id", "candidate_id", "snapshot_id", "version_id", "graph_hash", "source_graph_hash"],
+      "properties": {
+        "graph_path": {"type": "string", "minLength": 1},
+        "graph_schema_version": {"enum": ["content-graph/v2", "content-graph/v3"]},
+        "graph_id": {"type": "string", "minLength": 1},
+        "candidate_id": {"type": "string", "minLength": 1},
+        "snapshot_id": {"type": "string", "minLength": 1},
+        "version_id": {"type": "string", "minLength": 1},
+        "graph_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "source_graph_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "obligation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["obligation_id", "kind", "target_id", "trigger_ids", "required_state"],
+      "properties": {
+        "obligation_id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["revalidate_claim", "review_asset", "reassemble_channel_package", "review_predecessor_removal"]},
+        "target_id": {"type": "string", "minLength": 1},
+        "trigger_ids": {"$ref": "#/$defs/ids"},
+        "required_state": {"const": "evidence_bound"}
+      }
+    }
+  }
+}

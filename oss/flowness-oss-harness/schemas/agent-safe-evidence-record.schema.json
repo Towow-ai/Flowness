@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pre-redacted agent-safe evidence record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "kind", "mechanism_ids", "audit_object_id", "audit_object_sha256", "derived_sha256", "capture_status", "coordinate", "payload", "redaction_reason_classes"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "agent-safe-evidence-record/v1"},
+    "record_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "kind": {"type": "string", "enum": ["code_excerpt", "inventory_selection", "runtime_transition", "projection_state", "service_observation", "failure_recovery", "gap"]},
+    "mechanism_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 128}},
+    "audit_object_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "audit_object_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "derived_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "capture_status": {"type": "string", "enum": ["captured", "absent", "redacted", "incoherent"]},
+    "coordinate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_class", "opaque_locator", "time_bucket"],
+      "properties": {
+        "source_class": {"type": "string", "enum": ["code_or_test_capture", "runtime_or_test_capture", "service_observation", "gap_declaration"]},
+        "opaque_locator": {"type": "string", "minLength": 1, "maxLength": 200},
+        "time_bucket": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z$"}
+      }
+    },
+    "payload": {"type": "object", "maxProperties": 32, "additionalProperties": true},
+    "redaction_reason_classes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["identifier-tokenized", "path-removed", "credential-removed", "content-minimized", "not-applicable"]}}
+  }
+}

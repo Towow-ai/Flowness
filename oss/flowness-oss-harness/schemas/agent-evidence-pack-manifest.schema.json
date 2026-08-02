@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent-side derivative evidence pack manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pack_id", "scope", "cutoff", "source_boundary", "records", "coherence_checks", "gaps", "exclusions", "manifest_sha256"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "agent-evidence-pack-manifest/v1"},
+    "pack_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "scope": {"type": "string", "const": "pre_redacted_agent_side_derivative_only"},
+    "cutoff": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z$"},
+    "source_boundary": {"type": "string", "const": "does_not_read_or_prove_audit_vault_server_or_raw_source"},
+    "records": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["record_id", "path", "derived_sha256", "capture_status", "mechanism_ids"], "properties": {"record_id": {"type": "string"}, "path": {"type": "string", "pattern": "^records/[A-Za-z0-9][A-Za-z0-9._-]{0,127}\\.json$"}, "derived_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "capture_status": {"type": "string", "enum": ["captured", "absent", "redacted", "incoherent"]}, "mechanism_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}}}},
+    "coherence_checks": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "gaps": {"type": "array", "items": {"type": "string"}},
+    "exclusions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "manifest_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

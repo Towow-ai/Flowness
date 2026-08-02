@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://towow.ai/schemas/flowness-oss-execution-policy-v2.1.json",
+  "title": "Flowness OSS execution policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "program_id",
+    "status",
+    "workflow",
+    "objective",
+    "north_star_artifacts",
+    "truth_order",
+    "metering",
+    "budget",
+    "work_in_progress",
+    "authority_profile",
+    "control_contracts_required_before_resume",
+    "resume_decision_requirements",
+    "required_rejection_tests",
+    "task_admission",
+    "semantic_validation",
+    "core_value_metrics",
+    "attempt_policy",
+    "foundation",
+    "wave_outcomes",
+    "coverage_gate",
+    "mechanism_states",
+    "mechanism_maturity",
+    "stage_profiles",
+    "claim_rules",
+    "benchmark_rules",
+    "oss_package_required",
+    "communication_required",
+    "waves",
+    "rework_routes",
+    "jury",
+    "identity_equivalence",
+    "drift_detectors",
+    "release_rules",
+    "reporting"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "2.1"},
+    "program_id": {"const": "flowness-oss-v2"},
+    "status": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["phase", "execution_allowed", "control_enforcement", "policy_hash_required_for_resume"],
+          "properties": {
+            "phase": {"const": "planning_freeze"},
+            "execution_allowed": {"const": false},
+            "control_enforcement": {"const": "specification_pending_controller_binding"},
+            "policy_hash_required_for_resume": {"const": true}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["phase", "execution_allowed", "control_enforcement", "policy_hash_required_for_resume"],
+          "properties": {
+            "phase": {"enum": ["ready", "running"]},
+            "execution_allowed": {"const": true},
+            "control_enforcement": {"const": "controller_bound_and_tested"},
+            "policy_hash_required_for_resume": {"const": true}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["phase", "execution_allowed", "control_enforcement", "policy_hash_required_for_resume"],
+          "properties": {
+            "phase": {"enum": ["stopped", "complete"]},
+            "execution_allowed": {"const": false},
+            "control_enforcement": {"const": "controller_bound_and_tested"},
+            "policy_hash_required_for_resume": {"const": true}
+          }
+        }
+      ]
+    },
+    "workflow": {
+      "type": "object",
+      "required": ["system", "use_work_skill", "execution_host", "local_role", "external_side_effects"],
+      "properties": {
+        "system": {"const": "standalone_oss_harness"},
+        "use_work_skill": {"const": false},
+        "execution_host": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "description": "Operator-defined runner alias. Public policy schemas do not publish an internal hostname."
+        },
+        "local_role": {"const": "coordination_and_review_only"},
+        "external_side_effects": {"const": "owner_gate_only"}
+      }
+    },
+    "objective": {"type": "string", "minLength": 40},
+    "north_star_artifacts": {"type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "truth_order": {"type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "metering": {
+      "type": "object",
+      "required": ["budget_unit", "enablement_unit", "heartbeat_minutes_max", "no_positive_core_delta_minutes_max", "all_terminal_attempts_consume_budget"],
+      "properties": {
+        "budget_unit": {"type": "object", "required": ["agent_invocations_max", "aggregate_agent_minutes_max", "reported_tokens_max", "metered_api_usd_max", "exhaustion_rule"]},
+        "enablement_unit": {"type": "object", "required": ["agent_invocations_max", "aggregate_agent_minutes_max", "reported_tokens_max", "metered_api_usd_max", "deployment_allowance_source"]},
+        "heartbeat_minutes_max": {"const": 15},
+        "no_positive_core_delta_minutes_max": {"const": 120},
+        "all_terminal_attempts_consume_budget": {"const": true}
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_units", "enablement_units_max", "reserve_units", "enablement_is_charged_to_supported_wave", "wave_units", "lane_floors", "post_jury_stages"],
+      "properties": {
+        "total_units": {"const": 100},
+        "enablement_units_max": {"const": 8},
+        "reserve_units": {"const": 5},
+        "enablement_is_charged_to_supported_wave": {"const": true},
+        "wave_units": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["W0", "W1", "W2", "W3", "W4", "W5A", "W6", "W5B", "W7", "W8", "W9", "W10", "reserve"],
+          "properties": {
+            "W0": {"const": 4}, "W1": {"const": 5}, "W2": {"const": 20}, "W3": {"const": 7},
+            "W4": {"const": 6}, "W5A": {"const": 5}, "W6": {"const": 12}, "W5B": {"const": 3},
+            "W7": {"const": 7}, "W8": {"const": 6}, "W9": {"const": 5}, "W10": {"const": 15}, "reserve": {"const": 5}
+          }
+        },
+        "lane_floors": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["truth", "oss_standard", "benchmark_and_proof", "architecture_and_dissemination", "independent_jury"],
+          "properties": {
+            "truth": {"const": 42}, "oss_standard": {"const": 12}, "benchmark_and_proof": {"const": 15},
+            "architecture_and_dissemination": {"const": 13}, "independent_jury": {"const": 10}
+          }
+        },
+        "post_jury_stages": {"type": "object", "required": ["W11", "W12"]}
+      }
+    },
+    "work_in_progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["program_agent_instances_max", "producer_agent_instances_max", "independent_judge_instances_max", "enablement_instances_max", "producer_may_judge_same_artifact", "jury_first_pass_blind"],
+      "properties": {
+        "program_agent_instances_max": {"const": 4},
+        "producer_agent_instances_max": {"const": 3},
+        "independent_judge_instances_max": {"const": 1},
+        "enablement_instances_max": {"const": 1},
+        "producer_may_judge_same_artifact": {"const": false},
+        "jury_first_pass_blind": {"const": true}
+      }
+    },
+    "authority_profile": {"type": "object", "required": ["registry_required", "stable_authority_class_id_required", "routine_actions_delegated", "owner_gates", "repeat_equivalent_permission_question"], "properties": {"registry_required": {"const": true}, "stable_authority_class_id_required": {"const": true}, "repeat_equivalent_permission_question": {"const": "forbidden"}}},
+    "control_contracts_required_before_resume": {"type": "array", "minItems": 9, "uniqueItems": true, "items": {"type": "string"}},
+    "resume_decision_requirements": {"type": "object", "minProperties": 9, "additionalProperties": {"const": true}},
+    "resume_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_hash", "controller_version", "schema_validation_artifact", "controller_rejection_test_artifact", "scope_judge_verdict", "meta_judge_verdict", "owner_decision", "issued_at", "immutable_evidence_ids"],
+      "properties": {
+        "policy_hash": {"pattern": "^sha256:[0-9a-f]{64}$"},
+        "controller_version": {"type": "string", "minLength": 1},
+        "schema_validation_artifact": {"type": "string", "minLength": 1},
+        "controller_rejection_test_artifact": {"type": "string", "minLength": 1},
+        "scope_judge_verdict": {"$ref": "#/$defs/passVerdict"},
+        "meta_judge_verdict": {"$ref": "#/$defs/passVerdict"},
+        "owner_decision": {"$ref": "#/$defs/ownerApproveDecision"},
+        "issued_at": {"type": "string", "format": "date-time"},
+        "immutable_evidence_ids": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "required_rejection_tests": {"type": "array", "minItems": 22, "uniqueItems": true, "items": {"type": "string"}},
+    "task_admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_classes", "required_fields", "core_rules", "enablement_rules", "judge_rules", "common_rules", "on_reject"],
+      "properties": {
+        "task_classes": {"type": "array", "const": ["core", "enablement", "judge"]},
+        "required_fields": {"type": "array", "minItems": 18, "uniqueItems": true, "items": {"type": "string"}},
+        "core_rules": {"type": "object", "required": ["primary_core_artifact_required", "current_wave_necessity_required", "nonzero_expected_delta_required", "deployment_allowed"], "properties": {"primary_core_artifact_required": {"const": true}, "current_wave_necessity_required": {"const": true}, "nonzero_expected_delta_required": {"const": true}, "deployment_allowed": {"const": false}}},
+        "enablement_rules": {"type": "object", "minProperties": 5, "additionalProperties": {"const": true}},
+        "judge_rules": {"type": "object", "required": ["independent_identity_required", "verdict_or_delta_required", "deployment_allowed"], "properties": {"independent_identity_required": {"const": true}, "verdict_or_delta_required": {"const": true}, "deployment_allowed": {"const": false}}},
+        "common_rules": {"type": "object", "minProperties": 4, "additionalProperties": {"const": true}},
+        "on_reject": {"const": "backlog_without_execution"}
+      }
+    },
+    "semantic_validation": {"type": "object", "minProperties": 7, "additionalProperties": {"const": true}},
+    "core_value_metrics": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string"}},
+    "attempt_policy": {
+      "type": "object",
+      "required": ["blocker_fingerprint_components", "two_component_overlap_inherits_existing_ledger_pending_adjudication", "proposer_may_create_semantically_new_fingerprint", "rename_reopen_ripple_cross_wave_inherit_lifetime_ledger", "targeted_attempts_per_fingerprint_lifetime_max", "code_changes_per_fingerprint_lifetime_max", "deployments_per_foundation_lifetime_max", "meta_reviews_per_fingerprint_lifetime_max", "second_zero_delta_terminal_attempt_stops", "third_attempt_admission"],
+      "properties": {
+        "two_component_overlap_inherits_existing_ledger_pending_adjudication": {"const": true},
+        "proposer_may_create_semantically_new_fingerprint": {"const": false},
+        "rename_reopen_ripple_cross_wave_inherit_lifetime_ledger": {"const": true},
+        "targeted_attempts_per_fingerprint_lifetime_max": {"const": 2},
+        "code_changes_per_fingerprint_lifetime_max": {"const": 1},
+        "deployments_per_foundation_lifetime_max": {"const": 1},
+        "meta_reviews_per_fingerprint_lifetime_max": {"const": 1},
+        "second_zero_delta_terminal_attempt_stops": {"const": true},
+        "third_attempt_admission": {"const": "forbidden_and_meta_review_required"}
+      }
+    },
+    "foundation": {
+      "type": "object",
+      "required": ["foundation_id", "historical_equivalent_work_inherits_ledger", "historical_ledger_import_required_before_any_attempt", "historical_ledger_import_evidence_required", "unknown_historical_consumption", "attempts_max", "code_changes_max", "deployments_max", "meta_reviews_max", "on_failure", "may_block_W2_W3_W5A_W6", "may_block_W7_W8_W9_current_public_material"],
+      "properties": {
+        "foundation_id": {"const": "FOUNDATION-001"},
+        "historical_equivalent_work_inherits_ledger": {"const": true},
+        "historical_ledger_import_required_before_any_attempt": {"const": true},
+        "historical_ledger_import_evidence_required": {"const": true},
+        "unknown_historical_consumption": {"const": "assume_limit_exhausted"},
+        "attempts_max": {"const": 2},
+        "code_changes_max": {"const": 1},
+        "deployments_max": {"const": 1},
+        "meta_reviews_max": {"const": 1},
+        "may_block_W2_W3_W5A_W6": {"const": false},
+        "may_block_W7_W8_W9_current_public_material": {"const": true}
+      }
+    },
+    "wave_outcomes": {"const": ["passed", "degraded_with_blocker", "failed"]},
+    "coverage_gate": {"type": "object", "required": ["critical_scope", "passed_requires", "complete_chain", "degraded_allows", "degraded_forbids", "degraded_claim_effect", "all_unresolved_outcome"]},
+    "mechanism_states": {"type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": {"type": "string"}},
+    "mechanism_maturity": {"type": "object", "required": ["M0", "M1", "M2", "M3", "M4", "M5"]},
+    "stage_profiles": {"type": "object", "required": ["alpha", "beta", "broad_release"]},
+    "claim_rules": {"type": "object", "required": ["current_verified_complete_version_bound_chain_required", "writer_may_promote", "architecture_agent_may_promote", "benchmark_agent_may_promote", "channel_adapter_may_change_truth"], "properties": {"current_verified_complete_version_bound_chain_required": {"const": true}, "writer_may_promote": {"const": false}, "architecture_agent_may_promote": {"const": false}, "benchmark_agent_may_promote": {"const": false}, "channel_adapter_may_change_truth": {"const": false}}},
+    "benchmark_rules": {"type": "object", "required": ["readme_or_stars_only_forbidden", "primary_evidence_types_min", "candidate_selection_bias_judge_required", "scout_freshness_days", "release_recheck_days", "standard_recalibration_after_benchmark_required"]},
+    "oss_package_required": {"type": "array", "minItems": 14, "uniqueItems": true, "items": {"type": "string"}},
+    "communication_required": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string"}},
+    "waves": {
+      "type": "array",
+      "minItems": 21,
+      "maxItems": 21,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["wave_id", "depends_on", "allowed_dependency_outcomes", "outputs", "exit_predicates"],
+        "properties": {
+          "wave_id": {"enum": ["W0", "FOUNDATION-001", "W1", "W2A", "W2B", "W2C", "W3", "W4", "W5A", "W6", "W5B", "W7", "W8", "W9", "W10", "RW", "G1", "W11", "G2", "W12", "G3"]},
+          "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "allowed_dependency_outcomes": {"type": "array", "uniqueItems": true, "items": {"enum": ["passed", "degraded_with_blocker", "failed"]}},
+          "outputs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "exit_predicates": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+        }
+      }
+    },
+    "rework_routes": {"type": "object", "minProperties": 10, "additionalProperties": {"anyOf": [{"const": true}, {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}]}},
+    "jury": {
+      "type": "object",
+      "required": ["judges_per_dimension", "disagreement_adjudicator", "credible_fail_blocks", "average_score_override_forbidden", "dimensions"],
+      "properties": {
+        "judges_per_dimension": {"const": 2},
+        "disagreement_adjudicator": {"const": 1},
+        "credible_fail_blocks": {"const": true},
+        "average_score_override_forbidden": {"const": true},
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mechanism_coverage", "truth_claim", "architecture", "install_dx", "security_privacy_ip", "reliability_recovery", "benchmark", "professional_value", "public_clarity", "visual_demo", "oss_community", "channel_distribution", "adversarial_meta"],
+          "properties": {
+            "mechanism_coverage": {"$ref": "#/$defs/judgePair"},
+            "truth_claim": {"$ref": "#/$defs/judgePair"},
+            "architecture": {"$ref": "#/$defs/judgePair"},
+            "install_dx": {"$ref": "#/$defs/judgePair"},
+            "security_privacy_ip": {"$ref": "#/$defs/judgePair"},
+            "reliability_recovery": {"$ref": "#/$defs/judgePair"},
+            "benchmark": {"$ref": "#/$defs/judgePair"},
+            "professional_value": {"$ref": "#/$defs/judgePair"},
+            "public_clarity": {"$ref": "#/$defs/judgePair"},
+            "visual_demo": {"$ref": "#/$defs/judgePair"},
+            "oss_community": {"$ref": "#/$defs/judgePair"},
+            "channel_distribution": {"$ref": "#/$defs/judgePair"},
+            "adversarial_meta": {"$ref": "#/$defs/judgePair"}
+          }
+        }
+      }
+    },
+    "identity_equivalence": {"type": "object", "minProperties": 6, "additionalProperties": {"anyOf": [{"const": true}, {"const": false}, {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string"}}]}},
+    "drift_detectors": {"type": "object", "required": ["critical", "infra_streak_max_without_positive_core_delta", "source_drift_expected_transition_exempt_only", "on_critical"]},
+    "release_rules": {"type": "object", "required": ["credible_fail_blocks", "critical_unknown_blocks", "average_score_override_forbidden", "designed_target_as_current_forbidden", "owner_approval_separate_from_engine_pass", "whitepaper_requires_truth_benchmark_reproducibility_pass"], "properties": {"credible_fail_blocks": {"const": true}, "critical_unknown_blocks": {"const": true}, "average_score_override_forbidden": {"const": true}, "designed_target_as_current_forbidden": {"const": true}, "owner_approval_separate_from_engine_pass": {"const": true}, "whitepaper_requires_truth_benchmark_reproducibility_pass": {"const": true}}},
+    "reporting": {"type": "object", "required": ["wave_decision_memo_fields", "headline_activity_metrics_forbidden"]}
+  },
+  "$defs": {
+    "judgePair": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^judge\\."}
+    },
+    "passVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict", "judge_id", "artifact_hash", "policy_hash"],
+      "properties": {
+        "verdict": {"const": "PASS"},
+        "judge_id": {"type": "string", "minLength": 1},
+        "artifact_hash": {"pattern": "^sha256:[0-9a-f]{64}$"},
+        "policy_hash": {"pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "ownerApproveDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "owner_id", "decision_id", "policy_hash", "evidence_hash"],
+      "properties": {
+        "decision": {"const": "APPROVE"},
+        "owner_id": {"type": "string", "minLength": 1},
+        "decision_id": {"type": "string", "minLength": 1},
+        "policy_hash": {"pattern": "^sha256:[0-9a-f]{64}$"},
+        "evidence_hash": {"pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"properties": {"execution_allowed": {"const": true}}}}},
+      "then": {"required": ["resume_decision"]}
+    }
+  ]
+}

@@ -1,7 +1,0 @@
-# wow-harness runtime (not source)
-.towow/state/
-.towow/guard/
-.towow/metrics/
-.towow/logs/
-.towow/progress/
-.towow/proposals/

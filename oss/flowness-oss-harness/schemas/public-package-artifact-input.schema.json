@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/public-package-artifact-input.schema.json",
+  "title": "Private public-package evidence inputs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_binding", "artifact_slots", "rights_evidence"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "public-package-artifact-input/v1"},
+    "candidate_binding": {"$ref": "#/$defs/binding"},
+    "artifact_slots": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/slot"}},
+    "rights_evidence": {"$ref": "#/$defs/rightsInput"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "relativePath": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assembly_id", "assembly_hash", "assembly_file_sha256", "candidate_id", "snapshot_id"],
+      "properties": {
+        "assembly_id": {"$ref": "#/$defs/id"},
+        "assembly_hash": {"$ref": "#/$defs/hash"},
+        "assembly_file_sha256": {"$ref": "#/$defs/hash"},
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "snapshot_id": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "slot": {
+      "type": "object", "additionalProperties": false,
+      "required": ["slot", "path", "sha256", "candidate_binding"],
+      "properties": {
+        "slot": {"type": "string", "minLength": 1},
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "candidate_binding": {"$ref": "#/$defs/binding"}
+      }
+    },
+    "rightsInput": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "candidate_binding"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "candidate_binding": {"$ref": "#/$defs/binding"}
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/sealed-export-rights-contract.schema.json",
+  "title": "Private staging sealed export and rights evidence contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_id", "scope", "candidate_binding", "records", "authorization", "contract_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "sealed-export-rights-contract/v1"},
+    "contract_id": {"$ref": "#/$defs/id"},
+    "scope": {"type": "string", "const": "private_staging_only"},
+    "candidate_binding": {"$ref": "#/$defs/candidateBinding"},
+    "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/record"}},
+    "authorization": {"$ref": "#/$defs/authorization"},
+    "contract_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "ref": {"type": "string", "minLength": 1, "maxLength": 500},
+    "refList": {"type": "array", "items": {"$ref": "#/$defs/ref"}},
+    "candidateBinding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "sealed_export_manifest_sha256", "sealed_export_ref"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "sealed_export_manifest_sha256": {"$ref": "#/$defs/hash"},
+        "sealed_export_ref": {"$ref": "#/$defs/ref"}
+      }
+    },
+    "subject": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subject_type", "subject_ref", "content_sha256"],
+      "properties": {
+        "subject_type": {"type": "string", "enum": ["file", "symbol", "dependency"]},
+        "subject_ref": {"$ref": "#/$defs/ref"},
+        "content_sha256": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["origin_type", "source_ref", "source_revision"],
+      "properties": {
+        "origin_type": {"type": "string", "enum": ["internal_current", "internal_legacy", "third_party", "generated", "unknown"]},
+        "source_ref": {"$ref": "#/$defs/ref"},
+        "source_revision": {"$ref": "#/$defs/ref"}
+      }
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_evidence", "license_evidence", "attribution_evidence", "dependency_evidence"],
+      "properties": {
+        "source_evidence": {"$ref": "#/$defs/refList"},
+        "license_evidence": {"$ref": "#/$defs/refList"},
+        "attribution_evidence": {"$ref": "#/$defs/refList"},
+        "dependency_evidence": {"$ref": "#/$defs/refList"}
+      }
+    },
+    "review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state", "reviewer_id", "evidence_ref"],
+      "properties": {
+        "state": {"type": "string", "enum": ["unreviewed", "needs_research", "recommended_include", "recommended_exclude", "rejected"]},
+        "reviewer_id": {"$ref": "#/$defs/id"},
+        "evidence_ref": {"$ref": "#/$defs/ref"}
+      }
+    },
+    "ownerDecision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state", "evidence_ref"],
+      "properties": {
+        "state": {"type": "string", "enum": ["not_requested", "not_authorized"]},
+        "evidence_ref": {"$ref": "#/$defs/ref"}
+      }
+    },
+    "metadataItem": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state", "evidence_refs"],
+      "properties": {
+        "state": {"type": "string", "enum": ["required", "not_required", "unknown", "mapped"]},
+        "evidence_refs": {"$ref": "#/$defs/refList"}
+      }
+    },
+    "publicMetadata": {
+      "type": "object", "additionalProperties": false,
+      "required": ["notice", "spdx", "sbom"],
+      "properties": {
+        "notice": {"$ref": "#/$defs/metadataItem"},
+        "spdx": {"$ref": "#/$defs/metadataItem"},
+        "sbom": {"$ref": "#/$defs/metadataItem"}
+      }
+    },
+    "record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["record_id", "subject", "source", "proposed_disposition", "evidence", "review", "owner_decision", "public_metadata", "reject_reasons"],
+      "properties": {
+        "record_id": {"$ref": "#/$defs/id"},
+        "subject": {"$ref": "#/$defs/subject"},
+        "source": {"$ref": "#/$defs/source"},
+        "proposed_disposition": {"type": "string", "enum": ["include_in_candidate", "exclude_from_export", "hold", "replace"]},
+        "evidence": {"$ref": "#/$defs/evidence"},
+        "review": {"$ref": "#/$defs/review"},
+        "owner_decision": {"$ref": "#/$defs/ownerDecision"},
+        "public_metadata": {"$ref": "#/$defs/publicMetadata"},
+        "reject_reasons": {"$ref": "#/$defs/refList"}
+      }
+    },
+    "authorization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state", "boundary"],
+      "properties": {
+        "state": {"type": "string", "const": "not_authorized"},
+        "boundary": {"type": "string", "minLength": 1, "maxLength": 500}
+      }
+    }
+  }
+}

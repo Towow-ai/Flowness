@@ -1,5 +1,0 @@
-33a4bcc8c17e2c3cf50baf6b94042428e5229460
-# WP-02 sanitize snapshot produced 2026-04-09
-# source assets: scripts/hooks + scripts/checks + .claude/rules + .claude/skills + docs/architecture
-# files: 93 scanned, 0 SECRET/TRADE_SECRET/PII/NETWORK/PROTOCOL_INTERNAL after cleanup
-# 15 files dropped by Annex A.1 path+content blacklist

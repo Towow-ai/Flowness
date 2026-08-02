@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Flowness Open Alpha demo independent jury report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "report_id", "round", "judge", "candidate_id", "candidate_sha256", "policy_id", "policy_sha256", "verdict", "check", "blocker_id", "evidence_refs", "report_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "open-alpha-demo-jury-report/v1"},
+    "report_id": {"type": "string", "pattern": "^report-[a-z0-9-]+$"},
+    "round": {"type": "integer", "minimum": 1, "maximum": 2},
+    "judge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role_id", "agent_instance_id", "independent", "candidate_author"],
+      "properties": {
+        "role_id": {"type": "string", "enum": ["judge.truth", "judge.structure"]},
+        "agent_instance_id": {"type": "string", "pattern": "^agent-[a-z0-9-]+$"},
+        "independent": {"type": "boolean", "const": true},
+        "candidate_author": {"type": "boolean", "const": false}
+      }
+    },
+    "candidate_id": {"type": "string", "pattern": "^candidate-[a-z0-9]+$"},
+    "candidate_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "policy_id": {"type": "string", "const": "open-alpha-demo-policy/v1"},
+    "policy_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "verdict": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "expected", "observed", "retest_condition"],
+      "properties": {
+        "check_id": {"type": "string", "enum": ["G3.truth-claims", "G3.harness-structure"]},
+        "expected": {"type": "string", "minLength": 1},
+        "observed": {"type": "string", "minLength": 1},
+        "retest_condition": {"type": "string", "minLength": 1}
+      }
+    },
+    "blocker_id": {"type": ["string", "null"], "pattern": "^BLK-DEMO-[A-Z0-9-]+$"},
+    "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "report_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

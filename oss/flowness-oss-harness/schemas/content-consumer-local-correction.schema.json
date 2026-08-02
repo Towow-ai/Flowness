@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/content-consumer-local-correction.schema.json",
+  "title": "Local deterministic correction binding for one failed Content Consumer Machine item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "correction_id", "failed_run", "failed_work_item", "successor_receipt", "successor_work_item", "correction_action", "boundary", "correction_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "content-consumer-local-correction/v1"},
+    "correction_id": {"type": "string", "pattern": "^content-consumer-correction-[0-9a-f]{24}$"},
+    "failed_run": {"$ref": "#/$defs/runRef"},
+    "failed_work_item": {"$ref": "#/$defs/workItem"},
+    "successor_receipt": {"$ref": "#/$defs/receiptRef"},
+    "successor_work_item": {"$ref": "#/$defs/workItem"},
+    "correction_action": {"type": "string", "const": "local_candidate_corrective_target_rebound"},
+    "boundary": {"type": "string", "const": "local deterministic corrective-target record only; it binds one failed local work item to the same target in a successor local receipt and does not itself mutate source material, call a model, dispatch an agent, publish, withdraw, schedule, use credentials, access a network, or send externally."},
+    "correction_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "runRef": {"type": "object", "additionalProperties": false, "required": ["source_path", "run_id", "run_hash"], "properties": {"source_path": {"type": "string", "minLength": 1}, "run_id": {"type": "string", "pattern": "^content-consumer-run-[0-9a-f]{24}$"}, "run_hash": {"$ref": "#/$defs/sha256"}}},
+    "receiptRef": {"type": "object", "additionalProperties": false, "required": ["source_path", "receipt_id", "receipt_hash"], "properties": {"source_path": {"type": "string", "minLength": 1}, "receipt_id": {"type": "string", "pattern": "^content-update-[0-9a-f]{24}$"}, "receipt_hash": {"$ref": "#/$defs/sha256"}}},
+    "workItem": {"type": "object", "additionalProperties": false, "required": ["work_item_id", "kind", "target_id"], "properties": {"work_item_id": {"type": "string", "minLength": 1}, "kind": {"type": "string", "minLength": 1}, "target_id": {"type": "string", "minLength": 1}}}
+  }
+}

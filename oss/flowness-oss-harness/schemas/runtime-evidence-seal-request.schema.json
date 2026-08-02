@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Frozen, field-level runtime Evidence Seal collection request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "seal_id", "trace_id", "request_state", "boundary", "vault_locator_fence", "mechanism_ids", "mechanism_bindings", "record_range", "cutoff", "source_identity_expectation", "subject_token_policy", "allowlisted_objects", "exclusions", "collector_identity", "independent_verifier_identity", "claim_mapping", "request_sha256"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "runtime-evidence-seal-request/v1"},
+    "request_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "seal_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "trace_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "request_state": {"type": "string", "const": "scope_frozen"},
+    "boundary": {"type": "string", "const": "contract_only_not_collected_or_verified"},
+    "vault_locator_fence": {"type": "object", "additionalProperties": false, "required": ["fence_kind", "vault_reference_sha256", "access_scope"], "properties": {"fence_kind": {"type": "string", "const": "private_vault_nonresolvable_hash_reference"}, "vault_reference_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "access_scope": {"type": "string", "const": "collector_only_not_exported"}}},
+    "mechanism_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,127}$"}},
+    "mechanism_bindings": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["mechanism_id", "chain_roles"], "properties": {"mechanism_id": {"type": "string"}, "chain_roles": {"type": "array", "minItems": 6, "items": {"type": "string", "enum": ["producer", "event", "projection", "consumer", "failure_recovery", "postcondition"]}}}}},
+    "record_range": {"type": "object", "additionalProperties": false, "required": ["start_sequence", "end_sequence", "inclusion"], "properties": {"start_sequence": {"type": "integer", "minimum": 0}, "end_sequence": {"type": "integer", "minimum": 0}, "inclusion": {"type": "string", "const": "closed"}}},
+    "cutoff": {"type": "object", "additionalProperties": false, "required": ["start_bucket", "end_bucket", "window_kind", "rule"], "properties": {"start_bucket": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z$"}, "end_bucket": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z$"}, "window_kind": {"type": "string", "const": "closed_utc_minute_window"}, "rule": {"type": "string", "const": "event_sequence_at_or_before_cutoff_and_projection_watermark_covers_event"}}},
+    "source_identity_expectation": {"type": "object", "additionalProperties": false, "required": ["identity_kind", "source_identity_digest"], "properties": {"identity_kind": {"type": "string", "const": "deployed_build_commit_tree"}, "source_identity_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}},
+    "subject_token_policy": {"type": "string", "const": "seal_local_nonreversible_no_cross_seal_linkage"},
+    "allowlisted_objects": {"type": "array", "minItems": 7, "items": {"type": "object", "additionalProperties": false, "required": ["object_id", "object_class", "allowed_fields", "hash_algorithm"], "properties": {"object_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"}, "object_class": {"type": "string", "enum": ["source_identity", "producer_observation", "event_segment", "projection_state", "consumer_observation", "failure_recovery", "independent_postcondition"]}, "allowed_fields": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$"}}, "hash_algorithm": {"type": "string", "const": "sha256"}}}},
+    "exclusions": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"type": "string", "enum": ["credentials_and_secrets", "raw_transcript_prompt_response", "customer_content_and_identifiers", "host_network_and_private_paths", "environment_and_configuration_values", "undeclared_objects_or_fields"]}},
+    "collector_identity": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "independent_verifier_identity": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "claim_mapping": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["mechanism_id", "allowed_effect"], "properties": {"mechanism_id": {"type": "string"}, "allowed_effect": {"type": "string", "const": "runtime_evidence_group_only_registry_review_required"}}}},
+    "request_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

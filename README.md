@@ -1,137 +1,123 @@
-[中文](README.zh-CN.md) | English
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# wow-harness
+# Flowness
 
-> "How do you let AI handle so much development with so little supervision?"
+Flowness is an evidence-driven multi-agent engineering Harness. It turns one
+goal into parallel work, sealed artifacts, independent judgment, targeted
+rework, and a traceable accepted outcome.
 
-This is the answer.
+This repository is the Flowness `v1.0.0-alpha` open-source line, evolved from
+Wow-Harness `v0.x`. Open Alpha means the code and a canonical demonstration are
+inspectable and runnable. It does **not** mean production reliability, scale,
+security hardening, benchmark leadership, or external adoption has been
+established.
 
-wow-harness is a governance layer for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It makes AI agents reliable enough that you can set direction, walk away, and trust the work actually lands — with review gates, completion verification, and mechanical enforcement that no amount of prompting can replicate.
+## The acceptance loop
 
-## The Problem
-
-Claude Code is remarkably capable. But left unsupervised, it has structural biases:
-
-- **Claims completion prematurely** — "all tests pass" (didn't run them)
-- **Skips review** — "this change is simple enough" (it wasn't)
-- **Drifts from plans** — starts fixing one bug, ends up refactoring three files
-- **Self-evaluation bias** — asks itself "did I do a good job?", answers "yes"
-
-You end up supervising more than you saved in development time. The 80% it does well makes the 20% it silently drops even harder to catch.
-
-## The Insight
-
-```
-CLAUDE.md instruction compliance:  ~20%
-PreToolUse hook enforcement:       100%
-```
-
-Instructions don't reliably change AI behavior. Mechanical constraints do.
-
-A review agent told "don't modify files" obeys ~70% of the time. A review agent whose tool manifest doesn't list Edit/Write obeys 100% of the time — it physically can't call what isn't there.
-
-wow-harness applies this principle everywhere: if it matters, enforce it with a hook, not a sentence.
-
-## What Changes
-
-| Without wow-harness | With wow-harness |
-|---|---|
-| "Did you run the tests?" → "Yes" (didn't) | Mechanical gate checks `progress.json` — can't fake evidence |
-| AI stops mid-chat, injects completion checklist | Stop hook parses session transcript — only triggers when uncommitted writes exist |
-| Review agent "helpfully" edits what it reviews | Review agent physically cannot call Edit/Write (schema-level isolation) |
-| "This PR is simple, let's skip review" | Gates 2/4/6/8 mechanically require independent review — no exceptions |
-| Parallel AI sessions contaminate each other | Each session's scope is isolated via its own transcript file |
-| Agent drifts into unrelated fixes | Context routing injects domain-specific rules only for files being edited |
-
-## How It Works
-
-### Hooks: enforcement at the moment of action
-
-16 hooks across 7 lifecycle stages. They intercept *as things happen*, not after:
-
-```
-SessionStart  →  Load context, reset risk state, surface tools
-PreToolUse    →  Block unsafe deploys, gate review agents, sanitize reads
-PostToolUse   →  Route context on edit, detect loops, track risk
-Stop          →  Verify completion candidate exists (transcript × git diff)
-SessionEnd    →  Reflect, analyze traces, persist progress
+```mermaid
+flowchart LR
+    G["Goal + acceptance boundary"] --> P["Parallel producers"]
+    P --> E["Sealed artifacts + evidence"]
+    E --> J1["Independent judge A"]
+    E --> J2["Independent judge B"]
+    J1 --> V{"Every mandatory check passes?"}
+    J2 --> V
+    V -- "FAIL / critical UNKNOWN" --> R["Targeted rework\nsame blocker ID"]
+    R --> E
+    V -- "PASS" --> A["Accepted outcome"]
+    A --> O["Owner-controlled release"]
 ```
 
-### The 8-Gate State Machine
+A credible `FAIL` or critical `UNKNOWN` cannot disappear into an average
+score. The blocker remains visible through a bounded successor and fresh
+retest.
 
-Every significant change flows through gates. Even-numbered gates require independent review — not the same agent checking its own work:
+## 10-minute quickstart
 
-```
-G0 Problem  →  G1 Design  →  G2 Review*
-  →  G3 Plan  →  G4 Review+Lock*
-  →  G5 Tasks  →  G6 Review*
-  →  G7 Execute+Log  →  G8 Final Review*
-
-* = Independent reviewer (separate context, read-only tools)
-```
-
-### Automated Checks
-
-15 validators run on file changes: API type consistency, doc freshness, security patterns, fragment integrity, hook registration, and more. They catch drift before it compounds.
-
-### Skills
-
-16 specialized behaviors — from architecture design (`arch`) to failure pattern extraction (`crystal-learn`) to structured bug triage (`bug-triage`). Skills install judgment frameworks, not rule lists, so the agent can navigate situations the skill didn't explicitly cover.
-
-Each skill has `{{PLACEHOLDER}}` structural slots designed to be filled with your project's context during installation.
-
-## Install
+The intended first independently accepted Open Alpha coordinate is **Linux
+aarch64 with CPython 3.12**. This source tree cannot carry or authorize its own
+acceptance: the coordinate is claimable only when an external immutable release
+record binds the exact commit, sealed export, retained non-author clean-room
+receipt, and fresh jury decision. Run the commands from a **Git checkout**, not
+from the immutable root of a bare sealed export:
 
 ```bash
-git clone https://github.com/NatureBlueee/wow-harness.git
-cd wow-harness
-python3 scripts/install/phase2_auto.py /path/to/your/project --tier drop-in
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -e ./oss/flowness-oss-harness
+.venv/bin/flowness-oss open-alpha-demo \
+  --output /tmp/flowness-open-alpha-demo
+.venv/bin/flowness-oss open-alpha-demo-inspect \
+  --run-root /tmp/flowness-open-alpha-demo
 ```
 
-### Three Tiers
+The demo runs three isolated producers, blocks its first candidate on one
+credible failure, performs targeted rework, retests with two fresh judges, and
+then verifies the content-addressed trace. It is deterministic and does not
+need a model account. See the [guided demo](oss/flowness-oss-harness/docs/open-alpha-demo.md)
+for the artifact map and optional Codex CLI producer mode.
 
-| Tier | Trust level | What happens |
-|------|-------------|-------------|
-| **drop-in** | Minimal | Installs hooks + skills as-is. Try it, see what happens. |
-| **adapt** | Medium | Reads your README + docs, customizes skills to your project. |
-| **mine** | Full | Reads your work transcripts, deeply adapts to your patterns. |
+No operating-system, architecture, or interpreter coordinate is independently
+accepted by this mutable candidate. Other coordinates may work, but are also
+unverified until a future exact release record binds their external evidence.
 
-### What Gets Installed
+### Verification coordinates
 
-```
-your-project/
-├── .claude/
-│   ├── settings.json    # Hook registrations (appends, won't clobber)
-│   ├── skills/          # 16 agent behavior definitions
-│   └── rules/           # Path-scoped context (auto-loaded by file path)
-├── scripts/
-│   ├── hooks/           # 16 lifecycle hooks
-│   └── checks/          # 15 automated validators
-└── CLAUDE.md            # Governance guide (generated, yours to edit)
-```
+The full public CI workflow is supported from a Git checkout, including GitHub
+Actions, because scope tests inspect the tracked-file index. A bare sealed-export
+directory deliberately has no `.git`; verify its bytes with
+`python -m flowness_oss_harness.rc0_sealed_export verify`, then use the separate
+clean-room acceptance entry for installation and E2E evidence. A bare export is
+not claimed to be a drop-in GitHub Actions checkout. Never create `.venv`, test
+output, or bytecode inside it; copy the selected packages to scratch space first.
 
-The installer is idempotent — run it twice, get the same result.
+## Monorepo map
 
-## Design Principles
+| Path | What it contains | Alpha status |
+| --- | --- | --- |
+| [`harness/`](harness/README.md) | Selected canonical EventLog, projection, orchestration, review, recovery, lock, worktree, and portable-entry mechanisms | Experimental public engine; real-agent spawning requires a separately authorized adapter |
+| [`oss/flowness-oss-harness/`](oss/flowness-oss-harness/README.md) | Multi-agent roles, candidate sealing, independent jury, blocker/rework lineage, release checks, registries, and the runnable demo | Experimental public OSS machine |
+| [`public-core/flowness-ledger-core/`](public-core/flowness-ledger-core/README.md) | Append-only decisions, projection freshness, terminal verdicts, and bounded tail recovery | Narrow stable candidate |
+| [`oss/flowness-oss-harness/docs/`](oss/flowness-oss-harness/docs/) | Architecture, mechanism, evidence, benchmark, demo, and communication contracts | Mixed current, experimental, target, and Unknown labels; read each proof ceiling |
 
-1. **Hooks over instructions** — If compliance matters, don't ask. Enforce.
-2. **Schema-level isolation** — Review agents' tool manifests exclude write tools. Not "please don't" — *can't*.
-3. **Fail-open where safe** — A hook that can't read its data injects *more* checks, not fewer. The failure mode is always "too cautious," never "silently skipped."
-4. **Session isolation** — Completion detection uses per-session transcript parsing. No shared mutable state between parallel sessions.
-5. **Structural slots over blank space** — Project-specific content becomes `{{PLACEHOLDER}}` with meta-instructions (what to put, why it matters, how to discover it), not empty fields you forget to fill.
+Credentials, customer material, raw Transcripts, account/quota/fleet control,
+private server configuration, and private runtime ledgers are not part of the
+Open Alpha.
 
-## Requirements
+## Choose your route
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
-- Python 3.9+
-- Git
+- **Run it:** [10-minute FAIL → rework → PASS demo](oss/flowness-oss-harness/docs/open-alpha-demo.md)
+- **Understand it:** [D0–D9 Architecture Atlas](oss/flowness-oss-harness/docs/architecture-atlas.md)
+- **Evaluate fit:** [Open Alpha selector packet](oss/flowness-oss-harness/docs/open-alpha-selector-packet-v0.md)
+- **Reuse the public story:** [Discovery and launch pack](oss/flowness-oss-harness/docs/open-alpha-discovery-launch-pack-v0.md)
+- **Inspect boundaries:** [Open Alpha package scope](oss/flowness-oss-harness/docs/open-alpha-package-scope-v0.md)
+- **Migrate from v0:** [Wow-Harness migration guide](MIGRATION.md)
 
-## Origin
+The Architecture Atlas deliberately separates current, experimental,
+designed-target, blocked, and Unknown elements. A diagram or design target is
+not implementation evidence.
 
-Born from 6 months of production use on [Towow](https://towow.net), an agent collaboration protocol. The governance layer kept proving independently valuable — every AI-assisted project needs it, not just ours. So we extracted it.
+## From Wow-Harness to Flowness
 
-The hooks, gates, and isolation patterns were designed by getting burned first, then building the guard. Every rule in this system exists because an AI agent found a creative way to not follow the previous rule.
+Flowness is a ground-up major-version evolution of Wow-Harness, not an
+unrelated project borrowing its history. The migration preserves the v0 Git
+history and license while replacing the current tree through a reviewable
+major-version commit; it does not rewrite history or promise v0 compatibility.
 
-## License
+Historical stars, forks, issues, pull requests, and contributors show interest
+in and use of Wow-Harness. They do **not** validate the rewritten Flowness v1
+implementation. See [MIGRATION.md](MIGRATION.md) for legacy refs, breaking
+boundaries, and issue classification.
 
-MIT
+## Contributing and governance
+
+- [Contributing](CONTRIBUTING.md)
+- [Security](SECURITY.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Version-level license matrix](LICENSE-MATRIX.md)
+- [Apache-2.0 license text](LICENSE)
+- [Notice](NOTICE)
+
+Experimental interfaces may change before Beta. Claims about an external
+selection opportunity, endorsement, criteria, or deadline require a verified
+primary source; this repository makes none merely because an opportunity was
+reported to the project.

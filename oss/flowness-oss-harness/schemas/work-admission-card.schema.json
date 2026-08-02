@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://towow.ai/schemas/flowness-work-admission-card-v1.json",
+  "title": "Flowness OSS work admission card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["task_id", "task_class", "wave_id", "lane", "role_id", "immutable_inputs", "primary_core_artifact", "current_gate_or_blocker", "expected_core_value_delta", "authoritative_inputs", "downstream_consumer", "budget", "change_intent", "acceptance", "retest_condition", "stop_conditions", "excluded_scope", "owner_authority", "ripple_targets"],
+  "$defs": {
+    "artifactRef": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "sha256"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}
+  },
+  "properties": {
+    "task_id": {"type": "string", "minLength": 1},
+    "task_class": {"enum": ["core", "enablement", "judge"]},
+    "wave_id": {"type": "string", "minLength": 1},
+    "lane": {"type": "string", "minLength": 1},
+    "role_id": {"type": "string", "minLength": 1},
+    "immutable_inputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifactRef"}},
+    "primary_core_artifact": {"type": "string"},
+    "current_gate_or_blocker": {"type": "string", "minLength": 1},
+    "expected_core_value_delta": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "authoritative_inputs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "downstream_consumer": {"type": "string", "minLength": 1},
+    "budget": {"type": "object", "additionalProperties": false, "required": ["units"], "properties": {"units": {"const": 1}, "supported_wave_id": {"type": "string", "minLength": 1}}},
+    "change_intent": {"type": "object", "additionalProperties": false, "required": ["code_changes", "deployments", "meta_reviews"], "properties": {"code_changes": {"enum": [0, 1]}, "deployments": {"enum": [0, 1]}, "meta_reviews": {"enum": [0, 1]}}},
+    "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "retest_condition": {"type": "string", "minLength": 1},
+    "stop_conditions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "excluded_scope": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "owner_authority": {"type": "string", "minLength": 1},
+    "ripple_targets": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "judge_identity": {"type": "string", "minLength": 1},
+    "judge_verdict_or_delta": {"type": "string", "minLength": 1},
+    "blocker": {"type": "object", "additionalProperties": false, "required": ["components", "degraded_path_impossible_evidence"], "properties": {"components": {"type": "object", "additionalProperties": false, "required": ["adjudicated_root_cause_family", "sealed_canonical_consumer_id", "normalized_error_or_stack_signature_hash", "source_or_entry_coordinates"], "properties": {"adjudicated_root_cause_family": {"type": "string", "minLength": 1}, "sealed_canonical_consumer_id": {"type": "string", "minLength": 1}, "normalized_error_or_stack_signature_hash": {"type": "string", "minLength": 1}, "source_or_entry_coordinates": {"type": "string", "minLength": 1}, "degraded_path_impossible_evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifactRef"}}}}, "degraded_path_impossible_evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifactRef"}}, "historical_ledger_import": {"type": "object", "additionalProperties": false, "required": ["evidence", "attempts", "code_changes", "deployments", "meta_reviews"], "properties": {"evidence": {"$ref": "#/$defs/artifactRef"}, "attempts": {"type": "integer", "minimum": 0}, "code_changes": {"type": "integer", "minimum": 0}, "deployments": {"type": "integer", "minimum": 0}, "meta_reviews": {"type": "integer", "minimum": 0}}}, "new_fingerprint_adjudication": {"type": "object", "additionalProperties": false, "required": ["adjudicator_identity", "evidence"], "properties": {"adjudicator_identity": {"type": "string", "minLength": 1}, "evidence": {"$ref": "#/$defs/artifactRef"}}}}},
+    "rework_binding": {"type": "object", "additionalProperties": false, "required": ["blocker_case_id", "blocker_id", "case_hash", "case_artifact", "original"], "properties": {"blocker_case_id": {"type": "string", "minLength": 1}, "blocker_id": {"type": "string", "minLength": 1}, "case_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "case_artifact": {"$ref": "#/$defs/artifactRef"}, "original": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "snapshot_id", "report_id", "check_id"], "properties": {"candidate_id": {"type": "string", "minLength": 1}, "snapshot_id": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "report_id": {"type": "string", "minLength": 1}, "check_id": {"type": "string", "minLength": 1}}}}}
+  }
+}

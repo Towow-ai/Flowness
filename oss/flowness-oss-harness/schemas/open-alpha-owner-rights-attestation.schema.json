@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/open-alpha-owner-rights-attestation.schema.json",
+  "title": "Flowness Open Alpha owner rights attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "attestation_id",
+    "attested_on",
+    "owner_role",
+    "scope",
+    "rights_review_state",
+    "ip_review_state",
+    "attestations",
+    "cryptographic_signature",
+    "publication_authorization",
+    "boundary",
+    "attestation_hash"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "open-alpha-owner-rights-attestation/v1"},
+    "attestation_id": {"$ref": "#/$defs/id"},
+    "attested_on": {"type": "string", "format": "date"},
+    "owner_role": {"type": "string", "const": "repository_owner"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_path", "covered_rights_group_ids"],
+      "properties": {
+        "policy_path": {"type": "string", "const": "oss/flowness-oss-harness/config/open-alpha-release-audit.json"},
+        "covered_rights_group_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        }
+      }
+    },
+    "rights_review_state": {"type": "string", "const": "owner_attested"},
+    "ip_review_state": {"type": "string", "const": "owner_attested"},
+    "attestations": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["statement_id", "statement"],
+        "properties": {
+          "statement_id": {"$ref": "#/$defs/id"},
+          "statement": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "cryptographic_signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present"],
+      "properties": {"present": {"type": "boolean", "const": false}}
+    },
+    "publication_authorization": {"type": "boolean", "const": false},
+    "boundary": {"type": "string", "minLength": 1},
+    "attestation_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/analytics-feedback-observations.schema.json",
+  "title": "Private, aggregate-only Content Machine analytics observations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle_id", "source_graph", "channel_package", "provenance", "observation_window", "privacy", "interpretation_scope", "observations", "boundary", "bundle_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "analytics-feedback-observations/v1"},
+    "bundle_id": {"type": "string", "pattern": "^analytics-feedback-[a-f0-9]{24}$"},
+    "source_graph": {"$ref": "#/$defs/graph"},
+    "channel_package": {"$ref": "#/$defs/package"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "observation_window": {"$ref": "#/$defs/window"},
+    "privacy": {"$ref": "#/$defs/privacy"},
+    "interpretation_scope": {"type": "string", "const": "descriptive_aggregate_only_no_product_value_inference"},
+    "observations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/observation"}},
+    "boundary": {"type": "string", "const": "private aggregate analytics observations only; no raw personal data, raw event records, claim mutation, product-value inference, publication, network collection, credential use, scheduling, or external send."},
+    "bundle_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "graph": {"type": "object", "additionalProperties": false, "required": ["graph_id", "graph_hash", "candidate_id", "snapshot_id", "version_id", "verification"], "properties": {"graph_id": {"$ref": "#/$defs/id"}, "graph_hash": {"$ref": "#/$defs/sha256"}, "candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"$ref": "#/$defs/id"}, "verification": {"type": "string", "const": "verified_content_graph_v3"}}},
+    "package": {"type": "object", "additionalProperties": false, "required": ["package_id", "package_hash", "channel_id", "locale", "verification"], "properties": {"package_id": {"type": "string", "pattern": "^channel-package-[a-f0-9]{24}$"}, "package_hash": {"$ref": "#/$defs/sha256"}, "channel_id": {"$ref": "#/$defs/id"}, "locale": {"type": "string", "enum": ["en", "zh-CN"]}, "verification": {"type": "string", "const": "verified_channel_package"}}},
+    "provenance": {"type": "object", "additionalProperties": false, "required": ["source_class", "collector_id", "collection_method", "source_revision", "captured_at"], "properties": {"source_class": {"type": "string", "enum": ["synthetic_fixture", "private_aggregate_export"]}, "collector_id": {"$ref": "#/$defs/id"}, "collection_method": {"type": "string", "enum": ["fixture_generated", "manual_private_aggregate_export"]}, "source_revision": {"type": "string", "minLength": 1, "maxLength": 256}, "captured_at": {"type": "string", "format": "date-time"}}},
+    "window": {"type": "object", "additionalProperties": false, "required": ["start", "end", "timezone"], "properties": {"start": {"type": "string", "format": "date-time"}, "end": {"type": "string", "format": "date-time"}, "timezone": {"type": "string", "const": "UTC"}}},
+    "privacy": {"type": "object", "additionalProperties": false, "required": ["raw_personal_data", "raw_event_records", "identity_scope", "minimum_group_size", "small_group_handling"], "properties": {"raw_personal_data": {"type": "string", "const": "absent"}, "raw_event_records": {"type": "string", "const": "absent"}, "identity_scope": {"type": "string", "const": "aggregate_only"}, "minimum_group_size": {"type": "integer", "minimum": 2}, "small_group_handling": {"type": "string", "const": "suppressed"}}},
+    "observation": {"type": "object", "additionalProperties": false, "required": ["observation_id", "metric", "aggregation", "count", "denominator", "unit"], "properties": {"observation_id": {"$ref": "#/$defs/id"}, "metric": {"type": "string", "enum": ["attention", "read", "install", "first_success", "retention", "issue", "contribution", "adoption"]}, "aggregation": {"type": "string", "enum": ["event_count", "aggregate_rate"]}, "count": {"type": "integer", "minimum": 0}, "denominator": {"type": "integer", "minimum": 0}, "unit": {"type": "string", "enum": ["aggregate_events", "aggregate_actors"]}}}
+  }
+}

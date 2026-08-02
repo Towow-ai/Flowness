@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://towow.ai/schemas/flowness-work-attempt-ledger-event-v1.json",
+  "title": "Flowness OSS append-only work attempt event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "sequence", "event_id", "event_type", "admission_id", "admission_entry_hash", "policy_hash", "controller_version", "occurred_at", "run_binding", "payload", "previous_event_hash", "event_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "work-attempt-ledger-event/v1"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "event_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "event_type": {"type": "string", "enum": ["started", "stop_requested", "terminal"]},
+    "admission_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "admission_entry_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "policy_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "controller_version": {"type": "string", "minLength": 1},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "run_binding": {"type": "object", "additionalProperties": false, "required": ["run_id", "run_hash", "wave_id", "role_id"], "properties": {"run_id": {"type": ["string", "null"]}, "run_hash": {"type": ["string", "null"]}, "wave_id": {"type": "string", "minLength": 1}, "role_id": {"type": "string", "minLength": 1}}},
+    "payload": {"type": "object", "additionalProperties": false, "required": ["outcome", "reason_code", "execution_record", "evidence", "retest_required"], "properties": {"outcome": {"type": ["string", "null"], "enum": ["completed", "failed", "stopped", null]}, "reason_code": {"type": "string", "minLength": 1}, "execution_record": {"type": ["object", "null"], "additionalProperties": false, "required": ["artifact_id", "sha256"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}, "evidence": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "sha256"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}}}, "retest_required": {"type": "boolean"}}},
+    "previous_event_hash": {"type": ["string", "null"]},
+    "event_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

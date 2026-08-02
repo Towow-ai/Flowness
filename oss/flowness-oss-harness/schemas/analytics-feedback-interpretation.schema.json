@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/analytics-feedback-interpretation.schema.json",
+  "title": "Private Content Machine analytics interpretation for existing review obligations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "interpretation_id", "role_id", "contract_id", "source_graph", "impact_review_plan", "input_bundle", "findings", "review_links", "mutation_attestation", "effect_attestation", "inference_boundary", "boundary", "interpretation_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "analytics-feedback-interpretation/v1"},
+    "interpretation_id": {"type": "string", "pattern": "^analytics-interpretation-[a-f0-9]{24}$"},
+    "role_id": {"type": "string", "const": "analytics.interpreter"},
+    "contract_id": {"type": "string", "const": "content-machine/CM-008/v1"},
+    "source_graph": {"$ref": "#/$defs/graph"},
+    "impact_review_plan": {"$ref": "#/$defs/plan"},
+    "input_bundle": {"$ref": "#/$defs/bundle"},
+    "findings": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/finding"}},
+    "review_links": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/review_link"}},
+    "mutation_attestation": {"$ref": "#/$defs/mutation"},
+    "effect_attestation": {"$ref": "#/$defs/effects"},
+    "inference_boundary": {"type": "string", "const": "descriptive_observations_are_not_product_value_or_claim_evidence"},
+    "boundary": {"type": "string", "const": "private analytics review output only; it may request context review against existing Content Graph obligations but cannot mutate claims, evidence, candidate state, approvals, source analytics, publish, collect network data, use credentials, schedule, or send externally."},
+    "interpretation_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "graph": {"type": "object", "additionalProperties": false, "required": ["graph_id", "graph_hash", "candidate_id", "snapshot_id", "version_id", "verification"], "properties": {"graph_id": {"$ref": "#/$defs/id"}, "graph_hash": {"$ref": "#/$defs/sha256"}, "candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"type": "string", "minLength": 1}, "version_id": {"$ref": "#/$defs/id"}, "verification": {"type": "string", "const": "verified_content_graph_v3"}}},
+    "plan": {"type": "object", "additionalProperties": false, "required": ["plan_id", "plan_hash", "verification"], "properties": {"plan_id": {"type": "string", "minLength": 1}, "plan_hash": {"$ref": "#/$defs/sha256"}, "verification": {"type": "string", "const": "verified_content_impact_review_plan"}}},
+    "bundle": {"type": "object", "additionalProperties": false, "required": ["bundle_id", "bundle_hash", "verification"], "properties": {"bundle_id": {"type": "string", "pattern": "^analytics-feedback-[a-f0-9]{24}$"}, "bundle_hash": {"$ref": "#/$defs/sha256"}, "verification": {"type": "string", "const": "verified_private_aggregate_analytics"}}},
+    "finding": {"type": "object", "additionalProperties": false, "required": ["finding_id", "observation_ids", "statement", "state"], "properties": {"finding_id": {"$ref": "#/$defs/id"}, "observation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "statement": {"type": "string", "minLength": 1, "maxLength": 1000}, "state": {"type": "string", "const": "descriptive_only"}}},
+    "review_link": {"type": "object", "additionalProperties": false, "required": ["link_id", "finding_ids", "plan_obligation_ids", "target_ids", "requested_action", "claim_state"], "properties": {"link_id": {"$ref": "#/$defs/id"}, "finding_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "plan_obligation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "target_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "requested_action": {"type": "string", "const": "review_context_only"}, "claim_state": {"type": "string", "const": "not_mutated"}}},
+    "mutation": {"type": "object", "additionalProperties": false, "required": ["claim_registry", "evidence_registry", "candidate_state", "approval_state", "analytics_source_data"], "properties": {"claim_registry": {"type": "string", "const": "not_mutated"}, "evidence_registry": {"type": "string", "const": "not_mutated"}, "candidate_state": {"type": "string", "const": "not_mutated"}, "approval_state": {"type": "string", "const": "not_mutated"}, "analytics_source_data": {"type": "string", "const": "not_mutated"}}},
+    "effects": {"type": "object", "additionalProperties": false, "required": ["publish", "network", "credential_use", "external_send", "schedule"], "properties": {"publish": {"type": "string", "const": "not_attempted"}, "network": {"type": "string", "const": "not_attempted"}, "credential_use": {"type": "string", "const": "not_attempted"}, "external_send": {"type": "string", "const": "not_attempted"}, "schedule": {"type": "string", "const": "not_attempted"}}}
+  }
+}

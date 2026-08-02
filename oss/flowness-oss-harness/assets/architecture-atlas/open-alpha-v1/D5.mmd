@@ -1,0 +1,46 @@
+flowchart LR
+  H["D5 / open-alpha-v1 / architect<br/>LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / UNKNOWN / EXTERNAL"]
+  User["User goal<br/>UNKNOWN authority"]
+  C["Controller<br/>EXPERIMENTAL"]
+  F["Claim fence<br/>EXPERIMENTAL"]
+  W["Worker<br/>UNKNOWN live runtime"]
+  Sandbox["sandbox / worktree<br/>UNKNOWN isolation"]
+  G["Commit gate<br/>EXPERIMENTAL"]
+  L["Ledger<br/>EXPERIMENTAL"]
+  Stores["event + projection stores<br/>EXPERIMENTAL"]
+  P["Projection + independent review<br/>EXPERIMENTAL"]
+  R["Recovery / owner route<br/>EXPERIMENTAL / EXTERNAL"]
+  SyncAsync["control is synchronous candidate;<br/>worker and review handoffs are UNKNOWN"]
+  Handoff["artifact + envelope handoff<br/>UNKNOWN real delivery"]
+  RetryTimeout["retry / timeout / cancellation<br/>UNKNOWN runtime policy"]
+  Failure["FAILURE: denial, timeout, reject,<br/>or credible jury FAIL"]
+  Target["DESIGNED_TARGET: bounded live sequence"]
+  Evidence["CURRENT_VERIFIED: stable edge registry; runtime invocation remains unsealed"]
+  Ceiling["PROOF CEILING: no proof of real spawn, timing, capacity, isolation, delivery, or production success"]
+
+  User -. "goal" .-> C
+  C -->|request per-key claim · EDGE-D5-001| F
+  F -->|claim denied; preserve no-spawn · EDGE-D5-002| C
+  F -.->|claim granted; prepare worker · EDGE-D5-003| W
+  W -.->|stranded or failed work opens recovery · EDGE-D5-004| R
+  R -->|governed retry recomputes ready set · EDGE-D5-005| C
+  R -->|cap or ambiguity retains owner escalation · EDGE-D5-006| R
+  W -.->|submit envelope and provenance · EDGE-D5-007| G
+  G -->|CommitAccepted sentinel · EDGE-D5-008| L
+  L -->|visible events fold into projection · EDGE-D5-009| P
+  P -->|accepted closure unlocks dependent work · EDGE-D5-010| C
+  P -->|open finding routes to rework · EDGE-D5-011| R
+  G -->|CommitRejected sentinel · EDGE-D5-012| L
+  L -->|rejection batch routes to reassembly · EDGE-D5-013| R
+  W -.-> Sandbox
+  W -.-> Handoff -.-> G
+  L -.-> Stores
+  SyncAsync -.-> C
+  RetryTimeout -.-> R
+  Failure -.-> R
+  Target -.-> C
+  Evidence -.-> L
+  H -.-> User
+  Ceiling -.-> R
+
+%% ARCH-EDGE-IDS:D5: EDGE-D5-001, EDGE-D5-002, EDGE-D5-003, EDGE-D5-004, EDGE-D5-005, EDGE-D5-006, EDGE-D5-007, EDGE-D5-008, EDGE-D5-009, EDGE-D5-010, EDGE-D5-011, EDGE-D5-012, EDGE-D5-013

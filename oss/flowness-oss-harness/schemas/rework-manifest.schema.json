@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/rework-manifest.schema.json",
+  "title": "Immutable Flowness rework manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "rework_manifest_id", "blocker_case", "successor", "rework_evidence", "ripple_invalidations", "retest_requirement", "manifest_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["rework-manifest/v1", "rework-manifest/v2"]}, "rework_manifest_id": {"$ref": "#/$defs/id"},
+    "blocker_case": {"type": "object", "additionalProperties": false, "required": ["blocker_case_id", "blocker_id", "case_hash", "artifact"], "properties": {"blocker_case_id": {"$ref": "#/$defs/id"}, "blocker_id": {"$ref": "#/$defs/blockerId"}, "case_hash": {"$ref": "#/$defs/sha256"}, "artifact": {"$ref": "#/$defs/artifact"}}},
+    "successor": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "snapshot_id", "candidate", "snapshot"], "properties": {"candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"$ref": "#/$defs/sha256"}, "candidate": {"$ref": "#/$defs/artifact"}, "snapshot": {"$ref": "#/$defs/artifact"}}},
+    "rework_evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/artifact"}},
+    "rework_attempt": {"type": "object", "additionalProperties": false, "required": ["admission_id", "admission_entry_hash", "terminal_event_hash", "execution_record"], "properties": {"admission_id": {"type": "string", "minLength": 1}, "admission_entry_hash": {"$ref": "#/$defs/sha256"}, "terminal_event_hash": {"$ref": "#/$defs/sha256"}, "execution_record": {"$ref": "#/$defs/artifact"}}},
+    "ripple_invalidations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/invalidation"}},
+    "retest_requirement": {"type": "object", "additionalProperties": false, "required": ["blocker_id", "original_check_id", "fresh_independent_jury_required"], "properties": {"blocker_id": {"$ref": "#/$defs/blockerId"}, "original_check_id": {"type": "string", "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"}, "blocking_verdict": {"type": "string", "enum": ["fail", "unknown"]}, "reproduction": {"$ref": "#/$defs/reproduction"}, "evidence_acquisition": {"$ref": "#/$defs/evidenceAcquisition"}, "fresh_independent_jury_required": {"type": "boolean", "const": true}}},
+    "manifest_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"}, "blockerId": {"type": "string", "pattern": "^(BLK|SYSTEM|UNKNOWN|JURY|MATURITY|CHECK)-[A-Za-z0-9._:-]+$"}, "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "text": {"type": "string", "minLength": 1},
+    "artifact": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "sha256"], "properties": {"artifact_id": {"$ref": "#/$defs/text"}, "sha256": {"$ref": "#/$defs/sha256"}}},
+    "reproduction": {"type": "object", "additionalProperties": false, "required": ["command_template", "environment_hash", "attempts", "expected", "observed", "retest_condition"], "properties": {"command_template": {"$ref": "#/$defs/text"}, "environment_hash": {"$ref": "#/$defs/sha256"}, "attempts": {"type": "integer", "minimum": 1}, "expected": {"$ref": "#/$defs/text"}, "observed": {"$ref": "#/$defs/text"}, "retest_condition": {"$ref": "#/$defs/text"}}},
+    "evidenceAcquisition": {"type": "object", "additionalProperties": false, "required": ["missing_evidence", "expected", "observed", "remediation", "retest_condition"], "properties": {"missing_evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/text"}}, "expected": {"type": "string"}, "observed": {"type": "string"}, "remediation": {"type": "string"}, "retest_condition": {"type": "string"}}},
+    "invalidation": {"type": "object", "additionalProperties": false, "required": ["target_type", "target_id", "reason", "required_revalidation"], "properties": {"target_type": {"type": "string", "enum": ["claim", "mechanism", "architecture", "demo", "case", "asset", "channel", "release"]}, "target_id": {"$ref": "#/$defs/id"}, "reason": {"$ref": "#/$defs/text"}, "required_revalidation": {"$ref": "#/$defs/text"}}}
+  },
+  "allOf": [
+    {"if": {"properties": {"schema_version": {"const": "rework-manifest/v1"}}, "required": ["schema_version"]}, "then": {"properties": {"retest_requirement": {"required": ["reproduction"]}}}},
+    {"if": {"properties": {"schema_version": {"const": "rework-manifest/v2"}, "retest_requirement": {"properties": {"blocking_verdict": {"const": "fail"}}, "required": ["blocking_verdict"]}}, "required": ["schema_version", "retest_requirement"]}, "then": {"properties": {"retest_requirement": {"required": ["reproduction"]}}}},
+    {"if": {"properties": {"schema_version": {"const": "rework-manifest/v2"}, "retest_requirement": {"properties": {"blocking_verdict": {"const": "unknown"}}, "required": ["blocking_verdict"]}}, "required": ["schema_version", "retest_requirement"]}, "then": {"properties": {"retest_requirement": {"required": ["evidence_acquisition"]}}}}
+  ]
+}

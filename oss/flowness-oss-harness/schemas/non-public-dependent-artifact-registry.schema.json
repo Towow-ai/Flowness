@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Local non-public dependent artifact registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "boundary", "dependency_scope", "public_asset_scope_excluded", "artifacts", "registry_hash"],
+  "properties": {
+    "schema_version": {"const": "non-public-dependent-artifact-registry/v1"},
+    "registry_id": {"const": "local-governance-and-media-dependent-artifacts-v0"},
+    "boundary": {"const": "LOCAL-NON-PUBLIC-DEPENDENT-ARTIFACT-REGISTRY;NO-PUBLIC-ASSET-CLAIM-NO-DISCLOSURE-NO-PUBLISH"},
+    "dependency_scope": {"const": "content-and-media-local-rebuild-scope"},
+    "public_asset_scope_excluded": {"const": true},
+    "artifacts": {"type": "array", "minItems": 1, "maxItems": 1, "items": {"$ref": "#/$defs/artifact"}},
+    "registry_hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["binding_id", "path", "sha256"], "properties": {"binding_id": {"enum": ["mechanism_cards", "system_narrative_trace"]}, "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "artifact": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "kind", "path", "sha256", "source_bindings", "rebuild_action", "media_rebuild_scope", "external_effect"], "properties": {"artifact_id": {"const": "artifact.pro-blind-mechanism-architecture-preparation"}, "kind": {"const": "local_sealed_governance_packet"}, "path": {"const": "oss/flowness-oss-harness/registries/pro-blind-review-preparation-local-v0.json"}, "sha256": {"$ref": "#/$defs/hash"}, "source_bindings": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/ref"}}, "rebuild_action": {"const": "rebuild_local_packet_and_reverify_disclosure_boundary"}, "media_rebuild_scope": {"const": "governance_dependent_non_public"}, "external_effect": {"const": "no_public_claim_no_transmission_no_publication"}}}
+  }
+}

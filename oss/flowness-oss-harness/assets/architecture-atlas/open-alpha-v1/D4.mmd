@@ -1,0 +1,20 @@
+flowchart LR
+  H["D4 | open-alpha-v1\nMIXED TRUTH: located families and candidate consumers"]:::status
+  Intent["UNKNOWN / BLOCKED\nINTENT family: interview, concept, consensus, planning"] -.-> Dispatch["EXPERIMENTAL / LOCAL\nORCHESTRATION family: ready set + claim fence"]
+  Workspace["UNKNOWN / BLOCKED\nWORKSPACE family: worktree, write-set, ownership, isolation"] -.-> Tasks["candidate task decisions"]
+  Ledger["EXPERIMENTAL / LOCAL\nLEDGER family: event + commit + projection"] --> State["candidate projection state"]
+  Dispatch --> Tasks
+  Review["EXPERIMENTAL / LOCAL\nEVALUATION family: review + verification + closure"] --> Findings["candidate finding / retest"]
+  Handoff["EXPERIMENTAL / LOCAL\nHANDOFF family: capsule + provenance anchor"] --> Audit["candidate audit lookup"]
+  Recovery["EXPERIMENTAL / LOCAL\nRECOVERY family: reflow + dead letter"] --> Findings
+  InstallFleet["UNKNOWN / BLOCKED\nINSTALL + FLEET family: installer, sessions, accounts, quota"] -.-> Tasks
+  ObservabilitySecurity["UNKNOWN / BLOCKED\nOBSERVABILITY + SECURITY family: health, alert, permission, secret, network"] -.-> Audit
+  Unknown["UNKNOWN / BLOCKED\ncomplete producer/consumer inventory"] -.-> State
+  Failure["Failure: missing or partial consumer mapping"] --> Recover["Recovery: Unknown registry + targeted retest"]
+  Recover -. "retest candidate" .-> Dispatch
+  Target["DESIGNED TARGET\nsealed consumer graph"] -.-> Audit
+  Evidence["CURRENT_VERIFIED Evidence: static cards + trace map only"] -.-> Ledger
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling["PROOF CEILING\nCannot prove exhaustive coverage or runtime delivery"]:::boundary
+  classDef status fill:#fff8e1,stroke:#b26a00,color:#4a2900;
+  classDef boundary fill:#fdecec,stroke:#b91c1c,color:#5f1111;

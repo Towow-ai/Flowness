@@ -1,0 +1,28 @@
+flowchart LR
+  H["D7 / open-alpha-v1 / security reviewer + operator<br/>LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / UNKNOWN / EXTERNAL"]
+  TrustZones["trust zones + effective identity<br/>UNKNOWN"]
+  Creds["credentials / tokens<br/>UNKNOWN source, scope, rotation"]
+  Data["workspace + operational data<br/>UNKNOWN classification / retention"]
+  PII["PII collection / redaction / access / deletion<br/>UNKNOWN"]
+  CapabilityScope["capability scope: action + resource + expiry<br/>UNKNOWN"]
+  Egress["network / external APIs<br/>UNKNOWN enforcement"]
+  Gate["commit + evidence gate<br/>EXPERIMENTAL"]
+  Ledger["accepted/rejected evidence ledger<br/>EXPERIMENTAL"]
+  Owner["irreversible actions / publication<br/>EXTERNAL OWNER GATE"]
+  Failure["FAILURE: missing, stale, or overbroad authority evidence"]
+  Recovery["reject, retain finding, or escalate;<br/>no silent bypass"]
+  Target["DESIGNED_TARGET: explicit identity, least privilege, data classes, credential scope, and egress policy"]
+  Ceiling["PROOF CEILING: no proof of RBAC, least privilege, secrets/PII controls, egress enforcement, or owner delivery"]
+
+  H -.-> TrustZones
+  TrustZones -.-> Creds
+  Creds -.-> CapabilityScope
+  TrustZones -.-> Data
+  Data -.-> PII
+  TrustZones -.-> Egress
+  Gate --> Ledger
+  Gate -. "effective authority unsealed" .-> TrustZones
+  Failure --> Recovery --> Owner
+  Target -.-> Owner
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling -.-> Recovery

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/blocker-case.schema.json",
+  "title": "Immutable Flowness blocker case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "blocker_case_id", "blocker_id", "original", "ripple_targets", "case_hash"],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["blocker-case/v1", "blocker-case/v2"]},
+    "blocker_case_id": {"$ref": "#/$defs/id"},
+    "blocker_id": {"$ref": "#/$defs/blockerId"},
+    "blocking_verdict": {"type": "string", "enum": ["fail", "unknown"]},
+    "original": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "snapshot_id", "report_id", "check_id", "candidate", "snapshot", "report", "check_hash"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/id"}, "snapshot_id": {"$ref": "#/$defs/sha256"},
+        "report_id": {"$ref": "#/$defs/id"}, "check_id": {"type": "string", "pattern": "^G[0-5]\\.[A-Za-z0-9._-]+$"},
+        "candidate": {"$ref": "#/$defs/artifact"}, "snapshot": {"$ref": "#/$defs/artifact"}, "report": {"$ref": "#/$defs/artifact"}, "check_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "reproduction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["command_template", "environment_hash", "attempts", "expected", "observed", "retest_condition"],
+      "properties": {
+        "command_template": {"$ref": "#/$defs/text"}, "environment_hash": {"$ref": "#/$defs/sha256"}, "attempts": {"type": "integer", "minimum": 1},
+        "expected": {"$ref": "#/$defs/text"}, "observed": {"$ref": "#/$defs/text"}, "retest_condition": {"$ref": "#/$defs/text"}
+      }
+    },
+    "evidence_acquisition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["missing_evidence", "expected", "observed", "remediation", "retest_condition"],
+      "properties": {
+        "missing_evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+        "expected": {"type": "string"}, "observed": {"type": "string"},
+        "remediation": {"type": "string"}, "retest_condition": {"type": "string"}
+      }
+    },
+    "ripple_targets": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/rippleTarget"}},
+    "case_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "allOf": [
+    {"if": {"properties": {"schema_version": {"const": "blocker-case/v1"}}, "required": ["schema_version"]}, "then": {"required": ["reproduction"]}},
+    {"if": {"properties": {"schema_version": {"const": "blocker-case/v2"}, "blocking_verdict": {"const": "fail"}}, "required": ["schema_version", "blocking_verdict"]}, "then": {"required": ["reproduction"]}},
+    {"if": {"properties": {"schema_version": {"const": "blocker-case/v2"}, "blocking_verdict": {"const": "unknown"}}, "required": ["schema_version", "blocking_verdict"]}, "then": {"required": ["evidence_acquisition"]}}
+  ],
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "blockerId": {"type": "string", "pattern": "^(BLK|SYSTEM|UNKNOWN|JURY|MATURITY|CHECK)-[A-Za-z0-9._:-]+$"},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "text": {"type": "string", "minLength": 1},
+    "artifact": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "sha256"], "properties": {"artifact_id": {"$ref": "#/$defs/text"}, "sha256": {"$ref": "#/$defs/sha256"}}},
+    "rippleTarget": {"type": "object", "additionalProperties": false, "required": ["target_type", "target_id", "reason"], "properties": {"target_type": {"type": "string", "enum": ["claim", "mechanism", "architecture", "demo", "case", "asset", "channel", "release"]}, "target_id": {"$ref": "#/$defs/id"}, "reason": {"$ref": "#/$defs/text"}}}
+  }
+}

@@ -1,0 +1,28 @@
+flowchart LR
+  H["D8 / open-alpha-v1 / architect + evaluator<br/>LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / UNKNOWN / EXTERNAL"]
+  Source["source + test + history coordinates<br/>CURRENT_VERIFIED when hash-bound"]
+  Task["task<br/>EXPERIMENTAL"]
+  Envelope["artifact + evidence envelope<br/>EXPERIMENTAL"]
+  Event["accepted/rejected event<br/>EXPERIMENTAL"]
+  Timestamp["event / ingest / commit time semantics<br/>UNKNOWN"]
+  Finding["finding + retest condition<br/>EXPERIMENTAL"]
+  Graders["isolated graders / jury<br/>EXPERIMENTAL"]
+  Acceptance["terminal acceptance<br/>UNKNOWN authority"]
+  Claim["claim + audience + asset version<br/>CURRENT_VERIFIED as registry entry only"]
+  Failure["FAILURE: missing link, stale hash, unresolved finding, or unknown authority"]
+  Recovery["same blocker ID + retest"]
+  Target["DESIGNED_TARGET: continuous provenance to publication gate"]
+  Ceiling["PROOF CEILING: no proof of a continuous real-run trace, semantic correctness, or publication"]
+
+  H -.-> Source
+  Source --> Task --> Envelope --> Event --> Finding
+  Timestamp -.-> Event
+  Event -.-> Acceptance
+  Graders --> Finding
+  Finding -. "authority unsealed" .-> Acceptance
+  Acceptance -. "must support" .-> Claim
+  Failure --> Finding
+  Finding --> Recovery --> Task
+  Target -.-> Claim
+  Legend["LEGEND: CURRENT_VERIFIED / EXPERIMENTAL / DESIGNED_TARGET / OPTIONAL / WRITTEN-ONLY / BLOCKED"]
+  Ceiling -.-> Acceptance

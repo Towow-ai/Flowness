@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowness.dev/schemas/rc0-rights-policy.schema.json",
+  "title": "RC0-carried rights mapping policy",
+  "type": "object",
+  "required": ["schema_version", "rights_groups"],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "rights_groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group_id", "patterns", "license_expression", "origin_class", "rights_state", "ip_review_state", "provenance_state", "evidence_refs"],
+        "properties": {
+          "group_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+          "patterns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "license_expression": {"type": "string", "minLength": 1},
+          "origin_class": {"type": "string", "minLength": 1},
+          "rights_state": {"enum": ["owner_attestation_pending", "blocked", "cleared"]},
+          "ip_review_state": {"enum": ["source_review_pending", "blocked", "cleared"]},
+          "provenance_state": {"type": "string", "minLength": 1},
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["evidence_type", "path", "sha256"],
+              "properties": {
+                "evidence_type": {"type": "string", "const": "owner_rights_attestation"},
+                "path": {"type": "string", "minLength": 1},
+                "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "anyOf": [
+                {"properties": {"rights_state": {"const": "cleared"}}, "required": ["rights_state"]},
+                {"properties": {"ip_review_state": {"const": "cleared"}}, "required": ["ip_review_state"]}
+              ]
+            },
+            "then": {"properties": {"evidence_refs": {"minItems": 1}}}
+          }
+        ]
+      }
+    }
+  }
+}
