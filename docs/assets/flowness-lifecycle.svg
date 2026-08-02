@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">The complete Flowness lifecycle and the runnable Open Alpha slice</title>
+  <desc id="desc">The top lane shows the complete Flowness system from interview through accepted outcome. The lower lane separately highlights the public Open Alpha proof: parallel execution, independent review, targeted rework, and acceptance.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.58" stop-color="#0b1930"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="alphaBand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#102b42"/>
+      <stop offset="1" stop-color="#171f43"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#42d7ff"/>
+    </marker>
+    <marker id="alphaArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a4adff"/>
+    </marker>
+    <marker id="returnArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff8b58"/>
+    </marker>
+    <style>
+      .title{font:700 42px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#f8fafc;letter-spacing:-1px}
+      .sub{font:400 20px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#a7b7ca}
+      .lane{font:700 14px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:2px}
+      .nodeTitle{font:700 18px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#f8fafc}
+      .nodeCn{font:500 15px Inter,"PingFang SC","Microsoft YaHei",sans-serif;fill:#b5c6d8}
+      .tag{font:700 11px Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:1px}
+      .mini{font:500 14px Inter,"PingFang SC","Microsoft YaHei",sans-serif;fill:#b6c6d8}
+      .alphaTitle{font:700 21px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#f8fafc}
+      .alphaCn{font:500 16px Inter,"PingFang SC","Microsoft YaHei",sans-serif;fill:#c6d2e0}
+      .noteTitle{font:700 17px Inter,"PingFang SC","Microsoft YaHei",sans-serif;fill:#f8fafc}
+      .noteBody{font:400 14px Inter,"PingFang SC","Microsoft YaHei",sans-serif;fill:#aebfd1}
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" rx="28" fill="url(#bg)"/>
+  <circle cx="1410" cy="50" r="280" fill="#244c99" opacity=".13"/>
+  <circle cx="150" cy="900" r="300" fill="#00d0c6" opacity=".06"/>
+
+  <text x="70" y="70" class="title">From a vague goal to work you can actually trust.</text>
+  <text x="70" y="107" class="sub">Complete lifecycle model above. Runnable public proof below. The two are intentionally not the same claim.</text>
+
+  <text x="70" y="158" class="lane" fill="#5de1ff">COMPLETE LIFECYCLE MODEL · 完整生命周期模型</text>
+  <g transform="translate(15 190)">
+    <path d="M145 66 H178 M323 66 H356 M501 66 H534 M679 66 H712 M857 66 H890 M1035 66 H1068 M1213 66 H1246 M1391 66 H1424" stroke="#42d7ff" stroke-width="3" marker-end="url(#arrow)" opacity=".88"/>
+
+    <g><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2"/><text x="16" y="29" class="tag" fill="#42d7ff">01 CLARIFY</text><text x="16" y="64" class="nodeTitle">Interview</text><text x="16" y="91" class="nodeCn">采访澄清</text><text x="16" y="115" class="mini">goal + limits</text></g>
+    <g transform="translate(178 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2" stroke-dasharray="8 6"/><text x="16" y="29" class="tag" fill="#42d7ff">02 CHOOSE</text><text x="16" y="64" class="nodeTitle">Design</text><text x="16" y="91" class="nodeCn">设计方案</text><text x="16" y="115" class="mini">partial · private</text></g>
+    <g transform="translate(356 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2" stroke-dasharray="8 6"/><text x="16" y="29" class="tag" fill="#42d7ff">03 ENGINEER</text><text x="16" y="58" class="nodeTitle">Engineering</text><text x="16" y="79" class="nodeTitle">spec</text><text x="16" y="103" class="nodeCn">工程方案</text><text x="16" y="123" class="mini">partial · private</text></g>
+    <g transform="translate(534 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2"/><text x="16" y="29" class="tag" fill="#42d7ff">04 FREEZE</text><text x="16" y="60" class="nodeTitle">Shared</text><text x="16" y="82" class="nodeTitle">consensus</text><text x="16" y="108" class="nodeCn">工程共识</text></g>
+    <g transform="translate(712 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2"/><text x="16" y="29" class="tag" fill="#42d7ff">05 PLAN</text><text x="16" y="64" class="nodeTitle">Task graph</text><text x="16" y="91" class="nodeCn">计划与依赖</text><text x="16" y="115" class="mini">work + acceptance</text></g>
+    <g transform="translate(890 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2"/><text x="16" y="29" class="tag" fill="#42d7ff">06 BUILD</text><text x="16" y="64" class="nodeTitle">Parallel work</text><text x="16" y="91" class="nodeCn">多 Agent 执行</text><text x="16" y="115" class="mini">isolated outputs</text></g>
+    <g transform="translate(1068 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#42d7ff" stroke-width="2"/><text x="16" y="29" class="tag" fill="#42d7ff">07 CHALLENGE</text><text x="16" y="64" class="nodeTitle">Review</text><text x="16" y="91" class="nodeCn">独立复查</text><text x="16" y="115" class="mini">findings + evidence</text></g>
+    <g transform="translate(1246 0)"><rect width="145" height="132" rx="16" fill="#10243c" stroke="#ff8b58" stroke-width="2"/><text x="16" y="29" class="tag" fill="#ff9a63">08 CORRECT</text><text x="16" y="64" class="nodeTitle">Reflow</text><text x="16" y="91" class="nodeCn">修复或回到上游</text><text x="16" y="115" class="mini">change right layer</text></g>
+    <g transform="translate(1424 0)"><rect width="145" height="132" rx="16" fill="#173158" stroke="#9ca9ff" stroke-width="2" filter="url(#glow)"/><text x="16" y="29" class="tag" fill="#aeb5ff">09 ACCEPT</text><text x="16" y="64" class="nodeTitle">Accepted</text><text x="16" y="91" class="nodeCn">可验收结果</text><text x="16" y="115" class="mini">traceable outcome</text></g>
+
+    <path d="M1318 158 V228 H52 V158" fill="none" stroke="#ff8b58" stroke-width="3" marker-end="url(#returnArrow)"/>
+    <text x="90" y="196" class="mini" fill="#ffc08a">re_interview</text>
+    <text x="280" y="196" class="mini" fill="#ffc08a">redesign</text>
+    <text x="458" y="196" class="mini" fill="#ffc08a">re_engineer</text>
+    <text x="790" y="196" class="mini" fill="#ffc08a">replan</text>
+    <text x="960" y="196" class="mini" fill="#ffc08a">re_execute</text>
+    <text x="1170" y="196" class="mini" fill="#ffc08a">repair</text>
+    <text x="430" y="224" class="mini" fill="#ffc08a">Six-depth routing model — maturity varies. Return to the earliest layer that must genuinely change, and show why.</text>
+  </g>
+
+  <g transform="translate(70 500)">
+    <rect width="1460" height="235" rx="24" fill="url(#alphaBand)" stroke="#5964b8" stroke-width="2"/>
+    <text x="34" y="42" class="lane" fill="#adb4ff">PUBLIC OPEN ALPHA · 当前开源可运行切片</text>
+    <text x="34" y="76" class="sub">A deterministic proof of the acceptance kernel — not a claim that the full upper lifecycle is public today.</text>
+
+    <g transform="translate(45 105)"><rect width="285" height="94" rx="16" fill="#142b43" stroke="#70d9ef" stroke-width="2"/><text x="22" y="38" class="alphaTitle">Parallel producers</text><text x="22" y="68" class="alphaCn">3 个隔离 producer</text></g>
+    <path d="M380 152 H455" stroke="#a4adff" stroke-width="4" marker-end="url(#alphaArrow)"/>
+    <g transform="translate(475 105)"><rect width="285" height="94" rx="16" fill="#142b43" stroke="#70d9ef" stroke-width="2"/><text x="22" y="38" class="alphaTitle">Independent jury</text><text x="22" y="68" class="alphaCn">强制失败不能被平均掉</text></g>
+    <path d="M810 152 H885" stroke="#a4adff" stroke-width="4" marker-end="url(#alphaArrow)"/>
+    <g transform="translate(905 105)"><rect width="285" height="94" rx="16" fill="#32243a" stroke="#ff9b68" stroke-width="2"/><text x="22" y="38" class="alphaTitle">Targeted rework</text><text x="22" y="68" class="alphaCn">同一问题，定向返工</text></g>
+    <path d="M1240 152 H1285" stroke="#a4adff" stroke-width="4" marker-end="url(#alphaArrow)"/>
+    <g transform="translate(1305 105)"><rect width="120" height="94" rx="16" fill="#242d58" stroke="#adb4ff" stroke-width="2"/><text x="18" y="38" class="alphaTitle">PASS</text><text x="18" y="68" class="alphaCn">新评委复验</text></g>
+  </g>
+
+  <g transform="translate(70 780)">
+    <g><rect width="455" height="105" rx="18" fill="#0d2138" stroke="#244767"/><circle cx="31" cy="32" r="8" fill="#42d7ff"/><text x="52" y="38" class="noteTitle">Cognitive compilation · 认知编译</text><text x="26" y="72" class="noteBody">Intent becomes choices, contracts, tasks, and evidence.</text></g>
+    <g transform="translate(495 0)"><rect width="455" height="105" rx="18" fill="#0d2138" stroke="#244767"/><circle cx="31" cy="32" r="8" fill="#ff8b58"/><text x="52" y="38" class="noteTitle">Layer-aware reflow · 分层回流</text><text x="26" y="72" class="noteBody">Correct the layer that caused the failure, not just the last step.</text></g>
+    <g transform="translate(990 0)"><rect width="455" height="105" rx="18" fill="#0d2138" stroke="#244767"/><circle cx="31" cy="32" r="8" fill="#9ca9ff"/><text x="52" y="38" class="noteTitle">Evidence-backed acceptance · 证据验收</text><text x="26" y="72" class="noteBody">Independent challenge and fresh retest define “done.”</text></g>
+  </g>
+</svg>

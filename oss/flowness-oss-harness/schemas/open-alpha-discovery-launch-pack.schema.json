@@ -98,8 +98,8 @@
           "properties": {
             "candidate_version": {"type": "string", "minLength": 1},
             "release_tag_candidate": {"type": "string", "minLength": 1},
-            "source_commit": {"type": "string", "const": "EXTERNAL_RELEASE_RECORD"},
-            "sealed_export_manifest_hash": {"type": "string", "const": "EXTERNAL_RELEASE_RECORD"},
+            "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "sealed_export_manifest_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
             "scope_policy_path": {"type": "string", "minLength": 1},
             "scope_policy_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
           }
@@ -196,7 +196,7 @@
       "properties": {
         "gate_id": {"type": "string", "minLength": 1},
         "label": {"type": "string", "minLength": 1},
-        "state": {"type": "string", "enum": ["local_candidate_ready", "pre_release_required", "release_time_gate", "post_alpha"]},
+        "state": {"type": "string", "enum": ["local_candidate_ready", "pre_release_required", "release_time_gate", "passed_v1_0_0_alpha", "successor_revalidation_required", "released_refresh_in_progress", "post_alpha"]},
         "evidence_or_action": {"type": "string", "minLength": 1},
         "blocking": {"type": "boolean"}
       }

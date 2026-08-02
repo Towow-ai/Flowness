@@ -328,11 +328,12 @@ def validate_discovery_launch_pack(
     scope_path = _safe_local_file(root, scope_identity["scope_policy_path"])
     if _file_hash(scope_path) != scope_identity["scope_policy_sha256"]:
         raise ValidationError("DISCOVERY-PACK-SCOPE-POLICY-HASH-MISMATCH")
-    if (
-        scope_identity["source_commit"] != "EXTERNAL_RELEASE_RECORD"
-        or scope_identity["sealed_export_manifest_hash"] != "EXTERNAL_RELEASE_RECORD"
+    if not re.fullmatch(r"[0-9a-f]{40}", scope_identity["source_commit"]):
+        raise ValidationError("DISCOVERY-PACK-RELEASE-COMMIT-INVALID")
+    if not re.fullmatch(
+        r"sha256:[0-9a-f]{64}", scope_identity["sealed_export_manifest_hash"]
     ):
-        raise ValidationError("DISCOVERY-PACK-IDENTITY-MUST-REMAIN-EXTERNAL")
+        raise ValidationError("DISCOVERY-PACK-SEALED-EXPORT-HASH-INVALID")
 
     mechanism_path = _safe_local_file(root, binding["mechanism_registry_path"])
     mechanism_registry = json.loads(mechanism_path.read_text(encoding="utf-8"))
@@ -507,11 +508,11 @@ def render_discovery_launch_pack(payload: dict[str, Any]) -> str:
     lines = [
         "# Flowness Open Alpha — Discovery & Launch Pack",
         "",
-        "> Status: **Open Alpha pre-release material; independent clean-room, fresh jury, and exact release records are still required.**",
+        "> Status: **Released Open Alpha material. The evidence below is bound to v1.0.0-alpha; changed bytes require fresh clean-room and jury evidence.**",
         "",
         payload["scope"],
         "",
-        "**Start here:** [project story](../README.md) · [10-minute Harness demo](open-alpha-demo.md) · [D0–D9 Architecture Atlas](architecture-atlas.md) · [Mechanism Registry](../registries/mechanism-registry-seed-v0.json) · [Open Alpha scope](open-alpha-package-scope-v0.md)",
+        "**Start here:** [project story](../../../README.md) · [current architecture](../../../docs/architecture.md) · [10-minute Harness demo](open-alpha-demo.md) · [D0–D9 mechanism Atlas](architecture-atlas.md) · [Mechanism Registry](../registries/mechanism-registry-seed-v0.json)",
         "",
         "## GitHub metadata",
         "",
@@ -570,15 +571,15 @@ def render_discovery_launch_pack(payload: dict[str, Any]) -> str:
         lines.append(f"| {item['label']} | `{item['state']}` | `{str(item['blocking']).lower()}` | {_table_cell(item['evidence_or_action'])} |")
 
     release = payload["release_draft"]
-    lines += ["", "## GitHub Release draft", "", f"**Tag candidate:** `{release['tag']}`", "", f"**Title:** {release['title']}", "", f"**Pre-release:** `{str(release['prerelease']).lower()}`", ""]
+    lines += ["", "## GitHub Release record copy", "", f"**Released tag:** `{release['tag']}`", "", f"**Title:** {release['title']}", "", f"**GitHub pre-release flag:** `{str(release['prerelease']).lower()}`", ""]
     for section in release["body_sections"]:
         lines += [f"### {section['heading']}", "", section["body"], ""]
-    lines += ["### Do not publish until", ""]
+    lines += ["### Before a successor release", ""]
     lines += [f"- {item}" for item in release["do_not_publish_until"]]
 
     lines += ["", "## 中文渠道短稿", ""]
     for draft in payload["channel_drafts"]:
-        lines += [f"### {draft['channel']}｜{draft['title']}", "", draft["body"], "", f"**候选 CTA：** {draft['cta']}", "", f"发布状态：`{draft['publication_state']}`", ""]
+        lines += [f"### {draft['channel']}｜{draft['title']}", "", draft["body"], "", f"**CTA：** {draft['cta']}", "", f"发布状态：`{draft['publication_state']}`", ""]
 
     lines += ["## Claim ledger", "", "| Claim | State | Evidence | Limitation |", "| --- | --- | --- | --- |"]
     for claim in payload["claims"]:
@@ -597,7 +598,7 @@ def render_selector_packet(payload: dict[str, Any]) -> str:
     lines = [
         "# Flowness Open Alpha — selector packet",
         "",
-        "> Open Alpha pre-release material. Independent clean-room, fresh jury, and exact release records are still required.",
+        "> Released Open Alpha material. The identity below is v1.0.0-alpha; any changed successor must carry fresh clean-room and jury evidence.",
         "",
         "## 30-second fit",
         "",
@@ -605,16 +606,16 @@ def render_selector_packet(payload: dict[str, Any]) -> str:
         "",
         "The runnable proof today uses deterministic producer and judge fixtures. Optional Codex mode replaces only the producers with real Codex processes; judgment remains a deterministic policy probe. This proves the local orchestration and acceptance semantics, not model quality, production reliability, scale, security, or adoption.",
         "",
-        "## Exact candidate identity",
+        "## Exact released identity",
         "",
         f"- Package version: `{identity['candidate_version']}`",
-        f"- Tag candidate: `{identity['release_tag_candidate']}`",
+        f"- Released tag: `{identity['release_tag_candidate']}`",
         f"- Exact release commit: `{identity['source_commit']}`",
         f"- Exact sealed export manifest hash: `{identity['sealed_export_manifest_hash']}`",
         f"- Scope policy: `{identity['scope_policy_path']}`",
         f"- Scope policy SHA-256: `{identity['scope_policy_sha256']}`",
         "",
-        "`EXTERNAL_RELEASE_RECORD` is a required future binding for the exact commit, tree, export, wheel, non-author clean-room result, fresh jury decision, and authorization. This mutable packet does not assert that record already exists.",
+        "These values identify the released v1.0.0-alpha package. They do not validate later repository changes; a successor needs a new exact commit, export identity, non-author clean-room result, fresh jury decision, and authorization.",
         "",
         "## Run the smallest proof",
         "",

@@ -6,7 +6,7 @@
       "type": "asset",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:9f51a61a28b5fc7e541fd31143af92b3c195e806ad3647c026d6808d763a83ad",
+      "content_hash": "sha256:798a5955f82cd611204f196b1226158c18a95fca4085488b58d737bd73b1f3a5",
       "source_path": "docs/open-alpha-discovery-launch-pack-v0.md"
     },
     {
@@ -22,7 +22,7 @@
       "type": "asset",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:988b7ce3413ab719314f6c95001d6d6904904f0dcd0e19acd92c4d0024ecb925",
+      "content_hash": "sha256:12563977984b4cba7d1d900b0425fcf86bb9283eaebfcf1cb69f4157a6358ca1",
       "source_path": "docs/open-alpha-selector-packet-v0.md"
     },
     {
@@ -30,28 +30,28 @@
       "type": "channel_package",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:fe753bf418c22f00ca8747744899a6ac61bd0fe82e277a06ff9e22ba3aa1bd0b"
+      "content_hash": "sha256:78b4d7be655438b5ea87e938b9670e3c67fce7a621f052ba6e44ccc60068d2ce"
     },
     {
       "node_id": "channel.launch.draft-2",
       "type": "channel_package",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:bd0676ef7aa08eed51ea78b656c7cdadce6c554eaadaabed4d5237161d3fe144"
+      "content_hash": "sha256:0c24c6276f2d110947d85a2a8c30a792fcc7e5f0fa3b8bf85e7bc6257345cce9"
     },
     {
       "node_id": "channel.launch.draft-3",
       "type": "channel_package",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:f8754299f4151545d804275d2d1b10cff9f346a349751c7a20f099d7b340e96a"
+      "content_hash": "sha256:e3a9b6bed2c953cba448723aba98acc5e3619f66f05e38d254b1ceafd5fe2116"
     },
     {
       "node_id": "channel.launch.draft-4",
       "type": "channel_package",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:1d82de73781834ea88011dfa9db4fc58a6ab97b6834cf9c2e027c288e9ff721a"
+      "content_hash": "sha256:a70ffca19f6e422da89c93dd235025cd4a4c5e39567672a615b788104698f09d"
     },
     {
       "node_id": "claim.launch.architecture-atlas",
@@ -93,7 +93,7 @@
       "type": "claim",
       "state": "evidence_bound",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:49d587b16ee36c6fc92679a0568ae1209f94d3a2e4f62497768a0710fb4f0bf1"
+      "content_hash": "sha256:6b24901714ed305484911ee3d420b1d624541ebe5db1dfeac6ee287f1869b586"
     },
     {
       "node_id": "claim.launch.no-average",
@@ -107,7 +107,7 @@
       "type": "claim",
       "state": "evidence_bound",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:8dd8529e03eb9306da4d890751375305413b97ec60c59587bcfe56f0e35c0836"
+      "content_hash": "sha256:055d5129f66ac7b0422441329ce43c11eb4360b8d4263fc9f66df4819b4d37d2"
     },
     {
       "node_id": "evidence.launch.clm-flow-arch",
