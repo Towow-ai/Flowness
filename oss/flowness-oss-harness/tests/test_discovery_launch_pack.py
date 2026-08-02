@@ -67,8 +67,8 @@ def test_discovery_pack_contains_every_requested_launch_surface() -> None:
     selector = payload["selector_one_pager"]
     assert selector["identity"]["candidate_version"] == "1.0.0a1"
     assert selector["identity"]["release_tag_candidate"] == "v1.0.0-alpha"
-    assert selector["identity"]["source_commit"] == "EXTERNAL_RELEASE_RECORD"
-    assert selector["identity"]["sealed_export_manifest_hash"] == "EXTERNAL_RELEASE_RECORD"
+    assert selector["identity"]["source_commit"] == "db9cda3f82cea192c92f30ccca6ff9f12d5a1d31"
+    assert selector["identity"]["sealed_export_manifest_hash"].startswith("sha256:")
     assert len(selector["quickstart_commands"]) >= 2
     assert selector["available_now"] and selector["not_available"]
 
@@ -347,25 +347,28 @@ def test_deepseek_hypothesis_cannot_be_laundered_into_outward_copy() -> None:
 def test_thirty_second_and_selector_copy_name_fixture_proof_ceiling() -> None:
     payload = validate_discovery_launch_pack(_source(), ROOT, SCHEMA)
     thirty = next(item for item in payload["introductions"] if item["duration"] == "30 seconds")["copy"]
-    assert "deterministic local producer and judge fixtures" in thirty
-    assert "replaces only the producers" in thirty
-    assert "not model quality" in thirty
+    assert "clarify the goal" in thirty
+    assert "engineering contracts" in thirty
+    assert "public Alpha currently lets you run and inspect" in thirty
 
     selector = SELECTOR_DOCUMENT.read_text(encoding="utf-8")
+    assert "deterministic producer and judge fixtures" in selector
+    assert "replaces only the producers" in selector
+    assert "not model quality" in selector
     for required in (
         "Run the smallest proof",
         "flowness-oss open-alpha-demo",
         "flowness-oss open-alpha-demo-inspect",
         "Available now",
         "Not available or not proven",
-        "Exact release commit: `EXTERNAL_RELEASE_RECORD`",
-        "Exact sealed export manifest hash: `EXTERNAL_RELEASE_RECORD`",
+        "Exact release commit: `db9cda3f82cea192c92f30ccca6ff9f12d5a1d31`",
+        "Exact sealed export manifest hash: `sha256:",
         "Apache-2.0",
     ):
         assert required in selector
 
 
-def test_external_acceptance_gates_stay_pre_release_and_github_stays_pending() -> None:
+def test_released_acceptance_gates_are_historical_and_successor_checks_remain_explicit() -> None:
     payload = validate_discovery_launch_pack(_source(), ROOT, SCHEMA)
     gates = {item["gate_id"]: item for item in payload["launch_checklist"]}
 
@@ -379,19 +382,19 @@ def test_external_acceptance_gates_stay_pre_release_and_github_stays_pending() -
         "LCH-JURY",
         "LCH-OWNER",
     ):
-        assert gates[gate_id]["state"] == "pre_release_required"
-        assert gates[gate_id]["blocking"] is True
-    for gate_id in ("LCH-CLAIMS", "LCH-DISCOVERY"):
-        assert gates[gate_id]["state"] == "local_candidate_ready"
+        assert gates[gate_id]["state"] == "passed_v1_0_0_alpha"
         assert gates[gate_id]["blocking"] is False
-    assert gates["LCH-GITHUB"]["state"] == "release_time_gate"
-    assert gates["LCH-GITHUB"]["blocking"] is True
+    assert gates["LCH-CLAIMS"]["state"] == "successor_revalidation_required"
+    assert gates["LCH-DISCOVERY"]["state"] == "released_refresh_in_progress"
+    assert gates["LCH-GITHUB"]["state"] == "passed_v1_0_0_alpha"
+    assert gates["LCH-GITHUB"]["blocking"] is False
 
     selector = SELECTOR_DOCUMENT.read_text(encoding="utf-8")
     launch = DOCUMENT.read_text(encoding="utf-8")
     for text in (selector, launch):
         lowered = text.lower()
-        assert "still required" in lowered
+        assert "successor" in lowered
+        assert "v1.0.0-alpha" in lowered
         assert "passed_external_evidence" not in lowered
         assert "independently reproduced" not in lowered
 

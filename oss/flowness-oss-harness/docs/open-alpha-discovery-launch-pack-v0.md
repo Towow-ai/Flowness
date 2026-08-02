@@ -1,34 +1,34 @@
 # Flowness Open Alpha — Discovery & Launch Pack
 
-> Status: **Open Alpha pre-release material; independent clean-room, fresh jury, and exact release records are still required.**
+> Status: **Released Open Alpha material. The evidence below is bound to v1.0.0-alpha; changed bytes require fresh clean-room and jury evidence.**
 
-This pack carries Open Alpha pre-release discovery and release copy. It self-contains local candidate evidence only; exact freeze, non-author clean-room, fresh jury, authorization, repository, and publication records remain required before release.
+This pack carries discovery and reusable channel copy for the released Open Alpha. Release-specific evidence belongs to v1.0.0-alpha; successor material must be revalidated before it replaces that release.
 
-**Start here:** [project story](../README.md) · [10-minute Harness demo](open-alpha-demo.md) · [D0–D9 Architecture Atlas](architecture-atlas.md) · [Mechanism Registry](../registries/mechanism-registry-seed-v0.json) · [Open Alpha scope](open-alpha-package-scope-v0.md)
+**Start here:** [project story](../../../README.md) · [current architecture](../../../docs/architecture.md) · [10-minute Harness demo](open-alpha-demo.md) · [D0–D9 mechanism Atlas](architecture-atlas.md) · [Mechanism Registry](../registries/mechanism-registry-seed-v0.json)
 
 ## GitHub metadata
 
-**Description:** Evidence-driven multi-agent engineering harness: parallel agents, sealed evidence, independent juries, targeted rework, and traceable acceptance.
+**Description:** Compile vague goals into design, engineering decisions, parallel agent work, and independently accepted outcomes.
 
 **Topics:** `ai-agent-harness`, `multi-agent-system`, `agent-orchestration`, `coding-agents`, `codex-cli`, `agent-evaluation`, `llm-evaluation`, `software-engineering`, `evidence-driven`, `provenance`, `human-in-the-loop`, `agent-governance`, `open-source`, `harness-engineering`
 
 ### Social preview copy
 
 - Headline: Flowness
-- Subhead: Parallel agents are easy. Trustworthy acceptance is the hard part.
-- Footer: Evidence → independent jury → targeted rework → accepted outcome
+- Subhead: From vague intent to work you can actually trust.
+- Footer: Design → engineer → build → challenge → reflow → accept
 
 ## Layered introductions
 
-### 30 seconds — A Harness for work that must survive review
+### 30 seconds — From a vague goal to work you can trust
 
-Flowness is an evidence-driven multi-agent engineering harness. Its runnable proof today uses deterministic local producer and judge fixtures to exercise one goal → sealed evidence → independent checks → targeted rework → acceptance. Optional Codex mode replaces only the producers with real Codex processes; judges remain deterministic policy probes. This demonstrates inspectable orchestration and acceptance semantics, not model quality, production reliability, scale, security, or external adoption.
+Flowness gives complex agent work the stages it is usually missing: clarify the goal, explore a design, translate it into engineering contracts, freeze shared decisions, plan parallel work, challenge the result independently, and return failures to the right upstream layer. Its public Alpha currently lets you run and inspect the execution → review → targeted rework → acceptance kernel.
 
 **CTA:** Inspect the 10-minute FAIL → rework → PASS demo and its trace.
 
-### 3 minutes — The control loop around coding agents
+### 3 minutes — The cognitive and control pipeline around coding agents
 
-Most multi-agent demos stop when several agents return answers. Flowness adds the control layer around that work: versioned producer and judge roles, isolated outputs, content-bound candidates, deterministic gates, persistent blocker identity, successor evidence, and independent retest. Its Ledger Core is the narrowest runnable slice; orchestration, jury, rework, mechanism, Drift, and Content Graph surfaces remain experimental. Architecture views distinguish current, experimental, designed-target, and unknown states. Linux aarch64 with CPython 3.12 is the intended first independent Open Alpha coordinate, but a retained non-author clean-room receipt and fresh jury decision for the exact release bytes are still required.
+Most multi-agent demos begin at execution and stop when agents return answers. Flowness models the missing work before and after execution: interview, design, engineering specification, consensus, planning, independent review, and layer-aware correction. The released demo proves the narrower acceptance kernel with isolated producers, content-bound candidates, persistent blocker identity, targeted successor evidence, and fresh retest. The broader cognitive pipeline is shown as the product architecture, not misrepresented as a current public runnable capability.
 
 **CTA:** Run the deterministic demo, inspect both jury rounds, then follow the mechanism and architecture links.
 
@@ -42,7 +42,7 @@ Start with the Open Alpha demo: three producers run concurrently in isolated dir
 
 If you are assembling or evaluating open-source agent Harness projects, raw agent count and a polished demo are weak selection signals. The useful questions are whether the project can bind an outcome to evidence, preserve failures, separate production from judgment, and explain what remains unknown.
 
-Flowness is a candidate for inspection because its Open Alpha is organized around an explicit goal → producers → sealed evidence → independent jury → targeted rework → acceptance loop. The default proof is a deterministic local fixture; optional Codex mode replaces only producers, while judges remain deterministic policy probes. Its launch claims and assets are hash-bound to mechanisms, evidence and Drift in a candidate Content Graph. This is an invitation to inspect the source and trace, not a claim that DeepSeek has endorsed, selected, or specified criteria for Flowness.
+Flowness is designed around a path from a vague goal through interview, design, engineering specification, consensus, planning, execution, review, and correction. Its six-depth routing model aims to return failures to the earliest layer that must genuinely change instead of triggering another blind retry. Runtime maturity varies: the private design and engineering stages are partial, automatic tier routing and engineering-spec → consensus publishing are not closed, and the public Open Alpha currently runs only the execution → jury → targeted rework → acceptance kernel.
 
 ### What to inspect
 
@@ -74,7 +74,7 @@ Flowness is a candidate for inspection because its Open Alpha is organized aroun
 - The owner supplied an unverified hypothesis that a DeepSeek-related discovery opportunity may exist; no primary-source selection activity, criteria, endorsement, or deadline was verified.
 - No external project in the comparison queue has been inspected in this pass.
 - No star count, benchmark rank, production reliability, scale, security, or adoption claim is made.
-- Repository state and external actions must be verified in GitHub at release time, and exact acceptance identities must be retained externally; both remain pending in this packet.
+- The repository is public at Towow-ai/Flowness; this packet makes no claim about a future selector decision or endorsement.
 
 Standalone selector packet: [open-alpha-selector-packet-v0.md](open-alpha-selector-packet-v0.md)
 
@@ -172,30 +172,30 @@ Every entry below is an unverified search seed collected on 2026-08-02. No sourc
 
 | Gate | State | Blocking | Evidence or next action |
 | --- | --- | --- | --- |
-| Freeze and public manifest technical gate | `pre_release_required` | `true` | Freeze the exact successor bytes, regenerate the file-exact public manifest, and retain their external identities. |
-| File-level rights, secret, PII, and IP gate | `pre_release_required` | `true` | Bind the owner rights authorization and final scan results to the exact successor export outside mutable repository prose. |
-| Packaging, license, NOTICE, third-party, and version matrix | `pre_release_required` | `true` | Rerun package, dependency, license, sensitive-content, and public-boundary checks against the exact successor bytes. |
-| Runnable Harness FAIL → rework → PASS E2E | `pre_release_required` | `true` | Run the deterministic canonical E2E from the exact sealed export and retain its result. |
-| Claim, maturity, external-seed, and link checks | `local_candidate_ready` | `false` | Local registry, renderer, Content Graph, and static checks are inspectable; rerun them after the final freeze. |
-| Sealed public directory | `pre_release_required` | `true` | Create and verify the exact successor sealed export, then retain its external identity. |
-| Clean install and canonical E2E from sealed export | `pre_release_required` | `true` | A non-author must run all clean-room stages against the exact sealed export on Linux aarch64 with CPython 3.12 and retain the receipt. |
-| Independent package and claim juries | `pre_release_required` | `true` | Fresh independent juries must review the exact successor and close every mandatory blocker. |
-| GitHub description, topics, social copy, selector page, and drafts | `local_candidate_ready` | `false` | Launch assets are assembled locally and remain non-publishing until all pre-release gates pass. |
-| Owner authorization of release and channel actions | `pre_release_required` | `true` | Record final owner approval against the exact successor only after technical, clean-room, and jury evidence is complete. |
-| Repository transfer, rename, redirects, and private vulnerability reporting | `release_time_gate` | `true` | At release time, verify repository identity and old URL/Git redirects, and validate GitHub Private Vulnerability Reporting; record the observed state externally. |
+| Freeze and public manifest technical gate | `passed_v1_0_0_alpha` | `false` | The v1.0.0-alpha bytes and file-exact public manifest were frozen; repeat this gate for every successor. |
+| File-level rights, secret, PII, and IP gate | `passed_v1_0_0_alpha` | `false` | The release scan and owner rights decision were bound to v1.0.0-alpha; changed files require fresh review. |
+| Packaging, license, NOTICE, third-party, and version matrix | `passed_v1_0_0_alpha` | `false` | Packaging, dependency, license, sensitive-content, and public-boundary checks passed for the released bytes. |
+| Runnable Harness FAIL → rework → PASS E2E | `passed_v1_0_0_alpha` | `false` | The canonical deterministic E2E was retained for the released sealed export. |
+| Claim, maturity, external-seed, and link checks | `successor_revalidation_required` | `false` | The released claim set passed its gate. This material refresh must regenerate hashes and rerun the checks before a successor release. |
+| Sealed public directory | `passed_v1_0_0_alpha` | `false` | The released sealed export has an external identity; create a new identity for any successor. |
+| Clean install and canonical E2E from sealed export | `passed_v1_0_0_alpha` | `false` | A non-author clean-room run on Linux aarch64 with CPython 3.12 was retained for v1.0.0-alpha. |
+| Independent package and claim juries | `passed_v1_0_0_alpha` | `false` | Independent juries closed mandatory release blockers for v1.0.0-alpha; material changes require a fresh jury. |
+| GitHub description, topics, social copy, selector page, and drafts | `released_refresh_in_progress` | `false` | The repository is public. Reader-facing material is being refreshed around the full lifecycle and current proof boundary. |
+| Owner authorization of release and channel actions | `passed_v1_0_0_alpha` | `false` | Owner authorization applied to v1.0.0-alpha. Each later release or channel action keeps its own approval point. |
+| Repository transfer, rename, redirects, and private vulnerability reporting | `passed_v1_0_0_alpha` | `false` | The repository was transferred, renamed, and released as Towow-ai/Flowness; future audits recheck redirects and GitHub security settings. |
 | External source verification and reproducible comparison | `post_alpha` | `false` | Process the source queue after the Open Alpha package is frozen; do not delay source release merely to claim comparative leadership. |
 
-## GitHub Release draft
+## GitHub Release record copy
 
-**Tag candidate:** `v1.0.0-alpha`
+**Released tag:** `v1.0.0-alpha`
 
 **Title:** Flowness Open Alpha — evidence-driven multi-agent engineering harness
 
-**Pre-release:** `true`
+**GitHub pre-release flag:** `true`
 
 ### What this is
 
-Flowness turns an engineering goal into parallel agent work, sealed artifacts and evidence, independent judgments, targeted rework, and a traceable accepted outcome. This Open Alpha makes the Harness control loop inspectable while marking incomplete surfaces as experimental.
+Flowness models the full path from an ambiguous goal through interview, design, engineering specification, consensus, planning, parallel work, independent challenge, layer-aware correction, and an accepted outcome. This Open Alpha makes the narrower execution → review → targeted rework → acceptance kernel runnable and inspectable.
 
 ### Try first
 
@@ -207,32 +207,32 @@ Ledger Core is the most mature local candidate. The controller, role registry, j
 
 ### Limits
 
-This pre-release does not establish production reliability, scale, security hardening, benchmark leadership, or external adoption. Private context, customer data, credentials, account/quota/fleet operations, server configuration, private runtime ledgers, and rights-unknown assets are excluded.
+This Alpha does not establish production reliability, scale, security hardening, benchmark leadership, or external adoption. The private design and engineering-spec implementation is partial and has no organic end-to-end proof. Private context, customer data, credentials, account/quota/fleet operations, server configuration, private runtime ledgers, and rights-unknown assets are excluded.
 
 ### From Wow-Harness
 
 Flowness is a ground-up major-version evolution of Wow-Harness. Historical interest belongs to the legacy project; old stars do not validate the rewritten Flowness implementation. The migration keeps attribution and explains the replacement boundary.
 
-### Do not publish until
+### Before a successor release
 
-- Bind the exact successor commit, tree, scope, export, wheels, clean-room receipt, jury verdict, and owner authorization in the immutable external freeze/release record.
-- Complete the repository transfer and rename, verify old URL and Git redirects, and enable and validate GitHub Private Vulnerability Reporting.
+- Before any successor release, bind its exact commit, tree, scope, export, wheels, clean-room receipt, jury verdict, and owner authorization in a new immutable release record.
+- Before any successor release, recheck old URL and Git redirects plus GitHub security settings; do not reuse v1.0.0-alpha evidence for changed bytes.
 
 ## 中文渠道短稿
 
-### GitHub / 开发者社区短帖｜Flowness Open Alpha：不是让更多 Agent 开工，而是让结果经得起验收
+### GitHub / 开发者社区短帖｜Flowness Open Alpha：从一句模糊目标，到真正可验收的工程结果
 
-多 Agent 很容易制造大量输出，难的是判断结果能不能被接受。Flowness 把一项目标拆给多个 producer，把产物和证据密封后交给独立 judge；任何可信 FAIL 或关键 UNKNOWN 都会形成 blocker，进入定向返工和新一轮复验，不能靠平均分糊过去。Open Alpha 会公开可运行的本地闭环、Ledger Core、实验性的编排／评审／返工机制，以及分层架构和证据边界。它仍是 Alpha，不宣称生产可靠性、规模化或外部采用。
+多 Agent 很容易制造大量输出，难的是在交接中保住为什么这样做、哪些工程事实不能变、失败究竟要回到哪一层。Flowness 建模了采访、设计方案、工程方案、共识、计划、并行执行、独立复查和分层回流的完整生命周期。当前 Open Alpha 已公开可运行的执行 → 复查 → 定向返工 → 验收内核；设计与工程方案仍是部分私有实现，尚无真实任务端到端证据。它仍是 Alpha，不宣称生产可靠性、规模化或外部采用。
 
-**候选 CTA：** 先跑 10 分钟 FAIL → 返工 → PASS 演示，再决定它是不是你要找的 Harness。
+**CTA：** 先跑 10 分钟 FAIL → 返工 → PASS 演示，再决定它是不是你要找的 Harness。
 
 发布状态：`draft_owner_approval_required`
 
 ### 知乎 / 公众号｜当多个 AI Agent 都说“做完了”，谁来证明它真的完成了？
 
-Flowness 想解决的不是“怎么再多叫几个 Agent”，而是多 Agent 工程最难收口的一段：谁生产、谁判断、证据属于哪个候选版本、失败后只返工什么、怎样确认新结果真的覆盖了旧 blocker，以及谁有权最终发布。我们准备开放的是一套分层 Open Alpha：最成熟的 Ledger Core、可运行的多 Agent 验收演示、实验性的 orchestration／jury／rework／Drift／Content Graph，以及把现状和理想目标分开的 D0–D9 架构。所有能力按成熟度讲，未知就保留未知。
+Flowness 想解决的不是“怎么再多叫几个 Agent”，而是人的目标在多轮交接中不断丢失。它把一句模糊目标逐层编译成设计选择、工程契约、共享共识、任务图、产物、Finding 和验收证据；失败也不只会机械重试，而是回到真正需要变化的执行、计划、工程方案、设计或采访层。当前公开 Alpha 可运行的是验收内核；更完整的认知流水线会按证据成熟度逐步开放。
 
-**候选 CTA：** 欢迎从代码、测试和失败链路挑刺，而不是只看概念。
+**CTA：** 欢迎从代码、测试和失败链路挑刺，而不是只看概念。
 
 发布状态：`draft_owner_approval_required`
 
@@ -240,15 +240,15 @@ Flowness 想解决的不是“怎么再多叫几个 Agent”，而是多 Agent �
 
 示例里三个 producer 并行生成候选，两个 judge 独立审查同一份候选和 policy。第一轮一个 PASS、一个可信 FAIL，系统仍然 BLOCKED；之后只对 blocker 指向的 claim 做定向返工，生成 successor evidence，再由两名新 judge 复验。整个 candidate、policy、jury、rework、event log 和 trace 都可只读检查。默认 runner 是确定性本地 fixture，它证明的是编排与验收语义，不是模型能力 benchmark。
 
-**候选 CTA：** Open Alpha 后可直接运行 demo 并检查每一份 JSON 证据。
+**CTA：** 现在就可以运行 demo，并检查每一份 JSON 证据。
 
 发布状态：`draft_owner_approval_required`
 
 ### 模型实验室 / 项目选型私信｜Flowness：一个可检查的 evidence-driven multi-agent Harness 候选
 
-如果你正在收集开源 Agent Harness 项目，可以把 Flowness 放进待检查清单：它提供 goal → deterministic local producers → sealed evidence → deterministic policy judges → targeted rework → accepted outcome 的可运行 fixture，并把 mechanism、claim、evidence、drift 和传播素材之间的关系做成机器可读契约。owner 只提出了一个尚未核验的 DeepSeek 相关传播机会假设；我们不声称 DeepSeek 正在选型、已经认可或选择了项目，也不把 Wow-Harness 的历史关注度解释成 Flowness 验证。
+如果你正在收集开源 Agent Harness 项目，可以把 Flowness 放进待检查清单：它不从 Agent 数量开始，而是建模 goal → interview → design → engineering specification → consensus → plan → execution → independent review → layer-aware reflow → accepted outcome。当前公开包提供可运行的验收内核和机器可读的 mechanism、claim、evidence、drift 关系；设计与工程方案环仍未作为公开 E2E 证明。我们不声称 DeepSeek 已认可或选择本项目，也不把 Wow-Harness 的历史关注度解释成 Flowness 验证。
 
-**候选 CTA：** 建议先跑演示，再从任一 claim 反查代码、测试、失败和恢复证据。
+**CTA：** 建议先跑演示，再从任一 claim 反查代码、测试、失败和恢复证据。
 
 发布状态：`draft_owner_approval_required`
 
@@ -259,10 +259,10 @@ Flowness 想解决的不是“怎么再多叫几个 Agent”，而是多 Agent �
 | `CLM-FLOW-LOOP` The local Open Alpha demo executes three isolated producers, two judges, a forced FAIL, targeted rework, a successor candidate, fresh retest, and accepted trace. | `experimental` | docs/open-alpha-demo.md<br>src/flowness_oss_harness/open_alpha_demo.py<br>tests/test_public_harness_package.py | The default runner is deterministic and local.<br>Optional Codex producers do not turn deterministic judges into a model-quality benchmark. |
 | `CLM-FLOW-NOAVERAGE` A mandatory FAIL or hard UNKNOWN blocks the candidate instead of being hidden by an average score. | `experimental` | docs/gate-rules.md<br>config/gates.json<br>tests/test_public_harness_package.py | This is verified for the local policy implementation, not every private deployment path. |
 | `CLM-FLOW-EVIDENCE` The demo binds candidate, policy, jury, rework, evidence, event-log, and trace bytes for read-only reinspection. | `experimental` | docs/open-alpha-demo.md<br>schemas/open-alpha-demo-trace.schema.json<br>src/flowness_oss_harness/open_alpha_demo.py<br>tests/test_public_harness_package.py | Content binding does not by itself prove semantic correctness, production durability, or external reproducibility. |
-| `CLM-FLOW-LEDGER` Ledger Core is the narrowest runnable Open Alpha slice for proposal visibility, terminal decisions, projection freshness, verdict readback, and bounded crash-tail recovery. | `experimental` | README.md<br>docs/mechanism-card-ledger-candidate-v0.md<br>registries/mechanism-cards-v0.json | The public mechanism remains experimental. Linux aarch64 / CPython 3.12 is a pre-release clean-room target, not an independently accepted coordinate in this mutable candidate; distributed behavior, production reliability, and a broader platform matrix are also unproven. |
+| `CLM-FLOW-LEDGER` Ledger Core is the narrowest runnable Open Alpha slice for proposal visibility, terminal decisions, projection freshness, verdict readback, and bounded crash-tail recovery. | `experimental` | README.md<br>docs/mechanism-card-ledger-candidate-v0.md<br>registries/mechanism-cards-v0.json | The public mechanism remains experimental. The v1.0.0-alpha release retained a Linux aarch64 / CPython 3.12 non-author clean-room result; distributed behavior, production reliability, and a broader platform matrix remain unproven. |
 | `CLM-FLOW-CONTENT` Flowness includes experimental mechanism, Claim, Unknown, Drift, Content Graph, and propagation contracts for tracing public statements back to evidence. | `experimental` | docs/content-graph.md<br>docs/drift-atlas-seed-v0.md<br>registries/mechanism-registry-seed-v0.json<br>config/content-graph.json | Contract presence and static propagation checks do not prove every private mechanism or channel is covered. |
 | `CLM-FLOW-ARCH` The Architecture Atlas presents layered D0–D9 views and distinguishes current, experimental, target, and unknown material. | `experimental` | docs/architecture-atlas.md<br>config/architecture-atlas.json<br>registries/architecture-cross-layer-edges-local-v0.json<br>registries/mechanism-cards-v0.json<br>assets/architecture-atlas/open-alpha-v1/D0.mmd<br>assets/architecture-atlas/open-alpha-v1/D0.svg<br>assets/architecture-atlas/open-alpha-v1/D1.mmd<br>assets/architecture-atlas/open-alpha-v1/D1.svg<br>assets/architecture-atlas/open-alpha-v1/D2.mmd<br>assets/architecture-atlas/open-alpha-v1/D2.svg<br>assets/architecture-atlas/open-alpha-v1/D3.mmd<br>assets/architecture-atlas/open-alpha-v1/D3.svg<br>assets/architecture-atlas/open-alpha-v1/D4.mmd<br>assets/architecture-atlas/open-alpha-v1/D4.svg<br>assets/architecture-atlas/open-alpha-v1/D5.mmd<br>assets/architecture-atlas/open-alpha-v1/D5.svg<br>assets/architecture-atlas/open-alpha-v1/D6.mmd<br>assets/architecture-atlas/open-alpha-v1/D6.svg<br>assets/architecture-atlas/open-alpha-v1/D7.mmd<br>assets/architecture-atlas/open-alpha-v1/D7.svg<br>assets/architecture-atlas/open-alpha-v1/D8.mmd<br>assets/architecture-atlas/open-alpha-v1/D8.svg<br>assets/architecture-atlas/open-alpha-v1/D9.mmd<br>assets/architecture-atlas/open-alpha-v1/D9.svg | The public static candidate binds Mechanism Registry `registry_hash` sha256:1e8466c845398079139d3d6c250b857a4da43141f267f520a578e8633365ab8e, the included semantic-edge registry, and exact included D0–D9 Mermaid/SVG bytes. These static identities do not prove runtime reachability, renderer equivalence, or reliability. |
-| `CLM-FLOW-BOUNDARY` The Open Alpha explicitly excludes private operational and sensitive surfaces and keeps repository and publication effects behind an owner-controlled release sequence. | `experimental` | README.md<br>docs/open-alpha-package-scope-v0.md<br>config/open-alpha-package-scope.json<br>docs/open-alpha-release-audit-v0.md | Local packaging and sensitive-content checks are inspectable, but the exact sealed export, non-author clean-room, fresh jury, repository transition, GitHub security setup, publication, and successor identity remain pre-release responsibilities. |
+| `CLM-FLOW-BOUNDARY` The Open Alpha explicitly excludes private operational and sensitive surfaces and keeps repository and publication effects behind an owner-controlled release sequence. | `experimental` | README.md<br>docs/open-alpha-package-scope-v0.md<br>config/open-alpha-package-scope.json<br>docs/open-alpha-release-audit-v0.md | The v1.0.0-alpha release completed its sealed export, clean-room, jury, repository transition, and publication sequence. Any successor must bind fresh evidence to its own bytes; the earlier release cannot validate later changes. |
 | `CLM-DEEPSEEK-OPPORTUNITY` The owner supplied an unverified hypothesis that a DeepSeek-related open-source Harness discovery opportunity may exist. | `unknown` | None — external hypothesis remains Unknown | User-supplied discovery context only; no primary-source criteria, endorsement, selection process, or deadline was verified in this offline pass. |
 
 ## Static boundary

@@ -1,23 +1,23 @@
 # Flowness Open Alpha — selector packet
 
-> Open Alpha pre-release material. Independent clean-room, fresh jury, and exact release records are still required.
+> Released Open Alpha material. The identity below is v1.0.0-alpha; any changed successor must carry fresh clean-room and jury evidence.
 
 ## 30-second fit
 
-Flowness is a candidate for inspection because its Open Alpha is organized around an explicit goal → producers → sealed evidence → independent jury → targeted rework → acceptance loop. The default proof is a deterministic local fixture; optional Codex mode replaces only producers, while judges remain deterministic policy probes. Its launch claims and assets are hash-bound to mechanisms, evidence and Drift in a candidate Content Graph. This is an invitation to inspect the source and trace, not a claim that DeepSeek has endorsed, selected, or specified criteria for Flowness.
+Flowness is designed around a path from a vague goal through interview, design, engineering specification, consensus, planning, execution, review, and correction. Its six-depth routing model aims to return failures to the earliest layer that must genuinely change instead of triggering another blind retry. Runtime maturity varies: the private design and engineering stages are partial, automatic tier routing and engineering-spec → consensus publishing are not closed, and the public Open Alpha currently runs only the execution → jury → targeted rework → acceptance kernel.
 
 The runnable proof today uses deterministic producer and judge fixtures. Optional Codex mode replaces only the producers with real Codex processes; judgment remains a deterministic policy probe. This proves the local orchestration and acceptance semantics, not model quality, production reliability, scale, security, or adoption.
 
-## Exact candidate identity
+## Exact released identity
 
 - Package version: `1.0.0a1`
-- Tag candidate: `v1.0.0-alpha`
-- Exact release commit: `EXTERNAL_RELEASE_RECORD`
-- Exact sealed export manifest hash: `EXTERNAL_RELEASE_RECORD`
+- Released tag: `v1.0.0-alpha`
+- Exact release commit: `db9cda3f82cea192c92f30ccca6ff9f12d5a1d31`
+- Exact sealed export manifest hash: `sha256:06286399212db1f5f9c8cdef43cacac9afa5139122d2770632d40cc1fc3cdf42`
 - Scope policy: `config/open-alpha-package-scope.json`
 - Scope policy SHA-256: `sha256:a05b6bc18a617f819bf03fce007f5f66cf8e2a26a2667ab953188e7733f7d1e9`
 
-`EXTERNAL_RELEASE_RECORD` is a required future binding for the exact commit, tree, export, wheel, non-author clean-room result, fresh jury decision, and authorization. This mutable packet does not assert that record already exists.
+These values identify the released v1.0.0-alpha package. They do not validate later repository changes; a successor needs a new exact commit, export identity, non-author clean-room result, fresh jury decision, and authorization.
 
 ## Run the smallest proof
 
@@ -41,7 +41,7 @@ Expected terminal summary: `JSON with state=verified, producer_agents=3, judge_a
 
 - No claim of model-quality evaluation, production reliability, scale, security hardening, or external adoption.
 - No public fleet, account/quota routing, Transcript-backed supervision, credentials, customer data, or server controls.
-- Exact commit, tree, export, wheel, non-author clean-room, fresh jury, and authorization identities remain pre-release requirements; this mutable packet does not claim they already exist.
+- The full interview → design → engineering-spec → consensus pipeline is not yet part of the runnable public slice.
 
 ## Evidence to inspect
 
@@ -64,7 +64,7 @@ Expected terminal summary: `JSON with state=verified, producer_agents=3, judge_a
 - The owner supplied an unverified hypothesis that a DeepSeek-related discovery opportunity may exist; no primary-source selection activity, criteria, endorsement, or deadline was verified.
 - No external project in the comparison queue has been inspected in this pass.
 - No star count, benchmark rank, production reliability, scale, security, or adoption claim is made.
-- Repository state and external actions must be verified in GitHub at release time, and exact acceptance identities must be retained externally; both remain pending in this packet.
+- The repository is public at Towow-ai/Flowness; this packet makes no claim about a future selector decision or endorsement.
 
 ## License and contact
 
