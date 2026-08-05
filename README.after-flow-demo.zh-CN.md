@@ -12,7 +12,7 @@
 
 [English](README.md) · [运行公开证明](docs/open-alpha-demo.md) · [Flow 工程](docs/concepts/FLOW_ENGINEERING.md) · [架构](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md)
 
-> **当前公开状态：** Open Alpha 已提供可运行、确定性的 **Assurance Kernel（可信闭合内核）**，覆盖执行 → 独立审查 → 定向返工 → fresh acceptance。更完整的工作中心型 Flow Runtime 已经具有大量可检查机制和私有 dogfood 实践，但新的公开 Hero Demo 与完整有机端到端公开运行尚未交付。详见[当前到底有什么](#当前到底有什么)。
+> **当前公开状态：** Open Alpha 现在包含两个确定性证明：**Work Outlives Agents** 展示持久工作如何跨越执行者死亡并重新编译下一次执行；**Assurance Kernel** 展示独立审查、Blocker Lineage、定向返工与 fresh acceptance。完整有机的公开 goal → accepted outcome 仍是下一条证明边界。
 
 ![Flowness：工作持续存在，Agent 围绕它形成](docs/assets/diagrams/01_category_5s.zh-CN.svg)
 
@@ -145,9 +145,29 @@ re_execute → repair → replan → re_engineer → redesign → re_interview
 
 ---
 
-## 运行当前公开证明
+## 运行 Flow 证明
 
-当前 Open Alpha 提供一个确定性的 **Assurance Kernel Demo**。它证明可信 Flow 中一个狭窄但承重的部分：
+公开 Hero Demo 让核心运行时主张可见：**执行者可以死亡，但工作仍然活着。** 它从确定性公开 trace 中派生 WorkView、Context、Graph Snapshot、Finding 与 Closure。
+
+```bash
+.venv/bin/flowness-oss work-outlives-agents-demo \
+  --output /tmp/flowness-flow-demo
+
+.venv/bin/flowness-oss work-inspect \
+  --work-id W-42 \
+  --run-root /tmp/flowness-flow-demo
+```
+
+Trace 必须真实出现：
+
+```text
+agents: none
+flow: alive
+```
+
+随后它展示 Consumer Wiring Finding 如何使 Graph v1 被 Graph v2 替代，并在获得真实证据前持续区分 `built`、`integrated`、`activated` 与 `accepted`。
+
+原有确定性的 **Assurance Kernel Demo** 继续保留，它证明可信 Flow 中另一个狭窄但承重的部分：
 
 - 三个隔离 Producer；
 - 与内容绑定的候选结果；
@@ -178,7 +198,7 @@ python3.12 -m venv .venv
 {"state":"verified","producer_agents":3,"round_1":"blocked","targeted_rework":"verified","round_2":"accepted"}
 ```
 
-它证明的是 Acceptance Kernel，不是整个 Flow Engineering 主张。新的 “Work Outlives Agents” Hero Demo 已写入 [docs/demos/HERO_DEMO_SPEC.md](docs/demos/HERO_DEMO_SPEC.md)，在实现并与 release evidence 绑定之前保持 `[DESIGNED]`。
+两套 Demo 共同证明持久工作连续性与证据化闭合，但仍不代表完整 Flow Engineering 主张或公开有机 goal → accepted outcome 已被证明。
 
 ---
 
@@ -202,7 +222,7 @@ Flowness 通过统一状态标签区分架构、私有实践、设计与公开�
 | Append-only event、projection、envelope、gate、部分 orchestrator 与 closure 机制 | `[INSPECTABLE]` | `harness/src/towow/`、public core、测试与 conformance |
 | Design / Engineering Spec 对象、Gate、CLI 与部分 forward/reflow 路由 | `[DOGFOOD] / [INSPECTABLE]` | 部分公开 Schema/文档；私有运行时仍在接线 |
 | 新公开目标的 goal → accepted outcome 有机端到端 | `[OPEN QUESTION]` | 尚未公开证明 |
-| WorkView CLI 与 “Work Outlives Agents” Demo | `[DESIGNED]` | 本文档集中的公开规格 |
+| WorkView CLI 与 “Work Outlives Agents” Demo | `[RUNNABLE]` | 确定性 Hero Demo、Inspector 与 release evidence manifest |
 | 通用跨领域 Flow Runtime | `[OPEN QUESTION]` | 先在软件工程中证明 |
 
 [查看 Claim 与 Evidence Register](docs/benchmarks/CLAIMS_AND_EVIDENCE_REGISTER.md)

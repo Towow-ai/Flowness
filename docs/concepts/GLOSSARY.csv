@@ -1,0 +1,20 @@
+term,canonical_definition,not_to_be_confused_with,status_note
+Flow,"The continuing causal process by which a goal, driven by events, is repeatedly compiled against the current world into executable structure, executed, verified, and committed.","A single run, a fixed workflow, a message stream, or a graph.",Core concept
+Flow Engineering,"The engineering of work in motion: formation, continuity, integrity, adaptation, commitment, closure, and learning.","Prompt chaining or workflow orchestration alone.",Category claim
+Flowness,"A work-centered reference runtime and mechanism kit for agentic software engineering.","A universal autonomous coding product.",Current project identity
+Work,"The stable, addressable projection of a Flow, carrying identity, state, history, conditions, obligations, findings, effects, and future; can split, merge, or be superseded.","A ticket title, one agent session, or the deeper system of record itself.",Public WorkView still designed
+Execution,"One bounded attempt by an agent or deterministic executor on behalf of a Work object.","The Work itself.",Core distinction
+Harness,"The environment, tools, context, policies, state, and feedback that make one execution unit capable.","The full Flow.",Industry term
+Loop,"One execution unit unfolding through feedback over time.","The full work lifecycle.",Industry term
+Graph,"A versioned structural projection of execution units and dependencies for a given work state.","Permanent authoritative truth.",Flow-first interpretation
+GraphSnapshot,"A graph derived at a specific fact watermark and work state.","The Flow.",Recommended public term
+Context Capsule,"A bounded, provenance-bound local execution view compiled from current authoritative state.","A handoff summary or chat history dump.",Existing mechanism
+Reflow,"Invalidation localization, impact propagation, and partial recompilation of future work.","Retrying the same node.",Core mechanism
+Finding,"A persistent, evidence-bound statement that something is wrong, unknown, or unverified.","An ephemeral reviewer comment.",Existing mechanism
+Obligation,"A condition that must be satisfied before a governed transition may occur.","A suggestion in a prompt.",Existing mechanism
+Human Constitution,"The goals, ontology, judgments, obligations, authority, red lines, acceptance, and evolution rules owned by humans.","Watching every transcript.",Core governance concept
+Cognitive Exoskeleton,"The accumulated executable structure of a person or organization’s judgments, concepts, obligations, skills, validators, and failure learning.","Conversation memory alone.",Long-term value
+Activation,"Evidence that an integrated capability was organically invoked in the target environment.","A test, demo, drill, or mere deployment.",Existing evidence concept
+Acceptance,"A binding judgment by the responsible owner that the required outcome is acceptable.","A model-generated success message.",Core closure concept
+Assurance Kernel,"The currently runnable public execution-review-targeted-rework-fresh-acceptance demo.","The whole Flowness runtime.",Runnable public alpha
+Failure Atlas,"An empirical and replayable collection of structural agent-system failures, mechanisms, and remaining boundaries.","A list of embarrassing bugs.",Open-source evidence asset

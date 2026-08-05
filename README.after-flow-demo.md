@@ -12,7 +12,7 @@ Humans define the goals, rules, judgments, and irreversible boundaries. Agents o
 
 [简体中文](README.zh-CN.md) · [Run the public proof](docs/open-alpha-demo.md) · [Flow Engineering](docs/concepts/FLOW_ENGINEERING.md) · [Architecture](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md)
 
-> **Public status:** today’s Open Alpha ships a runnable, deterministic **Assurance Kernel** for execution → independent review → targeted rework → fresh acceptance. The broader work-centered Flow runtime is present as a substantial inspectable mechanism set and private dogfood system, but its new public hero demo and a complete organic public end-to-end run are not shipped yet. See [What is actually available](#what-is-actually-available).
+> **Public status:** the Open Alpha now ships two deterministic proofs: **Work Outlives Agents**, which shows persistent work surviving executor death and recompiling its next execution, and the **Assurance Kernel**, which shows independent review, blocker lineage, targeted rework, and fresh acceptance. A complete organic public goal → accepted outcome remains the next proof boundary.
 
 ![Flowness: Work persists, Agents assemble](docs/assets/diagrams/01_category_5s.en.svg)
 
@@ -147,9 +147,29 @@ Flowness treats those as different states, with different evidence.
 
 ---
 
-## Run the public proof
+## Run the Flow proof
 
-The current Open Alpha ships a deterministic **Assurance Kernel Demo**. It demonstrates one narrow but load-bearing part of a trustworthy Flow:
+The public hero demo makes the core runtime claim visible: **an executor can die while the work remains alive**. It derives `WorkView`, context, graph snapshots, findings, and closure from a deterministic public trace.
+
+```bash
+.venv/bin/flowness-oss work-outlives-agents-demo \
+  --output /tmp/flowness-flow-demo
+
+.venv/bin/flowness-oss work-inspect \
+  --work-id W-42 \
+  --run-root /tmp/flowness-flow-demo
+```
+
+The trace must visibly contain a state where:
+
+```text
+agents: none
+flow: alive
+```
+
+It then shows Graph v1 being superseded by Graph v2 after a consumer-wiring finding, and keeps `built`, `integrated`, `activated`, and `accepted` separate until organic evidence closes the work.
+
+The existing deterministic **Assurance Kernel Demo** remains available. It demonstrates another narrow but load-bearing part of a trustworthy Flow:
 
 - three isolated producers;
 - a content-bound candidate;
@@ -180,7 +200,7 @@ A successful inspection ends with:
 {"state":"verified","producer_agents":3,"round_1":"blocked","targeted_rework":"verified","round_2":"accepted"}
 ```
 
-This proves the acceptance kernel, not the entire Flow Engineering thesis. The new “Work Outlives Agents” hero demo is specified in [docs/demos/HERO_DEMO_SPEC.md](docs/demos/HERO_DEMO_SPEC.md) and remains `[DESIGNED]` until it is implemented and bound to a release artifact.
+Together, the two demos prove persistent work continuity and evidence-backed acceptance. They still do not prove the complete Flow Engineering thesis or a full organic public goal → accepted outcome.
 
 ---
 
@@ -204,7 +224,7 @@ Flowness uses evidence-status labels so architecture, dogfood, design, and shipp
 | Append-only events, projections, envelopes, gates, selected orchestration and closure mechanisms | `[INSPECTABLE]` | `harness/src/towow/`, public core, tests and conformance code |
 | Design and engineering-spec objects, gates, CLI, and partial forward/reflow routes | `[DOGFOOD] / [INSPECTABLE]` | selected public schemas/docs; private runtime is partial |
 | Full organic goal → accepted outcome on a new public target | `[OPEN QUESTION]` | not yet demonstrated publicly |
-| WorkView CLI and “Work Outlives Agents” demo | `[DESIGNED]` | public specifications in this documentation set |
+| WorkView CLI and “Work Outlives Agents” demo | `[RUNNABLE]` | deterministic hero demo, inspector, and release evidence manifest |
 | General cross-domain Flow runtime | `[OPEN QUESTION]` | software engineering is the first proving ground |
 
 [See the claims and evidence register](docs/benchmarks/CLAIMS_AND_EVIDENCE_REGISTER.md)

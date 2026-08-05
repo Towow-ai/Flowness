@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use Flowness or its Flow Engineering materials, please cite the software and the relevant paper or technical report."
+title: "Flowness"
+type: software
+authors:
+  - family-names: "Zhang"
+    given-names: "Chenxi"
+    alias: "Nature"
+    affiliation: "Towow Research"
+repository-code: "https://github.com/Towow-ai/Flowness"
+url: "https://github.com/Towow-ai/Flowness"
+license: "Apache-2.0"
+keywords:
+  - agentic software engineering
+  - flow engineering
+  - harness engineering
+  - multi-agent systems
+  - event sourcing
+  - context compilation
+  - reflow
+  - cognitive exoskeleton
+preferred-citation:
+  type: generic
+  title: "Flowness: A Distributed-Systems Position on Multi-Agent AI Software Engineering"
+  authors:
+    - family-names: "Zhang"
+      given-names: "Chenxi"
+      alias: "Nature"
+      affiliation: "Towow Research"
+  year: 2026

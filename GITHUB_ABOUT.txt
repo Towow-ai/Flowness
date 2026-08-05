@@ -1,0 +1,1 @@
+A work-centered runtime for agentic software engineering. Work persists; agents, context, and graphs assemble around it.

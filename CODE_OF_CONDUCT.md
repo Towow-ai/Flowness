@@ -1,24 +1,28 @@
-<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+# Community Code of Conduct
 
-# Code of Conduct
+Flowness aims to be a rigorous, curious, and welcoming place for people studying how agentic work fails and improves.
 
-The Flowness community is committed to a respectful, constructive, and
-evidence-aware environment for everyone.
+## Expected behavior
 
-Be direct about technical disagreement without attacking people. Preserve
-negative results and uncertainty. Give contributors credit, respect privacy,
-and do not publish confidential or personally identifying material.
+- Critique claims, mechanisms, and evidence rather than people.
+- State uncertainty and distinguish observation from inference.
+- Welcome counterexamples and simpler alternatives.
+- Credit prior work and contributors.
+- Protect private data and benchmark holdouts.
+- Make space for contributors with different levels of formal, systems, and AI experience.
+- Avoid using generated volume to overwhelm review or discussion.
 
-Harassment, threats, discriminatory conduct, sustained disruption, deliberate
-misrepresentation of evidence, and unwanted disclosure of private information
-are not acceptable.
+## Unacceptable behavior
 
-Report conduct concerns privately to the maintainers. When the concern
-includes a security or privacy disclosure, use the private route in
-[SECURITY.md](SECURITY.md). Maintainers may edit, remove, or reject
-contributions and may temporarily or permanently restrict participation when
-needed to protect the community. Enforcement decisions should be
-proportional, documented, and handled as privately as practical.
+- harassment, discrimination, threats, or personal attacks;
+- publishing private information;
+- deceptive benchmark or evidence manipulation;
+- impersonating maintainers or authority holders;
+- knowingly presenting model-generated claims as verified facts;
+- spam, coordinated disruption, or bad-faith flooding.
 
-This code applies in repository spaces, project events, and public
-representation of the project.
+## Enforcement
+
+Report conduct concerns privately to the maintainers through the current repository’s published contact path. Maintainers may remove content, limit participation, or ban contributors when needed to protect the community.
+
+Enforcement decisions should be documented internally and, when safe and appropriate, summarized transparently without exposing reporters.
