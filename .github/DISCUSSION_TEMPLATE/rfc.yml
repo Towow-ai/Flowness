@@ -1,0 +1,31 @@
+title: "[RFC] "
+labels: ["rfc"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives, including no change
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed objects, states, transitions, authority, and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: failures
+    attributes:
+      label: Failure, recovery, and counterexamples
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Public claim and compatibility impact

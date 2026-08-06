@@ -1,0 +1,39 @@
+name: FlowBench provider
+description: Propose or implement a frozen benchmark provider
+labels: ["benchmark", "provider"]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider / treatment name and version
+    validations:
+      required: true
+  - type: textarea
+    id: native
+    attributes:
+      label: Native information, authority, tools, and modality
+    validations:
+      required: true
+  - type: textarea
+    id: freeze
+    attributes:
+      label: Freeze and reproducibility plan
+    validations:
+      required: true
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resource accounting
+    validations:
+      required: true
+  - type: checkboxes
+    id: blindness
+    attributes:
+      label: Qualification
+      options:
+        - label: Provider-visible inputs exclude semantic case IDs and private manifest hashes.
+          required: true
+        - label: The provider does not receive expected routes or labels.
+          required: true
+        - label: Configuration is frozen before fresh holdout.
+          required: true

@@ -1,0 +1,61 @@
+name: Bug report
+description: Report a reproducible public runtime or documentation defect
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not include secrets, private repositories, or security vulnerabilities here.
+  - type: input
+    id: version
+    attributes:
+      label: Release / source commit
+      placeholder: vX.Y.Z / full commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command and sanitized output
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: dropdown
+    id: family
+    attributes:
+      label: Suspected Flow failure family
+      options:
+        - Formation
+        - Continuity
+        - Integrity
+        - Adaptation
+        - Commitment
+        - Closure
+        - Learning
+        - Unsure
+    validations:
+      required: true
+  - type: input
+    id: manifest
+    attributes:
+      label: Artifact manifest SHA-256 (if available)
+  - type: checkboxes
+    id: clean
+    attributes:
+      label: Reproduction
+      options:
+        - label: I reproduced this from a clean clone or documented why I could not.
+          required: true

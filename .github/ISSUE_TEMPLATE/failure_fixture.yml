@@ -1,0 +1,52 @@
+name: Failure Atlas case
+description: Propose a replayable structural agent-system failure
+labels: ["failure-atlas", "needs-triage"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Short failure name
+      placeholder: Event is emitted but has no consumer
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptom and impact
+    validations:
+      required: true
+  - type: textarea
+    id: world
+    attributes:
+      label: Minimal world, trigger, expected Flow, actual Flow
+    validations:
+      required: true
+  - type: dropdown
+    id: family
+    attributes:
+      label: Primary pathology
+      options: [Formation, Continuity, Integrity, Adaptation, Commitment, Closure, Learning]
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction or sanitized evidence
+      description: Bind exact versions and remove secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: counterexample
+    attributes:
+      label: Counterexample / when this should not be considered a failure
+  - type: textarea
+    id: simpler
+    attributes:
+      label: Existing mature mechanism that may solve it more simply
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Publication
+      options:
+        - label: I confirm this submission contains no private data or evaluator holdout labels.
+          required: true

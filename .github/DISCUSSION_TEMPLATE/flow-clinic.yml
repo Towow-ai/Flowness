@@ -1,0 +1,28 @@
+title: "[Flow Clinic] "
+labels: ["flow-clinic"]
+body:
+  - type: textarea
+    id: work
+    attributes:
+      label: What work was trying to move?
+    validations:
+      required: true
+  - type: textarea
+    id: stopped
+    attributes:
+      label: Where did it stop, drift, fail to adapt, fail to commit, or close falsely?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+  - type: dropdown
+    id: family
+    attributes:
+      label: Suspected family
+      options: [Formation, Continuity, Integrity, Adaptation, Commitment, Closure, Learning, Unsure]
+  - type: textarea
+    id: question
+    attributes:
+      label: What would be most useful from the community?

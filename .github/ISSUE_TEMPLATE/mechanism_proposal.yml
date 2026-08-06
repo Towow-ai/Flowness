@@ -1,0 +1,36 @@
+name: Mechanism proposal
+description: Propose a new or changed Flowness mechanism
+labels: ["mechanism", "rfc-needed"]
+body:
+  - type: textarea
+    id: failure
+    attributes:
+      label: Failure and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include no change and mature external technologies.
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Proposed contract
+      description: Inputs, outputs, state, consumers, authority, idempotency, evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Safety, liveness, cost, and maintenance trade-offs
+    validations:
+      required: true
+  - type: textarea
+    id: test
+    attributes:
+      label: Failure fixture and counterexample plan
+    validations:
+      required: true

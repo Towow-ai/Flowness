@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Flow Engineering discussion
+    url: https://github.com/Towow-ai/Flowness/discussions
+    about: Ask conceptual, architecture, and community questions.
+  - name: Security report
+    url: https://github.com/Towow-ai/Flowness/security
+    about: Report vulnerabilities privately.
