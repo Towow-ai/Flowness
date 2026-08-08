@@ -2,8 +2,10 @@
   "schema_version": "flowness-open-alpha-public-package-metadata/v1",
   "release_identity": {
     "project": "Flowness",
-    "release": "v1.0.0-alpha",
-    "distribution_state": "pre_release_candidate_external_acceptance_pending"
+    "component_release_line": "v1.0.0-alpha",
+    "repository_release": "v1.1.0-alpha.1",
+    "distribution_state": "component_baseline_sealed; repository_release_evidence_bound (see release v1.1.0-alpha.1 assets)",
+    "version_tracks_doc": "docs/VERSIONING.md"
   },
   "package_state": "three_exact_installable_source_metadata_files_present",
   "packages": [
@@ -52,7 +54,7 @@
       "distribution_name": "flowness-ledger-core",
       "version": "1.0.0a1",
       "source_metadata": "public-core/flowness-ledger-core/pyproject.toml",
-      "source_metadata_sha256": "sha256:de3c1247025e50361fd34f0bae47ae9ec15b6c743186a68d11f454daa2889a7f",
+      "source_metadata_sha256": "sha256:35dc047a6d120b18b94315a3d9719c1d836dd123983b2351b0c2d3f6735aafdd",
       "requires_python": ">=3.11",
       "license_expression": "Apache-2.0",
       "documentation_license_expression": "CC-BY-4.0",

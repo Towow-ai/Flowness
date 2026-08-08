@@ -30,7 +30,7 @@ def test_public_readme_identifies_the_harness_and_truth_boundary() -> None:
 
     required = (
         "# Flowness OSS Harness",
-        "public Open Alpha coordination and acceptance layer",
+        "public assurance, replay, release-audit, and\ndeterministic acceptance tooling",
         "## Run the acceptance loop",
         "from a Flowness **Git checkout**",
         "never create `.venv`",

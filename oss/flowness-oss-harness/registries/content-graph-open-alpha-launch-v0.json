@@ -14,7 +14,7 @@
       "type": "asset",
       "state": "draft",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:c3a699266b745307fa4eac943b7b20e5395bb6b191248ca1bf9aec3c8d9999e8",
+      "content_hash": "sha256:ebd13985b99784e0e41646124524e54ad452bbc24e0f463679ebd594c9b4984a",
       "source_path": "README.md"
     },
     {
@@ -93,7 +93,7 @@
       "type": "claim",
       "state": "evidence_bound",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:6b24901714ed305484911ee3d420b1d624541ebe5db1dfeac6ee287f1869b586"
+      "content_hash": "sha256:00e2dc8951477dfe42c10defac0e51b9e3f016da9e1127ef0d9d4549ae20dfea"
     },
     {
       "node_id": "claim.launch.no-average",
@@ -107,7 +107,7 @@
       "type": "claim",
       "state": "evidence_bound",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:055d5129f66ac7b0422441329ce43c11eb4360b8d4263fc9f66df4819b4d37d2"
+      "content_hash": "sha256:79a7d14fa2919ed1da61694166a7a1e55f03bb0206ffd93f3c2aa425138036ca"
     },
     {
       "node_id": "evidence.launch.clm-flow-arch",
@@ -121,7 +121,7 @@
       "type": "evidence",
       "state": "evidence_bound",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:e2034449a633891ece8f73e09b43c7a25f15b7c89417b0f35aacb41d13f8c53d"
+      "content_hash": "sha256:82a73b32dfda21b8b7b25c73699da3caf6a40c5d6c262eee534a54555f7b1f97"
     },
     {
       "node_id": "evidence.launch.clm-flow-content",
@@ -142,7 +142,7 @@
       "type": "evidence",
       "state": "evidence_bound",
       "snapshot_id": "open-alpha-launch-successor-v1",
-      "content_hash": "sha256:be2ea1ac9574a2bcaeeec22385087866f318e165ce163797add17599b37cf3c3"
+      "content_hash": "sha256:5223d55356e89140a00c12ad72bb0a0675badf1f34b1d58f00ba67772a851eba"
     },
     {
       "node_id": "evidence.launch.clm-flow-loop",

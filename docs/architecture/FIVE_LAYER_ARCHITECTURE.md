@@ -28,7 +28,7 @@ The five-layer model is the canonical product architecture for explaining Flowne
 
 ## 1. Human Constitution
 
-This layer is the ming (命) — the grammar that generates valid paths.
+This layer is the normative core of ming (命) — the authored part of the grammar that generates valid paths (ming as a whole also inherits the work's irreversible structure).
 
 This layer answers:
 
@@ -89,7 +89,7 @@ This layer answers:
 - Which obligations and validators apply?
 - What completion evidence must be produced?
 
-Where ming meets yun, the runtime compiles one temporary agent — the Execution Assembly.
+Ming and yun compile into an Execution Assembly. When that bounded assembly acts, a temporary Agent instance takes form. The Agent is the occurrence of agency expressed by the assembly, not any executor inside it.
 
 Typical outputs:
 

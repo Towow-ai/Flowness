@@ -293,7 +293,7 @@ Executor
 + Evidence Contract
 ```
 
-Execution Assembly 是临时的。Flow 持续存在，Work 提供可寻址的连续性。用命/运的语言说：命遇运，编译出一次临时 Agent——Execution Assembly 就是这次编译的产物。
+Execution Assembly 是临时的。Flow 持续存在，Work 提供可寻址的连续性。用命/运的语言说：命与运共同编译出 Execution Assembly；当这套有边界的 Assembly 实际行动时，一次临时 Agent 实例才随之成形。Agent 是这套结构所表达的一次 Agency，而不是其中任何一个 Executor。
 
 ## 4.5 Graph Snapshot
 
@@ -334,7 +334,7 @@ Reflow 不一定沿 Pipeline 向后。它可以形成 Investigation 支线、等
 - Acceptance 与 Promotion Rule；
 - Budget 与 Risk Posture。
 
-用命/运的语言说，Human Constitution 就是**命（mìng）**——不是剧本，而是生成合法路径的语法。
+用命/运的语言说，Human Constitution 是**命（mìng）的规范性核心**——语法中有作者的那部分。命整体还继承着这项工作不可逆的结构：已发生的 Effect、确切版本与关系、已接受的承诺、历史形成的义务。它不是剧本，而是生成合法路径的语法。
 
 Constitution 可以演化，但它的演化也必须受治理。系统可以从 Trace 提出新规则，不应悄悄把规则提升为强制基础设施。
 

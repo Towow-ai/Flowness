@@ -148,4 +148,4 @@ Or, more compactly:
 
 > **Human out of the session, never out of the constitution.**
 
-Human Constitution is **ming (命)**; World State is **yun (运)**. Where the two meet, the runtime compiles one temporary agent—the Execution Assembly.
+Human Constitution is the normative core of **ming (命)**; World State is **yun (运)**. Ming and yun compile into an Execution Assembly. When that bounded assembly acts, a temporary Agent instance takes form. The Agent is the occurrence of agency expressed by the assembly, not any executor inside it.

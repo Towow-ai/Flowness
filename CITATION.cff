@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use Flowness or its Flow Engineering materials, please cite the software and the relevant paper or technical report."
 title: "Flowness"
 type: software
+version: "v1.1.0-alpha.1"
 authors:
   - family-names: "Zhang"
     given-names: "Chenxi"
@@ -21,10 +22,20 @@ keywords:
   - cognitive exoskeleton
 preferred-citation:
   type: generic
-  title: "Flowness: A Distributed-Systems Position on Multi-Agent AI Software Engineering"
+  title: "Flow Engineering: Flow-Centered Infrastructure for Agentic Software Engineering (Flowness Whitepaper v1.1, Public Position Paper)"
   authors:
     - family-names: "Zhang"
       given-names: "Chenxi"
       alias: "Nature"
       affiliation: "Towow Research"
   year: 2026
+  url: "https://github.com/Towow-ai/Flowness/blob/main/docs/whitepaper/flow-engineering-whitepaper.en.md"
+references:
+  - type: generic
+    title: "Flowness: A Distributed-Systems Position on Multi-Agent AI Software Engineering (previous formal position)"
+    authors:
+      - family-names: "Zhang"
+        given-names: "Chenxi"
+        alias: "Nature"
+        affiliation: "Towow Research"
+    year: 2026

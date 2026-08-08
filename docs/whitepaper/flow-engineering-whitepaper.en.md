@@ -289,7 +289,7 @@ executor(s)
 + evidence contract
 ```
 
-The Execution Assembly is temporary. The Flow persists; Work provides addressable continuity. In ming/yun terms: where ming meets yun, the runtime compiles one temporary agent — Execution Assembly is the product of that compilation.
+The Execution Assembly is temporary. The Flow persists; Work provides addressable continuity. In ming/yun terms: Ming and yun compile into an Execution Assembly. When that bounded assembly acts, a temporary Agent instance takes form. The Agent is the occurrence of agency expressed by the assembly, not any executor inside it.
 
 ## 4.5 Graph Snapshot
 
@@ -332,7 +332,7 @@ The **Human Constitution** is the set of human-owned, binding constraints that d
 - acceptance and promotion rules;
 - budgets and risk posture.
 
-In ming/yun terms, the Human Constitution is **ming (命)** — not a script, but the grammar that generates legitimate paths.
+In ming/yun terms, the Human Constitution is the **normative core of ming (命)** — the part of the grammar that has an author. Ming as a whole also inherits the work's irreversible structure: effects already produced, exact versions and relations, accepted commitments, obligations formed by history. Not a script, but the grammar that generates legitimate paths.
 
 The constitution can evolve, but its evolution must itself be governed. A system may propose a new rule from traces; it should not silently promote that rule into binding infrastructure.
 

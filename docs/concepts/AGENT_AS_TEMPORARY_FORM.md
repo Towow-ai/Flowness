@@ -86,7 +86,7 @@ ming (grammar)  +  yun (moment)
  provenance remains
 ```
 
-Compilation here is not a metaphor—it is the same operation described elsewhere in this set as assembling an Execution Assembly: an executor, a Context Capsule, tools and capabilities, a graph or ready-set, policies and obligations, validators and gates, resource and authority boundaries, and an evidence contract. What ming and yun compile *into* is that assembly; the agent is the executor at its center, temporarily animated by it.
+Compilation here is not a metaphor—it is the same operation described elsewhere in this set as assembling an Execution Assembly: an executor, a Context Capsule, tools and capabilities, a graph or ready-set, policies and obligations, validators and gates, resource and authority boundaries, and an evidence contract. What ming and yun compile *into* is that assembly. When the bounded assembly acts, a temporary Agent instance takes form: the Agent is the occurrence of agency expressed by the whole assembly, not any executor inside it.
 
 When the action completes—successfully, or with a Finding that routes it elsewhere—the agent dissolves. It does not retire, get reassigned, or wait idle for its next task. It simply stops existing. What remains is not the agent, but what the agent left in the Flow's history: the path taken, the evidence produced, the state it moved to, and any judgment the next compilation can inherit.
 

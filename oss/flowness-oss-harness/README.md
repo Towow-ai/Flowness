@@ -2,12 +2,16 @@
 
 # Flowness OSS Harness
 
-This package contains the public Open Alpha coordination and acceptance layer
-for Flowness `v1.0.0-alpha`.
+This package contains the public assurance, replay, release-audit, and
+deterministic acceptance tooling shipped with Flowness Open Alpha. Its package
+version follows the sealed component track (`v1.0.0-alpha` line); the current
+repository release is versioned separately — see
+[`docs/VERSIONING.md`](../../docs/VERSIONING.md).
 
-Flowness turns one engineering goal into parallel producer work, sealed
-artifacts, independent judgments, targeted rework, and a traceable accepted
-outcome. A mandatory `FAIL` or critical `UNKNOWN` blocks the candidate; it
+Within the Flow-centered runtime, this layer protects one load-bearing
+boundary: a candidate is produced by isolated producers, sealed to its content,
+judged independently, repaired through targeted rework, and re-judged fresh —
+a traceable accepted outcome. A mandatory `FAIL` or critical `UNKNOWN` blocks the candidate; it
 cannot be cleared by an average score or a rewritten explanation.
 
 ## Run the acceptance loop
@@ -59,11 +63,13 @@ deterministic policy probes. This is not a model-quality benchmark.
   channel-staging contracts.
 - A selected canonical engine package and a narrower Ledger Core package.
 
-The intended first independent Alpha coordinate is **Linux aarch64 with CPython
-3.12**. Local package and validator paths target that coordinate, but this
-mutable candidate does not contain a retained non-author clean-room receipt or
-fresh jury decision for its exact bytes. No coordinate is independently
-accepted until those pre-release gates are completed and bound externally.
+The first verified Alpha coordinate is **Linux aarch64 with CPython 3.12**.
+The repository release `v1.1.0-alpha.1` binds a maintainer-run clean-clone
+receipt and demo-inspector output for its exact source commit (see the release
+assets: `CLEAN_CLONE_RECEIPT.json`, `DEMO_INSPECTOR_OUTPUT.json`,
+`RELEASE_MANIFEST.json`). What remains a pre-release boundary is **independent,
+non-author external acceptance** of the sealed component bytes — that gate is
+still open, and no external-acceptance claim is made until it is bound.
 
 ## Maturity and boundaries
 
