@@ -322,7 +322,7 @@ flow: alive
 
 ## 9. Release gate
 
-The README may switch from the current-safe version to `README.after-flow-demo.md` only when:
+The README may switch from the current-safe version to `docs/internal/launch-staging/README.after-flow-demo.md` only when:
 
 - all acceptance criteria above pass in CI;
 - a clean clone reproduces the run offline or with only declared dependencies;

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "flowness-oss-harness"
 version = "1.0.0a1"
-description = "Evidence-first multi-agent orchestration, jury, rework, and release tooling for Flowness."
+description = "Public assurance, evidence, replay, and release tooling for the Flowness reference runtime."
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]

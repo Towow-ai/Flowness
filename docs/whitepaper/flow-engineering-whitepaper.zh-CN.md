@@ -1,10 +1,10 @@
 # Flow 工程
-## 面向 Agent 软件工程的工作中心型基础设施
+## 面向 Agent 软件工程的 Flow 中心型基础设施
 
-**Flowness 白皮书 v1.0 — 对外立场草案**  
+**Flowness 白皮书 v1.1 — 对外立场文件**  
 **作者：** Nature / Towow Research  
 **日期：** 2026-08-05  
-**建议许可证：** CC BY 4.0
+**许可证：** 本文档 CC BY 4.0
 
 > **工作持续存在，Agent 围绕它形成。**
 >
@@ -151,7 +151,7 @@ Flow-centered Runtime 反转依赖：
 
 最短的公共表达是：
 
-> **不是 Agent 拥有工作，而是工作临时调用 Agent。**
+> **不是 Agent 拥有 Flow，而是 Flow 临时召集 Agent；Work 是你寻址它的地方。**
 
 这不是一句哲学口号，而会改变系统设计。
 
@@ -242,7 +242,7 @@ Handoff Summary 是文本产物；Runtime Context Capsule 是从以下内容编�
 
 ## 4.1 Work
 
-**Work** 是一个持续存在的语义工作单元，表示对某个 Goal 或 Target 尚未完成的责任。
+Flow 是那个持续存在的因果过程；**Work** 是它稳定、可寻址的投影，表示对某个 Goal 或 Target 尚未完成的责任。
 
 Work 不持有这些字段——它们是从底层事实投影出的最小视图：
 
@@ -293,7 +293,7 @@ Executor
 + Evidence Contract
 ```
 
-Assembly 是临时的，Work 是持久的。用命/运的语言说：命遇运，编译出一次临时 Agent——Execution Assembly 就是这次编译的产物。
+Execution Assembly 是临时的。Flow 持续存在，Work 提供可寻址的连续性。用命/运的语言说：命遇运，编译出一次临时 Agent——Execution Assembly 就是这次编译的产物。
 
 ## 4.5 Graph Snapshot
 

@@ -51,3 +51,45 @@ jobs:
             public-core/flowness-ledger-core/tests/test_readme_entrypoint.py \
             public-core/flowness-ledger-core/tests/test_alpha_quickstart.py \
             public-core/flowness-ledger-core/tests/test_install_receipt.py
+
+  build-and-docs:
+    name: package builds and doc link integrity
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build wheels and sdists for all public packages
+        run: |
+          python -m pip install --quiet build
+          python -m build --outdir /tmp/dist-harness ./harness
+          python -m build --outdir /tmp/dist-oss ./oss/flowness-oss-harness
+          python -m build --outdir /tmp/dist-core ./public-core/flowness-ledger-core
+          ls /tmp/dist-harness /tmp/dist-oss /tmp/dist-core
+
+      - name: Check internal Markdown links resolve
+        run: |
+          python - <<'PY'
+          import re, sys
+          from pathlib import Path
+          root = Path(".").resolve()
+          bad = []
+          for md in list(root.glob("*.md")) + list((root / "docs").rglob("*.md")):
+              if "docs/internal/" in str(md.relative_to(root)).replace(chr(92), "/"):
+                  continue  # internal staging: root-relative links by design (promoted back to root on launch B)
+              rel = md.relative_to(root)
+              for m in re.finditer(r"\]\(([^)#\s]+)(?:#[^)\s]*)?\)", md.read_text(encoding="utf-8")):
+                  t = m.group(1)
+                  if t.startswith(("http://", "https://", "mailto:")):
+                      continue
+                  if not (md.parent / t).resolve().exists():
+                      bad.append(f"{rel}: {t}")
+          if bad:
+              print("BROKEN INTERNAL LINKS:")
+              print("\n".join(bad))
+              sys.exit(1)
+          print("all internal markdown links resolve")
+          PY

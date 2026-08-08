@@ -8,6 +8,8 @@ Flowness calls that substrate the **Human Constitution**.
 
 This layer is **ming (命)**—the grammar that generates legitimate paths, not a script that prescribes one. It is not a list of outcomes to check off; it is what makes some next steps valid and others illegitimate before any world event ever arrives: goals and anti-goals, ontology and relations, constraints and obligations, what change is legitimate, what evidence can move state, and what counts as accepted.
 
+Strictly speaking, the constitution is the *normative core* of ming — the part with an author. Ming as a whole also inherits the work's irreversible structure: effects already produced, exact versions and relations, accepted commitments, and obligations formed by history. Humans own the part that can be rewritten; the flow carries the part that cannot. (See [Agent as Temporary Form](./AGENT_AS_TEMPORARY_FORM.md).)
+
 ## 1. What humans own
 
 Humans remain authoritative over six classes of decisions.

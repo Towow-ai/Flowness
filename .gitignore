@@ -1,0 +1,5 @@
+
+# local build/test artifacts
+__pycache__/
+*.egg-info/
+.venv-ci/

@@ -8,6 +8,8 @@
 
 人定义目标、规则、判断和不可逆边界；Agent 在其中自组织并行动。
 
+> **Flow 是第一性的；Work 让它可被寻址；Agent 是执行在当下的临时形态。**
+
 > **水无常形，事有其脉；会话会散，工作继续。**
 
 [English](README.md) · [运行公开证明](docs/open-alpha-demo.md) · [Flow 工程](docs/concepts/FLOW_ENGINEERING.md) · [架构](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md)
@@ -205,7 +207,7 @@ Flowness 通过统一状态标签区分架构、私有实践、设计与公开�
 | WorkView CLI 与 “Work Outlives Agents” Demo | `[DESIGNED]` | 本文档集中的公开规格 |
 | 通用跨领域 Flow Runtime | `[OPEN QUESTION]` | 先在软件工程中证明 |
 
-[查看 Claim 与 Evidence Register](docs/benchmarks/CLAIMS_AND_EVIDENCE_REGISTER.md)
+[查看 Claim 与 Evidence Register](docs/benchmarks/CLAIMS_AND_EVIDENCE_REGISTER.md) · [版本轨说明](docs/VERSIONING.md)
 
 ---
 
@@ -352,7 +354,7 @@ Flowness/
 5. **让主张可证伪：** FlowBench qualification 与 ablation；
 6. **让判断可累积：** 公共 JudgmentCase 与 regression 示例。
 
-[路线图](ROADMAP.proposed.md)
+[路线图](ROADMAP.md)
 
 ---
 
@@ -367,7 +369,7 @@ Flowness/
 - 更清楚的公共解释；
 - 一份明确 Work 状态、受影响 Projection、验证与证据的 Patch。
 
-从 [CONTRIBUTING](CONTRIBUTING.proposed.md) 开始，提交结构化 Issue，或进入 GitHub Discussion。
+从 [CONTRIBUTING](CONTRIBUTING.md) 开始，提交结构化 Issue，或进入 GitHub Discussion。
 
 ---
 
@@ -400,4 +402,4 @@ Flowness 由一个很小的独立团队与 AI 共同建设。这构成真实约�
 
 ---
 
-[FAQ](docs/community/FAQ.md) · [Governance](GOVERNANCE.md) · [Contributing](CONTRIBUTING.proposed.md)
+[FAQ](docs/community/FAQ.md) · [Governance](GOVERNANCE.md) · [Contributing](CONTRIBUTING.md)

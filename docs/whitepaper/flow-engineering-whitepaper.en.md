@@ -1,10 +1,10 @@
 # Flow Engineering
-## Work-Centered Infrastructure for Agentic Software Engineering
+## Flow-Centered Infrastructure for Agentic Software Engineering
 
-**Flowness Whitepaper v1.0 — Public Position Draft**  
+**Flowness Whitepaper v1.1 — Public Position Paper**  
 **Author:** Nature / Towow Research  
 **Date:** 2026-08-05  
-**License recommendation:** CC BY 4.0 for this document
+**License:** CC BY 4.0 for this document
 
 > **Work persists. Agents assemble.**
 >
@@ -147,7 +147,7 @@ persist the work
 
 The public distinction can be stated in one line:
 
-> **Agent does not own the work. Work temporarily calls an agent.**
+> **Agent does not own the flow. The flow temporarily assembles an agent; Work is where you address it.**
 
 This is not a philosophical decoration. It has concrete consequences.
 
@@ -238,7 +238,7 @@ A category becomes useful only when its core objects are precise enough to imple
 
 ## 4.1 Work
 
-A **Work** object is a persistent semantic unit representing an unfinished responsibility toward a goal or target.
+The Flow is the persistent causal process. A **Work** object is its stable, addressable projection, representing an unfinished responsibility toward a goal or target.
 
 Work does not own these fields — they are the minimal view projected from underlying facts:
 
@@ -289,7 +289,7 @@ executor(s)
 + evidence contract
 ```
 
-The assembly is temporary. The work is persistent. In ming/yun terms: where ming meets yun, the runtime compiles one temporary agent — Execution Assembly is the product of that compilation.
+The Execution Assembly is temporary. The Flow persists; Work provides addressable continuity. In ming/yun terms: where ming meets yun, the runtime compiles one temporary agent — Execution Assembly is the product of that compilation.
 
 ## 4.5 Graph Snapshot
 

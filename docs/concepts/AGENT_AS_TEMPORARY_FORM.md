@@ -16,6 +16,32 @@ An agent exists only inside the window between compilation and dissolution. Befo
 
 ---
 
+## 1a. Model, Execution Assembly, Agent — three different things
+
+A common collapse must be prevented early: *the model is not the agent.*
+
+```text
+Model / Executor
+  a capability provider — reasoning or deterministic execution.
+
+Execution Assembly
+  the temporary structure compiled for one action:
+  context, tools, permissions, obligations, scope,
+  validators, graph position, resource and authority boundaries.
+
+Agent (an instance of agency)
+  what that assembly becomes at the moment it acts:
+  a bounded occurrence of agency, not a durable actor.
+```
+
+The model only provides capability. The assembly gives that capability a
+lawful, bounded world. The agent is what happens when the two are compiled
+together and act — and one assembly may even hold several executors at once,
+in which case the agent is not any single model inside it.
+
+This is why "agent" here never means "a short-lived person." It is not a
+persistent entity with a reduced lifespan; it is **an occurrence of agency**.
+
 ## 2. Ming and yun: the two things that meet
 
 Every temporary agent is compiled from exactly two ingredients.
@@ -27,6 +53,22 @@ Every temporary agent is compiled from exactly two ingredients.
 Neither one alone can produce an agent. Ming without yun is a rulebook with nothing to apply it to. Yun without ming is raw circumstance with no legitimate path through it. An agent exists only where the two meet.
 
 ---
+
+
+One precision matters here. The Human Constitution is the **normative core**
+of ming — the part a person owns, interprets, and may revise. But ming is
+broader than what humans wrote down. A flow's lawful paths are also shaped by:
+
+- effects that have already happened and cannot be recalled;
+- exact objects, versions, and the relations between them;
+- dependencies and commitments already accepted;
+- obligations accumulated through history;
+- causal structure that no one may simply rewrite.
+
+So: **ming = the Human Constitution plus the inherited, irreversible
+structure of the work itself.** The constitution is the part with an author;
+the rest is the part with a history. Yun remains the present moment —
+events, resources, capabilities, permissions, risks, and timing.
 
 ## 3. The compile loop
 

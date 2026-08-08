@@ -12,7 +12,7 @@ Flowness should not be explained with one diagram. Different readers are asking 
 | Software engineer | What lifecycle does the first profile use? | High-Assurance SWE Flow Profile |
 | Auditor / researcher | What facts, claims, and gates are binding? | mechanism registry, claims register, and Failure Atlas |
 
-The canonical visual assets are in [`brand/diagrams`](../../../brand/diagrams) in the release asset package. When merged into the repository, copy them to `docs/assets/architecture/` and preserve the filenames used below.
+The canonical visual assets live in [`docs/assets/diagrams/`](../assets/diagrams/); they are generated, versioned, and updated together with the documents that embed them.
 
 ---
 

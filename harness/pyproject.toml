@@ -1,7 +1,7 @@
 [project]
 name = "flowness-harness"
 version = "1.0.0a1"
-description = "Evidence-driven multi-agent engineering harness kernel."
+description = "Flow-centered runtime kernel for persistent, context-compiled, governed agentic work."
 requires-python = ">=3.12"
 readme = "README.md"
 authors = [{ name = "Towow AI" }]

@@ -8,6 +8,8 @@ It keeps engineering work alive across changing agents, sessions, contexts, and 
 
 Humans define the goals, rules, judgments, and irreversible boundaries. Agents organize and act within them.
 
+> **Flow is primary. Work gives it an address. Agents are temporary forms of execution.**
+
 > *A session may end. The work keeps its name, its history, and its next question.*
 
 [简体中文](README.zh-CN.md) · [Run the public proof](docs/open-alpha-demo.md) · [Flow Engineering](docs/concepts/FLOW_ENGINEERING.md) · [Architecture](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md)
@@ -207,7 +209,7 @@ Flowness uses evidence-status labels so architecture, dogfood, design, and shipp
 | WorkView CLI and “Work Outlives Agents” demo | `[DESIGNED]` | public specifications in this documentation set |
 | General cross-domain Flow runtime | `[OPEN QUESTION]` | software engineering is the first proving ground |
 
-[See the claims and evidence register](docs/benchmarks/CLAIMS_AND_EVIDENCE_REGISTER.md)
+[See the claims and evidence register](docs/benchmarks/CLAIMS_AND_EVIDENCE_REGISTER.md) · [Versioning tracks](docs/VERSIONING.md)
 
 ---
 
@@ -354,7 +356,7 @@ The public roadmap is organized around evidence-bearing milestones, not feature 
 5. **Make claims falsifiable:** FlowBench qualification and ablations;
 6. **Make judgment compound:** public JudgmentCase and regression examples.
 
-[Roadmap](ROADMAP.proposed.md)
+[Roadmap](ROADMAP.md)
 
 ---
 
@@ -369,7 +371,7 @@ The highest-value contribution is not always a feature. Flowness welcomes:
 - a clearer public explanation;
 - a patch with explicit work state, affected projections, validation, and evidence.
 
-Start with [CONTRIBUTING](CONTRIBUTING.proposed.md), open a structured issue, or join a GitHub Discussion.
+Start with [CONTRIBUTING](CONTRIBUTING.md), open a structured issue, or join a GitHub Discussion.
 
 ---
 
@@ -402,4 +404,4 @@ The project is ambitious about the direction and deliberately cautious about wha
 
 ---
 
-[FAQ](docs/community/FAQ.md) · [Governance](GOVERNANCE.md) · [Contributing](CONTRIBUTING.proposed.md)
+[FAQ](docs/community/FAQ.md) · [Governance](GOVERNANCE.md) · [Contributing](CONTRIBUTING.md)
