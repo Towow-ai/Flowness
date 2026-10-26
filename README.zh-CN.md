@@ -12,7 +12,7 @@
 
 > **水无常形，事有其脉；会话会散，工作继续。**
 
-[English](README.md) · [运行公开证明](docs/open-alpha-demo.md) · [Flow 工程](docs/concepts/FLOW_ENGINEERING.md) · [架构](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md)
+[English](README.md) · [运行公开证明](docs/open-alpha-demo.md) · [Flow 工程](docs/concepts/FLOW_ENGINEERING.md) · [架构](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md) · [towow.net 上的介绍](https://towow.net/flowness)
 
 > **当前公开状态：** Open Alpha 已提供可运行、确定性的 **Assurance Kernel（可信闭合内核）**，覆盖执行 → 独立审查 → 定向返工 → fresh acceptance。更完整的工作中心型 Flow Runtime 已经具有大量可检查机制和私有 dogfood 实践，但新的公开 Hero Demo 与完整有机端到端公开运行尚未交付。详见[当前到底有什么](#当前到底有什么)。
 

@@ -12,7 +12,7 @@ Humans define the goals, rules, judgments, and irreversible boundaries. Agents o
 
 > *A session may end. The work keeps its name, its history, and its next question.*
 
-[简体中文](README.zh-CN.md) · [Run the public proof](docs/open-alpha-demo.md) · [Flow Engineering](docs/concepts/FLOW_ENGINEERING.md) · [Architecture](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md)
+[简体中文](README.zh-CN.md) · [Run the public proof](docs/open-alpha-demo.md) · [Flow Engineering](docs/concepts/FLOW_ENGINEERING.md) · [Architecture](docs/architecture/README.md) · [Failure Atlas](docs/failure-atlas/README.md) · [Overview on towow.net](https://towow.net/en/flowness)
 
 > **Public status:** today’s Open Alpha ships a runnable, deterministic **Assurance Kernel** for execution → independent review → targeted rework → fresh acceptance. The broader work-centered Flow runtime is present as a substantial inspectable mechanism set and private dogfood system, but its new public hero demo and a complete organic public end-to-end run are not shipped yet. See [What is actually available](#what-is-actually-available).
 
